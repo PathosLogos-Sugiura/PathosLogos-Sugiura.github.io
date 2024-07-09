@@ -1,0 +1,1206 @@
+{
+    "revision": "58",
+    "properties": {
+        "deliver_to_number": {
+            "type": "NUMBER",
+            "code": "deliver_to_number",
+            "label": "納入先",
+            "noLabel": false,
+            "required": true,
+            "lookup": null
+        },
+        "レコード番号": {
+            "type": "RECORD_NUMBER",
+            "code": "レコード番号",
+            "label": "レコード番号",
+            "noLabel": false
+        },
+        "own_initial_end_date": {
+            "type": "DATE",
+            "code": "own_initial_end_date",
+            "label": "初期サービス終了日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "partner_initial_end_date": {
+            "type": "DATE",
+            "code": "partner_initial_end_date",
+            "label": "納品日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "ステータス": {
+            "type": "STATUS",
+            "code": "ステータス",
+            "label": "ステータス",
+            "enabled": true
+        },
+        "own_initial_payment_timing": {
+            "type": "DROP_DOWN",
+            "code": "own_initial_payment_timing",
+            "label": "初期支払方法",
+            "noLabel": false,
+            "required": false,
+            "options": {
+                "サービス開始月一括": {
+                    "label": "サービス開始月一括",
+                    "index": "0"
+                }
+            },
+            "defaultValue": "サービス開始月一括"
+        },
+        "invoice_to_postal_code": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "invoice_to_postal_code",
+            "label": "請求先郵便番号",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "own_monthly_end_date": {
+            "type": "DATE",
+            "code": "own_monthly_end_date",
+            "label": "月額サービス終了日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "partner_monthly_end_date": {
+            "type": "DATE",
+            "code": "partner_monthly_end_date",
+            "label": "月額サービス終了日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "own_monthly_total_amount": {
+            "type": "CALC",
+            "code": "own_monthly_total_amount",
+            "label": "月額費用合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(own_monthly_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "internal_remarks": {
+            "type": "MULTI_LINE_TEXT",
+            "code": "internal_remarks",
+            "label": "備考（社内用）",
+            "noLabel": false,
+            "required": false,
+            "defaultValue": ""
+        },
+        "partner_monthly_table": {
+            "type": "SUBTABLE",
+            "code": "partner_monthly_table",
+            "noLabel": true,
+            "label": "共パ製品月額費用",
+            "fields": {
+                "partner_monthly_qty": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_qty",
+                    "label": "数量（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "",
+                    "unitPosition": "BEFORE"
+                },
+                "partner_monthly_charge_type": {
+                    "type": "DROP_DOWN",
+                    "code": "partner_monthly_charge_type",
+                    "label": "単位（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "options": {
+                        "人": {
+                            "label": "人",
+                            "index": "1"
+                        },
+                        "式": {
+                            "label": "式",
+                            "index": "0"
+                        }
+                    },
+                    "defaultValue": ""
+                },
+                "partner_monthly_contract_amount": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_contract_amount",
+                    "label": "契約金額（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "partner_monthly_product_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_monthly_product_name",
+                    "label": "商品（サービス）名（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_monthly_product_number": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_product_number",
+                    "label": "番号（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "lookup": null
+                },
+                "partner_monthly_list_price_to_customer": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_list_price_to_customer",
+                    "label": "定価（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "partner_monthly_amount": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_amount",
+                    "label": "金額（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "partner_monthly_remarks": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_monthly_remarks",
+                    "label": "備考（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_monthly_months": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_months",
+                    "label": "月数（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "12",
+                    "displayScale": "0",
+                    "unit": "",
+                    "unitPosition": "BEFORE"
+                },
+                "partner_monthly_list_price_purchase": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_list_price_purchase",
+                    "label": "仕入定価（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "partner_monthly_partner_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_monthly_partner_name",
+                    "label": "パートナー名（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_monthly_option_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_monthly_option_name",
+                    "label": "オプション名（共パ月額 ）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_monthly_purchase_amount": {
+                    "type": "NUMBER",
+                    "code": "partner_monthly_purchase_amount",
+                    "label": "仕入金額（共パ月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                }
+            }
+        },
+        "own_initial_start_date": {
+            "type": "DATE",
+            "code": "own_initial_start_date",
+            "label": "初期サービス開始日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "partner_initial_total_amount": {
+            "type": "CALC",
+            "code": "partner_initial_total_amount",
+            "label": "初期費用合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(partner_initial_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "カテゴリー": {
+            "type": "CATEGORY",
+            "code": "カテゴリー",
+            "label": "カテゴリー",
+            "enabled": false
+        },
+        "own_monthly_table": {
+            "type": "SUBTABLE",
+            "code": "own_monthly_table",
+            "noLabel": true,
+            "label": "自社製品月額費用",
+            "fields": {
+                "own_monthly_amount": {
+                    "type": "NUMBER",
+                    "code": "own_monthly_amount",
+                    "label": "月額（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "own_monthly_product_number": {
+                    "type": "NUMBER",
+                    "code": "own_monthly_product_number",
+                    "label": "番号（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "lookup": null
+                },
+                "own_monthly_list_price": {
+                    "type": "NUMBER",
+                    "code": "own_monthly_list_price",
+                    "label": "定価（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "own_monthly_remarks": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "own_monthly_remarks",
+                    "label": "備考（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "own_monthly_charge_type": {
+                    "type": "DROP_DOWN",
+                    "code": "own_monthly_charge_type",
+                    "label": "単位（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "options": {
+                        "人": {
+                            "label": "人",
+                            "index": "1"
+                        },
+                        "式": {
+                            "label": "式",
+                            "index": "0"
+                        }
+                    },
+                    "defaultValue": ""
+                },
+                "own_monthly_months": {
+                    "type": "NUMBER",
+                    "code": "own_monthly_months",
+                    "label": "月数（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "12",
+                    "displayScale": "0",
+                    "unit": "",
+                    "unitPosition": "BEFORE"
+                },
+                "own_monthly_product_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "own_monthly_product_name",
+                    "label": "商品（サービス）名（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "own_monthly_contract_amount": {
+                    "type": "NUMBER",
+                    "code": "own_monthly_contract_amount",
+                    "label": "契約金額（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "own_monthly_qty": {
+                    "type": "NUMBER",
+                    "code": "own_monthly_qty",
+                    "label": "数量（自社月額）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "1",
+                    "displayScale": "0",
+                    "unit": "",
+                    "unitPosition": "BEFORE"
+                }
+            }
+        },
+        "partner_initial_payment_timing": {
+            "type": "DROP_DOWN",
+            "code": "partner_initial_payment_timing",
+            "label": "初期支払方法",
+            "noLabel": false,
+            "required": false,
+            "options": {
+                "サービス開始月一括": {
+                    "label": "サービス開始月一括",
+                    "index": "0"
+                }
+            },
+            "defaultValue": "サービス開始月一括"
+        },
+        "own_monthly_start_date": {
+            "type": "DATE",
+            "code": "own_monthly_start_date",
+            "label": "月額サービス開始日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "deal_title": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "deal_title",
+            "label": "件名",
+            "noLabel": false,
+            "required": true,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "invoice_to_name": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "invoice_to_name",
+            "label": "請求先会社名",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "deal_quotation_approver": {
+            "type": "USER_SELECT",
+            "code": "deal_quotation_approver",
+            "label": "見積・注文承認者",
+            "noLabel": false,
+            "required": true,
+            "entities": [],
+            "defaultValue": []
+        },
+        "initial_grand_total_amount": {
+            "type": "CALC",
+            "code": "initial_grand_total_amount",
+            "label": "初期費用総合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(own_initial_amount, partner_initial_total_amount)",
+            "format": "NUMBER",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "作業者": {
+            "type": "STATUS_ASSIGNEE",
+            "code": "作業者",
+            "label": "作業者",
+            "enabled": true
+        },
+        "partner_monthly_total_amount": {
+            "type": "CALC",
+            "code": "partner_monthly_total_amount",
+            "label": "月額費用合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(partner_monthly_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "monthly_grand_total_contract_amount": {
+            "type": "CALC",
+            "code": "monthly_grand_total_contract_amount",
+            "label": "契約金額総合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(own_monthly_total_contract_amount, partner_monthly_total_contract_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "deal_type": {
+            "type": "DROP_DOWN",
+            "code": "deal_type",
+            "label": "案件種別",
+            "noLabel": false,
+            "required": true,
+            "options": {
+                "契約繰越": {
+                    "label": "契約繰越",
+                    "index": "2"
+                },
+                "新規": {
+                    "label": "新規",
+                    "index": "0"
+                },
+                "契約追加": {
+                    "label": "契約追加",
+                    "index": "1"
+                }
+            },
+            "defaultValue": ""
+        },
+        "monthly_grand_total_amount": {
+            "type": "CALC",
+            "code": "monthly_grand_total_amount",
+            "label": "月額費用総合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(own_monthly_total_amount, partner_monthly_total_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "partner_monthly_payment_timing": {
+            "type": "DROP_DOWN",
+            "code": "partner_monthly_payment_timing",
+            "label": "月額支払方法",
+            "noLabel": false,
+            "required": false,
+            "options": {
+                "月次": {
+                    "label": "月次",
+                    "index": "1"
+                },
+                "サービス開始月年払": {
+                    "label": "サービス開始月年払",
+                    "index": "0"
+                }
+            },
+            "defaultValue": "サービス開始月年払"
+        },
+        "own_monthly_payment_timing": {
+            "type": "DROP_DOWN",
+            "code": "own_monthly_payment_timing",
+            "label": "月額支払方法",
+            "noLabel": false,
+            "required": false,
+            "options": {
+                "月次": {
+                    "label": "月次",
+                    "index": "1"
+                },
+                "サービス開始月年払": {
+                    "label": "サービス開始月年払",
+                    "index": "0"
+                }
+            },
+            "defaultValue": "サービス開始月年払"
+        },
+        "partner_monthly_total_contract_amount": {
+            "type": "CALC",
+            "code": "partner_monthly_total_contract_amount",
+            "label": "契約金額合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(partner_monthly_contract_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "own_monthly_total_contract_amount": {
+            "type": "CALC",
+            "code": "own_monthly_total_contract_amount",
+            "label": "契約金額合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(own_monthly_contract_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "作成日時": {
+            "type": "CREATED_TIME",
+            "code": "作成日時",
+            "label": "作成日時",
+            "noLabel": false
+        },
+        "partner_initial_table": {
+            "type": "SUBTABLE",
+            "code": "partner_initial_table",
+            "noLabel": true,
+            "label": "共パ製品初期費用",
+            "fields": {
+                "partner_initial_amount": {
+                    "type": "NUMBER",
+                    "code": "partner_initial_amount",
+                    "label": "金額（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "partner_initial_qty": {
+                    "type": "NUMBER",
+                    "code": "partner_initial_qty",
+                    "label": "数量（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "",
+                    "unitPosition": "BEFORE"
+                },
+                "partner_initial_remarks": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_initial_remarks",
+                    "label": "備考（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_initial_number": {
+                    "type": "NUMBER",
+                    "code": "partner_initial_number",
+                    "label": "番号（共パ 初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "lookup": null
+                },
+                "partner_initial_partner_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_initial_partner_name",
+                    "label": "パートナー名（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_initial_option_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_initial_option_name",
+                    "label": "オプション名（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_initial_product_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "partner_initial_product_name",
+                    "label": "商品（サービス）名（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "partner_initial_purchase_amount": {
+                    "type": "NUMBER",
+                    "code": "partner_initial_purchase_amount",
+                    "label": "仕入金額（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "partner_initial_charge_type": {
+                    "type": "DROP_DOWN",
+                    "code": "partner_initial_charge_type",
+                    "label": "単位（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "options": {
+                        "人": {
+                            "label": "人",
+                            "index": "1"
+                        },
+                        " 式": {
+                            "label": "式",
+                            "index": "0"
+                        }
+                    },
+                    "defaultValue": ""
+                },
+                "partner_initial_list_price_to_customer": {
+                    "type": "NUMBER",
+                    "code": "partner_initial_list_price_to_customer",
+                    "label": "定価（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "partner_initial_list_price_purchase": {
+                    "type": "NUMBER",
+                    "code": "partner_initial_list_price_purchase",
+                    "label": "仕入定価（共パ初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                }
+            }
+        },
+        "partner_initial_total_purchase_amount": {
+            "type": "CALC",
+            "code": "partner_initial_total_purchase_amount",
+            "label": "初期費用仕入合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(partner_initial_purchase_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "partner_purchase_order_file": {
+            "type": "FILE",
+            "code": "partner_purchase_order_file",
+            "label": "注文書（共創パートナー製品）",
+            "noLabel": false,
+            "required": false,
+            "thumbnailSize": "150"
+        },
+        "deliver_to_name": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "deliver_to_name",
+            "label": "納入先会社名",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "partner_monthly_total_purchase_amount": {
+            "type": "CALC",
+            "code": "partner_monthly_total_purchase_amount",
+            "label": "仕入金額合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(partner_monthly_purchase_amount)",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "更新者": {
+            "type": "MODIFIER",
+            "code": "更新者",
+            "label": "更新者",
+            "noLabel": false
+        },
+        "invoice_to_address2": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "invoice_to_address2",
+            "label": "請求先住所2",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "deliver_to_postal_code": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "deliver_to_postal_code",
+            "label": "納入先郵便番号",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "deliver_to_address2": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "deliver_to_address2",
+            "label": "納入先住所2",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "quotation_remarks": {
+            "type": "MULTI_LINE_TEXT",
+            "code": "quotation_remarks",
+            "label": "見積書備考",
+            "noLabel": false,
+            "required": false,
+            "defaultValue": ""
+        },
+        "own_purchase_order_file": {
+            "type": "FILE",
+            "code": "own_purchase_order_file",
+            "label": "注文書（自社製品）",
+            "noLabel": false,
+            "required": false,
+            "thumbnailSize": "150"
+        },
+        "invoice_to_address1": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "invoice_to_address1",
+            "label": "請求先住所1",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "partner_monthly_total_pl_percent": {
+            "type": "CALC",
+            "code": "partner_monthly_total_pl_percent",
+            "label": "損益（%）",
+            "noLabel": false,
+            "required": false,
+            "expression": "(partner_monthly_total_contract_amount - partner_monthly_total_purchase_amount) / partner_monthly_total_contract_amount  * 100",
+            "format": "NUMBER",
+            "displayScale": "2",
+            "hideExpression": false,
+            "unit": "%",
+            "unitPosition": "AFTER"
+        },
+        "partner_initial_pl": {
+            "type": "CALC",
+            "code": "partner_initial_pl",
+            "label": "損益",
+            "noLabel": false,
+            "required": false,
+            "expression": "partner_initial_total_amount - partner_initial_total_purchase_amount",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "deliver_to_address1": {
+            "type": "SINGLE_LINE_TEXT",
+            "code": "deliver_to_address1",
+            "label": "納入先住所1",
+            "noLabel": false,
+            "required": false,
+            "minLength": "",
+            "maxLength": "",
+            "expression": "",
+            "hideExpression": false,
+            "unique": false,
+            "defaultValue": ""
+        },
+        "partner_monthly_start_date": {
+            "type": "DATE",
+            "code": "partner_monthly_start_date",
+            "label": "月額サービス開始日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "quotation_file": {
+            "type": "FILE",
+            "code": "quotation_file",
+            "label": "御見積書",
+            "noLabel": false,
+            "required": false,
+            "thumbnailSize": "150"
+        },
+        "作成者": {
+            "type": "CREATOR",
+            "code": "作成者",
+            "label": "作成者",
+            "noLabel": false
+        },
+        "更新日時": {
+            "type": "UPDATED_TIME",
+            "code": "更新日時",
+            "label": "更新日時",
+            "noLabel": false
+        },
+        "own_initial_total_amount": {
+            "type": "CALC",
+            "code": "own_initial_total_amount",
+            "label": "初期費用合計",
+            "noLabel": false,
+            "required": false,
+            "expression": "SUM(own_initial_amount)",
+            "format": "NUMBER",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        },
+        "order_date": {
+            "type": "DATE",
+            "code": "order_date",
+            "label": "注文日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "purchase_order_remarks": {
+            "type": "MULTI_LINE_TEXT",
+            "code": "purchase_order_remarks",
+            "label": "注文書特記事項",
+            "noLabel": false,
+            "required": false,
+            "defaultValue": ""
+        },
+        "partner_initial_pl_percent": {
+            "type": "CALC",
+            "code": "partner_initial_pl_percent",
+            "label": "損益（%）",
+            "noLabel": false,
+            "required": false,
+            "expression": "(partner_initial_total_amount - partner_initial_total_purchase_amount) / partner_initial_total_amount * 100",
+            "format": "NUMBER",
+            "displayScale": "2",
+            "hideExpression": false,
+            "unit": "%",
+            "unitPosition": "AFTER"
+        },
+        "own_initial_table": {
+            "type": "SUBTABLE",
+            "code": "own_initial_table",
+            "noLabel": true,
+            "label": "自社製品初期費用",
+            "fields": {
+                "own_initial_list_price": {
+                    "type": "NUMBER",
+                    "code": "own_initial_list_price",
+                    "label": "定価（自社初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "own_initial_product_number": {
+                    "type": "NUMBER",
+                    "code": "own_initial_product_number",
+                    "label": "番号（自社初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "lookup": null
+                },
+                "own_initial_amount": {
+                    "type": "NUMBER",
+                    "code": "own_initial_amount",
+                    "label": "金額（自社初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": true,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "円",
+                    "unitPosition": "AFTER"
+                },
+                "own_initial_product_name": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "own_initial_product_name",
+                    "label": "商品（サービス）名（自社初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "own_initial_charge_type": {
+                    "type": "DROP_DOWN",
+                    "code": "own_initial_charge_type",
+                    "label": "単位（自社初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "options": {
+                        "人": {
+                            "label": "人",
+                            "index": "1"
+                        },
+                        "式": {
+                            "label": "式",
+                            "index": "0"
+                        }
+                    },
+                    "defaultValue": ""
+                },
+                "own_initial_remarks": {
+                    "type": "SINGLE_LINE_TEXT",
+                    "code": "own_initial_remarks",
+                    "label": "備考（自社初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "expression": "",
+                    "hideExpression": false,
+                    "unique": false,
+                    "defaultValue": ""
+                },
+                "own_initial_qty": {
+                    "type": "NUMBER",
+                    "code": "own_initial_qty",
+                    "label": "数量（自社初期）",
+                    "noLabel": false,
+                    "required": false,
+                    "minValue": "",
+                    "maxValue": "",
+                    "digit": false,
+                    "unique": false,
+                    "defaultValue": "",
+                    "displayScale": "0",
+                    "unit": "",
+                    "unitPosition": "BEFORE"
+                }
+            }
+        },
+        "invoice_to_number": {
+            "type": "NUMBER",
+            "code": "invoice_to_number",
+            "label": "請求先",
+            "noLabel": false,
+            "required": true,
+            "lookup": null
+        },
+        "quote_date": {
+            "type": "DATE",
+            "code": "quote_date",
+            "label": "見積発行日",
+            "noLabel": false,
+            "required": false,
+            "unique": false,
+            "defaultValue": "",
+            "defaultNowValue": false
+        },
+        "partner_monthly_total_pl": {
+            "type": "CALC",
+            "code": "partner_monthly_total_pl",
+            "label": "損益",
+            "noLabel": false,
+            "required": false,
+            "expression": "partner_monthly_total_contract_amount - partner_monthly_total_purchase_amount",
+            "format": "NUMBER_DIGIT",
+            "displayScale": "0",
+            "hideExpression": false,
+            "unit": "円",
+            "unitPosition": "AFTER"
+        }
+    }
+}
