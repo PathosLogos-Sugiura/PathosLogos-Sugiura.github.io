@@ -1,12 +1,15 @@
 (function () {
     "use strict";
-    const APP_ID = 5;
+    const APP_ID = 21;
 
     // レコードが追加されたときのイベントをフック
     kintone.events.on(['app.record.create.submit', 'app.record.edit.submit'], function (event) {
+        alert("動作確認テスト");
+        return;
+
         // 作成されたレコードの情報を取得
         var record = event.record;
-        var customer_id = record.CUSTOMER_ID.value;
+        var customer_id = record.deliver_to_number.value;
         var customer_name = record.CUSTOMER_NAME.value;
         var deal_name = record.DEAL_NAME.value;
         var monthly_amount = record.MONTHLY_AMOUNT.value;
@@ -47,6 +50,7 @@
             });
         }
     });
+
     // 日付をフォーマットする関数（YYYY-MM-DD形式）
     function formatDate(date) {
         var year = date.getFullYear();
