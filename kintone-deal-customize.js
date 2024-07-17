@@ -14,6 +14,7 @@
             alert("請求データを作成しました");
         };
         kintone.app.record.getHeaderMenuSpaceElement().appendChild(menuButton);
+        console.log("Added invoice button.")
         return event;
     });
 
