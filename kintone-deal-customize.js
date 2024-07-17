@@ -88,7 +88,7 @@
         invoice_to_name;
         deliver_to_number;
         deliver_to_name;
-        item_suffix;
+        invoice_item_suffix;
         own_initial_invoice_timing;
         own_initial_total_amount;
         own_initial_start_date;
@@ -116,9 +116,9 @@
             this.invoice_to_name = record.invoice_to_name.value;
             this.deliver_to_number = record.deliver_to_number.value;
             this.deliver_to_name = record.deliver_to_name.value;
-            this.item_suffix = "";
-            if (invoice_to_number != deliver_to_number) {
-                this.item_suffix = "(" + deliver_to_name + "様利用分)";
+            this.invoice_item_suffix = "";
+            if (this.invoice_to_number != this.deliver_to_number) {
+                this.invoice_item_suffix = "(" + deliver_to_name + "様利用分)";
             }
                 // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
