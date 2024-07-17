@@ -155,6 +155,8 @@
     function createInvoice(event) {
         var record = event.record;
         var deal_info = new DealInfo(record);
+        console.log("test:" + deal_info.own_initial_total_amount);
+        console.log("test:" + deal_info.own_initial_invoice_timing);
         var table_value = [];
         if (deal_info.own_initial_total_amount > 0 && deal_info.own_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "初期費用(パトスロゴス)" + deal_info.invoice_item_suffix;
@@ -242,8 +244,8 @@
             "app": INVOICE_APP_ID,
             "record": {
                 "invoice_to_number": { "value": deal_info.invoice_to_number },
-                "invoice_issue_date": { "value": dayjs(deal_info.invoice_issue_date).format('YYYY-MM-DD') },
-                "payment_due_date": { "value": dayjs(deal_info.payment_due_date).format('YYYY-MM-DD') },
+                "invoice_issue_date": { "value": invoice_issue_date.format('YYYY-MM-DD') },
+                "payment_due_date": { "value": payment_due_date.format('YYYY-MM-DD') },
                 "deal_number": { "value": deal_info.deal_number },
                 "invoice_subtotal_amount": { "value": deal_info.grand_total_amount },
                 "invoice_consumption_tax_amount": { "value": deal_info.consumption_tax },
