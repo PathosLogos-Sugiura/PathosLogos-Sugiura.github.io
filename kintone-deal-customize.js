@@ -14,7 +14,6 @@
             alert("請求データを作成しました");
         };
         kintone.app.record.getHeaderMenuSpaceElement().appendChild(menuButton);
-        console.log("Added invoice button.");
         return event;
     });
 
@@ -66,6 +65,7 @@
                 console.error("エラーが発生しました:", error);
             });
         }
+        return event;
     });
 
     class MonthlyEntry {
@@ -161,7 +161,7 @@
             var newRow = {
                 value: {
                     'item_name': {
-                        value: deal_info.item_name
+                        value: item_name
                     },
                     'start_date': {
                         value: deal_info.own_initial_start_date
@@ -181,7 +181,7 @@
             var newRow = {
                 value: {
                     'item_name': {
-                        value: deal_info.item_name
+                        value: item_name
                     },
                     'start_date': {
                         value: deal_info.own_monthly_start_date
@@ -201,7 +201,7 @@
             var newRow = {
                 value: {
                     'item_name': {
-                        value: deal_info.item_name
+                        value: item_name
                     },
                     'start_date': {
                         value: deal_info.partner_initial_start_date
@@ -221,7 +221,7 @@
             var newRow = {
                 value: {
                     'item_name': {
-                        value: deal_info.item_name
+                        value: item_name
                     },
                     'start_date': {
                         value: deal_info.partner_monthly_start_date
@@ -254,6 +254,7 @@
         kintone.api(kintone.api.url('/k/v1/record', true), 'POST', newData, function (resp) {
             console.log("新しいレコードが作成されました:", resp);
         }, function (error) {
+            event.error = "請求書登録時にエラーが発生しました";
             console.error("エラーが発生しました:", error);
         });
     }
