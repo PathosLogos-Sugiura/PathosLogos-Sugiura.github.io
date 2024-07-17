@@ -87,15 +87,23 @@
         // パトスロゴス初期費用
         var own_initial_invoice_timing = record.own_initial_invoice_timing.value;
         var own_initial_total_amount = record.own_initial_total_amount.value;
+        var own_initial_start_date = record.own_initial_start_date.value;
+        var own_initial_end_date = record.own_initial_end_date.value;
         // パトスロゴス月額費用
         var own_monthly_invoice_timing = record.own_monthly_invoice_timing.value;
         var own_monthly_total_period_amount = record.own_monthly_total_period_amount.value;
+        var own_monthly_start_date = record.own_monthly_start_date.value;
+        var own_monthly_end_date = record.own_monthly_end_date.value;
         // 共創パートナー初期費用
         var partner_initial_invoice_timing = record.partner_initial_invoice_timing.value;
         var partner_initial_total_amount = record.partner_initial_total_amount.value;
+        var partner_initial_start_date = record.partner_initial_start_date.value;
+        var partner_initial_end_date = record.partner_initial_end_date.value;
         // 共創パートナー月額費用
         var partner_monthly_invoice_timing = record.partner_monthly_invoice_timing.value;
         var partner_monthly_total_period_amount = record.partner_monthly_total_period_amount.value;
+        var partner_monthly_start_date = record.partner_monthly_start_date.value;
+        var partner_monthly_end_date = record.partner_monthly_end_date.value;
         // 送金額
         var grand_total_amount = record.grand_total_amount.value;
         var consumption_tax = record.consumption_tax.value;
@@ -109,6 +117,12 @@
                 value: {
                     'item_name': {
                         value: item_name
+                    },
+                    'start_date': {
+                        value: own_initial_start_date
+                    },
+                    'end_date': {
+                        value: own_initial_end_date
                     },
                     'amount': {
                         value: own_initial_total_amount
@@ -124,6 +138,12 @@
                     'item_name': {
                         value: item_name
                     },
+                    'start_date': {
+                        value: own_monthly_start_date
+                    },
+                    'end_date': {
+                        value: own_monthly_end_date
+                    },
                     'amount': {
                         value: own_monthly_total_period_amount
                     }
@@ -138,6 +158,12 @@
                     'item_name': {
                         value: item_name
                     },
+                    'start_date': {
+                        value: partner_initial_start_date
+                    },
+                    'end_date': {
+                        value: partner_initial_end_date
+                    },
                     'amount': {
                         value: partner_initial_total_amount
                     }
@@ -151,6 +177,12 @@
                 value: {
                     'item_name': {
                         value: item_name
+                    },
+                    'start_date': {
+                        value: partner_monthly_start_date
+                    },
+                    'end_date': {
+                        value: partner_monthly_end_date
                     },
                     'amount': {
                         value: partner_monthly_total_period_amount
