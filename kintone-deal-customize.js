@@ -5,7 +5,7 @@
 
     const INVOICE_TIMING_BULK_INITIAL = "開始月一括";
 
-    kintone.events.on('app.record.detail.show', (event) => {
+    kintone.events.on(['app.record.detail.show'], function (event) {
         const menuButton = document.createElement('button');
         menuButton.id = 'menu_button';
         menuButton.innerText = '請求データ作成';
