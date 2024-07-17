@@ -160,13 +160,13 @@
             table_value.push(newRow);
         }
         var invoice_date = dayjs();
-        var invoice_due_date = getNextEndOfMonth(invoice_date)
+        var payment_due_date = getNextEndOfMonth(invoice_date)
         var newData = {
             "app": INVOICE_APP_ID,
             "record": {
                 "invoice_to_number": { "value": invoice_to_number },
                 "invoice_date": { "value": invoice_date.format('YYYY-MM-DD') },
-                "invoice_due_date": { "value": invoice_due_date.format('YYYY-MM-DD') },
+                "payment_due_date": { "value": payment_due_date.format('YYYY-MM-DD') },
                 "deal_number": { "value": deal_number },
                 "invoice_subtotal_amount": { "value": grand_total_amount },
                 "invoice_consumption_tax_amount": { "value": consumption_tax },
