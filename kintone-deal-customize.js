@@ -160,7 +160,7 @@
             table_value.push(newRow);
         }
         var invoice_issue_date = dayjs();
-        var payment_due_date = getNextEndOfMonth(invoice_date)
+        var payment_due_date = getNextEndOfMonth(invoice_issue_date)
         var newData = {
             "app": INVOICE_APP_ID,
             "record": {
