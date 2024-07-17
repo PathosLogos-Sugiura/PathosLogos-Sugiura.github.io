@@ -1,0 +1,829 @@
+{
+    "record": {
+        "deliver_to_number": {
+            "type": "NUMBER",
+            "value": "1"
+        },
+        "レコード番号": {
+            "type": "RECORD_NUMBER",
+            "value": "1"
+        },
+        "own_initial_end_date": {
+            "type": "DATE",
+            "value": "2024-09-30"
+        },
+        "partner_initial_end_date": {
+            "type": "DATE",
+            "value": "2024-08-31"
+        },
+        "own_monthly_total_period_amount": {
+            "type": "CALC",
+            "value": "1176000"
+        },
+        "ステータス": {
+            "type": "STATUS",
+            "value": "見積発行済"
+        },
+        "invoice_to_postal_code": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "105-6319"
+        },
+        "own_monthly_end_date": {
+            "type": "DATE",
+            "value": "2025-07-31"
+        },
+        "partner_monthly_end_date": {
+            "type": "DATE",
+            "value": "2025-07-31"
+        },
+        "own_monthly_total_amount": {
+            "type": "CALC",
+            "value": "98000"
+        },
+        "internal_remarks": {
+            "type": "MULTI_LINE_TEXT",
+            "value": ""
+        },
+        "own_initial_start_date": {
+            "type": "DATE",
+            "value": "2024-08-01"
+        },
+        "partner_initial_total_amount": {
+            "type": "CALC",
+            "value": "1000000"
+        },
+        "own_monthly_start_date": {
+            "type": "DATE",
+            "value": "2024-08-01"
+        },
+        "deal_title": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "テスト用案件"
+        },
+        "invoice_to_name": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "シンプレクス・ホールディングス株式会社"
+        },
+        "deal_quotation_approver": {
+            "type": "USER_SELECT",
+            "value": [
+                {
+                    "code": "hidekazu.sugiura@pathoslogos.co.jp",
+                    "name": "杉浦英和"
+                }
+            ]
+        },
+        "purchase_order_file": {
+            "type": "FILE",
+            "value": []
+        },
+        "initial_grand_total_amount": {
+            "type": "CALC",
+            "value": "2000000"
+        },
+        "作業者": {
+            "type": "STATUS_ASSIGNEE",
+            "value": [
+                {
+                    "code": "yashita.shigeo@pathoslogos.co.jp",
+                    "name": "矢下茂雄"
+                }
+            ]
+        },
+        "partner_monthly_total_amount": {
+            "type": "CALC",
+            "value": "108000"
+        },
+        "sales_introduction_partner_name": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": ""
+        },
+        "quotation_details_table": {
+            "type": "SUBTABLE",
+            "value": [
+                {
+                    "id": "336",
+                    "value": {
+                        "partner_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "charge_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "式"
+                        },
+                        "partner_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        },
+                        "own_initial_amount": {
+                            "type": "CALC",
+                            "value": "1000000"
+                        },
+                        "quotation_product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "導入支援サービス"
+                        },
+                        "monthly_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "option_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        },
+                        "initial_amount": {
+                            "type": "NUMBER",
+                            "value": "1000000"
+                        },
+                        "partner_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_initial_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "product_number": {
+                            "type": "NUMBER",
+                            "value": "1"
+                        },
+                        "list_price_to_customer": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "product_supplier": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "パトスロゴス"
+                        },
+                        "own_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_monthly_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "month_count": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "導入支援サービス"
+                        },
+                        "own_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quote_amount": {
+                            "type": "CALC",
+                            "value": "1000000"
+                        },
+                        "partner_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "product_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "初期"
+                        },
+                        "purchase_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "qty": {
+                            "type": "NUMBER",
+                            "value": "1"
+                        },
+                        "list_price_purchase": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "details_remarks": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        }
+                    }
+                },
+                {
+                    "id": "340",
+                    "value": {
+                        "partner_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "charge_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "人"
+                        },
+                        "partner_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        },
+                        "own_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quotation_product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "共創プラットフォームPathosLogos基本ライセンス（正社員）"
+                        },
+                        "monthly_amount": {
+                            "type": "NUMBER",
+                            "value": "18000"
+                        },
+                        "option_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "基本ライセンス（正社員）"
+                        },
+                        "initial_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "partner_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_initial_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "product_number": {
+                            "type": "NUMBER",
+                            "value": "3"
+                        },
+                        "list_price_to_customer": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "product_supplier": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "パトスロゴス"
+                        },
+                        "own_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "216000"
+                        },
+                        "partner_monthly_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "month_count": {
+                            "type": "NUMBER",
+                            "value": "12"
+                        },
+                        "product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "共創プラットフォームPathosLogos"
+                        },
+                        "own_monthly_amount": {
+                            "type": "CALC",
+                            "value": "18000"
+                        },
+                        "quote_amount": {
+                            "type": "CALC",
+                            "value": "216000"
+                        },
+                        "partner_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "216000"
+                        },
+                        "product_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "月額"
+                        },
+                        "purchase_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "qty": {
+                            "type": "NUMBER",
+                            "value": "100"
+                        },
+                        "list_price_purchase": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "details_remarks": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        }
+                    }
+                },
+                {
+                    "id": "341",
+                    "value": {
+                        "partner_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "charge_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "人"
+                        },
+                        "partner_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        },
+                        "own_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quotation_product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "Combosite人事給与基本ライセンス（正社員）"
+                        },
+                        "monthly_amount": {
+                            "type": "NUMBER",
+                            "value": "80000"
+                        },
+                        "option_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "基本ライセンス（正社員）"
+                        },
+                        "initial_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "partner_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_initial_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "product_number": {
+                            "type": "NUMBER",
+                            "value": "6"
+                        },
+                        "list_price_to_customer": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "product_supplier": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "パトスロゴス"
+                        },
+                        "own_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "960000"
+                        },
+                        "partner_monthly_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "month_count": {
+                            "type": "NUMBER",
+                            "value": "12"
+                        },
+                        "product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "Combosite人事給与"
+                        },
+                        "own_monthly_amount": {
+                            "type": "CALC",
+                            "value": "80000"
+                        },
+                        "quote_amount": {
+                            "type": "CALC",
+                            "value": "960000"
+                        },
+                        "partner_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "960000"
+                        },
+                        "product_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "月額"
+                        },
+                        "purchase_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "qty": {
+                            "type": "NUMBER",
+                            "value": "100"
+                        },
+                        "list_price_purchase": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "details_remarks": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        }
+                    }
+                },
+                {
+                    "id": "342",
+                    "value": {
+                        "partner_initial_amount": {
+                            "type": "CALC",
+                            "value": "1000000"
+                        },
+                        "charge_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "式"
+                        },
+                        "partner_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "株式会社チームスピリット"
+                        },
+                        "own_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quotation_product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "チームスピリット初期導入費用"
+                        },
+                        "monthly_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "option_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "初期導入費用"
+                        },
+                        "initial_amount": {
+                            "type": "NUMBER",
+                            "value": "1000000"
+                        },
+                        "partner_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_initial_purchase_amount": {
+                            "type": "CALC",
+                            "value": "800000"
+                        },
+                        "product_number": {
+                            "type": "NUMBER",
+                            "value": "16"
+                        },
+                        "list_price_to_customer": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "product_supplier": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "共創パートナー"
+                        },
+                        "own_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_monthly_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "month_count": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "チームスピリット"
+                        },
+                        "own_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quote_amount": {
+                            "type": "CALC",
+                            "value": "1000000"
+                        },
+                        "partner_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "product_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "初期"
+                        },
+                        "purchase_amount": {
+                            "type": "NUMBER",
+                            "value": "800000"
+                        },
+                        "qty": {
+                            "type": "NUMBER",
+                            "value": "1"
+                        },
+                        "list_price_purchase": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "details_remarks": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        }
+                    }
+                },
+                {
+                    "id": "343",
+                    "value": {
+                        "partner_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "charge_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "人"
+                        },
+                        "partner_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "株式会社エフアンドエム"
+                        },
+                        "own_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quotation_product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "オフィスステーション労務"
+                        },
+                        "monthly_amount": {
+                            "type": "NUMBER",
+                            "value": "10000"
+                        },
+                        "option_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "労務"
+                        },
+                        "initial_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "partner_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "120000"
+                        },
+                        "partner_initial_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "product_number": {
+                            "type": "NUMBER",
+                            "value": "18"
+                        },
+                        "list_price_to_customer": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "product_supplier": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "共創パートナー"
+                        },
+                        "own_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_monthly_purchase_amount": {
+                            "type": "CALC",
+                            "value": "100000"
+                        },
+                        "month_count": {
+                            "type": "NUMBER",
+                            "value": "12"
+                        },
+                        "product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "オフィスステーション"
+                        },
+                        "own_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quote_amount": {
+                            "type": "CALC",
+                            "value": "120000"
+                        },
+                        "partner_monthly_amount": {
+                            "type": "CALC",
+                            "value": "10000"
+                        },
+                        "monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "120000"
+                        },
+                        "product_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "月額"
+                        },
+                        "purchase_amount": {
+                            "type": "NUMBER",
+                            "value": "100000"
+                        },
+                        "qty": {
+                            "type": "NUMBER",
+                            "value": "100"
+                        },
+                        "list_price_purchase": {
+                            "type": "NUMBER",
+                            "value": "0"
+                        },
+                        "details_remarks": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        }
+                    }
+                }
+            ]
+        },
+        "deal_type": {
+            "type": "DROP_DOWN",
+            "value": "新規"
+        },
+        "monthly_grand_total_amount": {
+            "type": "CALC",
+            "value": "206000"
+        },
+        "grand_total_amount": {
+            "type": "CALC",
+            "value": "2206000"
+        },
+        "payment_due_date": {
+            "type": "DATE",
+            "value": null
+        },
+        "作成日時": {
+            "type": "CREATED_TIME",
+            "value": "2024-07-10T07:49:00Z"
+        },
+        "$id": {
+            "type": "__ID__",
+            "value": "1"
+        },
+        "partner_initial_start_date": {
+            "type": "DATE",
+            "value": "2024-08-01"
+        },
+        "partner_initial_total_purchase_amount": {
+            "type": "CALC",
+            "value": "800000"
+        },
+        "deliver_to_name": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "シンプレクス・ホールディングス株式会社"
+        },
+        "partner_monthly_total_purchase_amount": {
+            "type": "CALC",
+            "value": "900000"
+        },
+        "更新者": {
+            "type": "MODIFIER",
+            "value": {
+                "code": "yashita.shigeo@pathoslogos.co.jp",
+                "name": "矢下茂雄"
+            }
+        },
+        "partner_monthly_total_period_amount": {
+            "type": "CALC",
+            "value": "1296000"
+        },
+        "invoice_to_address2": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "虎ノ門ヒルズ森タワー19階"
+        },
+        "deliver_to_postal_code": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "105-6319"
+        },
+        "own_monthly_invoice_timing": {
+            "type": "DROP_DOWN",
+            "value": "開始月一括"
+        },
+        "quotation_issue_date": {
+            "type": "DATE",
+            "value": "2024-07-10"
+        },
+        "deliver_to_address2": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "虎ノ門ヒルズ森タワー19階"
+        },
+        "quotation_remarks": {
+            "type": "MULTI_LINE_TEXT",
+            "value": "御見積書に記載する備考の事項です。"
+        },
+        "invoice_to_address1": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "東京都港区虎ノ門1-23-1"
+        },
+        "partner_initial_invoice_timing": {
+            "type": "DROP_DOWN",
+            "value": "開始月一括"
+        },
+        "partner_monthly_total_pl_percent": {
+            "type": "CALC",
+            "value": "30.56"
+        },
+        "partner_initial_pl": {
+            "type": "CALC",
+            "value": "200000"
+        },
+        "deliver_to_address1": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "東京都港区虎ノ門1-23-1"
+        },
+        "partner_monthly_start_date": {
+            "type": "DATE",
+            "value": "2024-08-01"
+        },
+        "quotation_file": {
+            "type": "FILE",
+            "value": [
+                {
+                    "fileKey": "20240712063126FDDA0E3A2D22470288743A4DDE4D9C71084",
+                    "name": "シンプレクス・ホールディングス株式会社-2024-07-10.xlsx",
+                    "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    "size": "36249"
+                }
+            ]
+        },
+        "grand_total_amount_with_tax": {
+            "type": "CALC",
+            "value": "2426600"
+        },
+        "monthly_grand_total_period_amount": {
+            "type": "CALC",
+            "value": "2472000"
+        },
+        "作成者": {
+            "type": "CREATOR",
+            "value": {
+                "code": "hidekazu.sugiura@pathoslogos.co.jp",
+                "name": "杉浦英和"
+            }
+        },
+        "quotation_due_date": {
+            "type": "DATE",
+            "value": "2024-07-24"
+        },
+        "$revision": {
+            "type": "__REVISION__",
+            "value": "33"
+        },
+        "更新日時": {
+            "type": "UPDATED_TIME",
+            "value": "2024-07-12T06:52:00Z"
+        },
+        "own_initial_total_amount": {
+            "type": "CALC",
+            "value": "1000000"
+        },
+        "order_date": {
+            "type": "DATE",
+            "value": null
+        },
+        "consumption_tax": {
+            "type": "CALC",
+            "value": "220600"
+        },
+        "sales_introduction_partner_number": {
+            "type": "NUMBER",
+            "value": ""
+        },
+        "purchase_order_remarks": {
+            "type": "MULTI_LINE_TEXT",
+            "value": "注文に係る特記事項です。"
+        },
+        "partner_initial_pl_percent": {
+            "type": "CALC",
+            "value": "20"
+        },
+        "partner_monthly_invoice_timing": {
+            "type": "DROP_DOWN",
+            "value": "開始月一括"
+        },
+        "invoice_to_number": {
+            "type": "NUMBER",
+            "value": "1"
+        },
+        "partner_monthly_total_pl": {
+            "type": "CALC",
+            "value": "396000"
+        },
+        "own_initial_invoice_timing": {
+            "type": "DROP_DOWN",
+            "value": "開始月一括"
+        }
+    }
+}
