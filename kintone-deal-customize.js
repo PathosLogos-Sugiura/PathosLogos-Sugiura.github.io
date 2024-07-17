@@ -118,7 +118,7 @@
             this.deliver_to_name = record.deliver_to_name.value;
             this.invoice_item_suffix = "";
             if (this.invoice_to_number != this.deliver_to_number) {
-                this.invoice_item_suffix = "(" + deliver_to_name + "様利用分)";
+                this.invoice_item_suffix = "(" + this.deliver_to_name + "様利用分)";
             }
                 // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
@@ -157,7 +157,7 @@
         var deal_info = new DealInfo(record);
         var table_value = [];
         if (deal_info.own_initial_total_amount > 0 && deal_info.own_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "初期費用(パトスロゴス)" + deal_info.item_suffix;
+            var item_name = "初期費用(パトスロゴス)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
@@ -177,7 +177,7 @@
             table_value.push(newRow);
         }
         if (deal_info.own_monthly_total_period_amount > 0 && deal_info.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "期間費用(パトスロゴス)" + deal_info.item_suffix;
+            var item_name = "期間費用(パトスロゴス)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
@@ -197,7 +197,7 @@
             table_value.push(newRow);
         }
         if (deal_info.partner_initial_total_amount > 0 && deal_info.partner_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "初期費用(共創パートナー)" + deal_info.item_suffix;
+            var item_name = "初期費用(共創パートナー)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
@@ -217,7 +217,7 @@
             table_value.push(newRow);
         }
         if (deal_info.partner_monthly_total_period_amount > 0 && deal_info.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "期間費用(共創パートナー)" + deal_info.item_suffix;
+            var item_name = "期間費用(共創パートナー)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
