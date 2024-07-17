@@ -182,7 +182,7 @@
     }
 
     function getNextEndOfMonth(date) {
-        end_date = dayjs(date).add(1, 'month').endOf('month');
+        var end_date = dayjs(date).add(1, 'month').endOf('month');
         return end_date;
     }
 
