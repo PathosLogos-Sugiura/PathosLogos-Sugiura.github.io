@@ -81,7 +81,7 @@
         var deliver_to_number = record.deliver_to_number.value;
         var deliver_to_name = record.deliver_to_name.value;
         var item_suffix = "";
-        if (invlice_number != deliver_to_number) {
+        if (invoice_to_number != deliver_to_number) {
             item_suffix = "（" + deliver_to_name + "様利用分）"
         }
         // パトスロゴス初期費用
