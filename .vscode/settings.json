@@ -29,5 +29,7 @@
     "formattingToggle.affects": [
         "editor.formatOnPaste",
         "editor.formatOnType"
-    ]
+    ],
+    "javascript.referencesCodeLens.enabled": true,
+    "javascript.referencesCodeLens.showOnAllFunctions": true
 }
