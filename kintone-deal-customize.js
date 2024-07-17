@@ -14,7 +14,7 @@
             alert("請求データを作成しました");
         };
         kintone.app.record.getHeaderMenuSpaceElement().appendChild(menuButton);
-        console.log("Added invoice button.")
+        console.log("Added invoice button.");
         return event;
     });
 
@@ -24,12 +24,8 @@
         if (event.nextStatus.value != "受注済") {
             return;
         }
-        // 作成されたレコードの情報を取得
-        var record = event.record;
         // 請求データの作成
-        for (const detail of record.details_table.value) {
-
-        }
+        createInvoice(event);
         var customer_id = record.deliver_to_number.value;
         var customer_name = record.CUSTOMER_NAME.value;
         var deal_name = record.DEAL_NAME.value;
@@ -72,138 +68,187 @@
         }
     });
 
-    function createInvoice(event) {
-        // 作成されたレコードの情報を取得
+    class MonthlyEntry {
+        date;
+        product_supplier;
+        charge_type;
+        partner_name;
+        product_name;
+        sales_amount;
+        finance_amount;
+
+        constructor(date) {
+            this.date = date;
+        }
+    }
+
+    class DealInfo {
+        deal_number;
+        invoice_to_number;
+        invoice_to_name;
+        deliver_to_number;
+        deliver_to_name;
+        item_suffix;
+        own_initial_invoice_timing;
+        own_initial_total_amount;
+        own_initial_start_date;
+        own_initial_end_date;
+        own_monthly_invoice_timing;
+        own_monthly_total_period_amount;
+        own_monthly_start_date;
+        own_monthly_end_date;
+        partner_initial_invoice_timing;
+        partner_initial_total_amount;
+        partner_initial_start_date;
+        partner_initial_end_date;
+        partner_monthly_invoice_timing;
+        partner_monthly_total_period_amount;
+        partner_monthly_start_date;
+        partner_monthly_end_date;
+        grand_total_amount;
+        consumption_tax;
+        grand_total_amount_with_tax;
+        constructor(record) {
+            // 案件レコード番号
+            this.deal_number = record.レコード番号.value;
+            // 請求先・納品先
+            this.invoice_to_number = record.invoice_to_number.value;
+            this.invoice_to_name = record.invoice_to_name.value;
+            this.deliver_to_number = record.deliver_to_number.value;
+            this.deliver_to_name = record.deliver_to_name.value;
+            this.item_suffix = "";
+            if (invoice_to_number != deliver_to_number) {
+                this.item_suffix = "(" + deliver_to_name + "様利用分)";
+            }
+                // パトスロゴス初期費用
+            this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
+            this.own_initial_total_amount = record.own_initial_total_amount.value;
+            this.own_initial_start_date = record.own_initial_start_date.value;
+            this.own_initial_end_date = record.own_initial_end_date.value;
+            // パトスロゴス月額費用
+            this.own_monthly_invoice_timing = record.own_monthly_invoice_timing.value;
+            this.own_monthly_total_period_amount = record.own_monthly_total_period_amount.value;
+            this.own_monthly_start_date = record.own_monthly_start_date.value;
+            this.own_monthly_end_date = record.own_monthly_end_date.value;
+            // 共創パートナー初期費用
+            this.partner_initial_invoice_timing = record.partner_initial_invoice_timing.value;
+            this.partner_initial_total_amount = record.partner_initial_total_amount.value;
+            this.partner_initial_start_date = record.partner_initial_start_date.value;
+            this.partner_initial_end_date = record.partner_initial_end_date.value;
+            // 共創パートナー月額費用
+            this.partner_monthly_invoice_timing = record.partner_monthly_invoice_timing.value;
+            this.partner_monthly_total_period_amount = record.partner_monthly_total_period_amount.value;
+            this.partner_monthly_start_date = record.partner_monthly_start_date.value;
+            this.partner_monthly_end_date = record.partner_monthly_end_date.value;
+            // 送金額
+            this.grand_total_amount = record.grand_total_amount.value;
+            this.consumption_tax = record.consumption_tax.value;
+            this.grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
+        }
+    }
+
+    function createRevenue(event) {
         var record = event.record;
-        var deal_number = record.レコード番号.value;
-        var invoice_to_number = record.invoice_to_number.value;
-        var invoice_to_name = record.invoice_to_name.value;
-        var deliver_to_number = record.deliver_to_number.value;
-        var deliver_to_name = record.deliver_to_name.value;
-        var item_suffix = "";
-        if (invoice_to_number != deliver_to_number) {
-            item_suffix = "（" + deliver_to_name + "様利用分）"
-        }
-        // パトスロゴス初期費用
-        var own_initial_invoice_timing = record.own_initial_invoice_timing.value;
-        var own_initial_total_amount = record.own_initial_total_amount.value;
-        var own_initial_start_date = record.own_initial_start_date.value;
-        var own_initial_end_date = record.own_initial_end_date.value;
-        // パトスロゴス月額費用
-        var own_monthly_invoice_timing = record.own_monthly_invoice_timing.value;
-        var own_monthly_total_period_amount = record.own_monthly_total_period_amount.value;
-        var own_monthly_start_date = record.own_monthly_start_date.value;
-        var own_monthly_end_date = record.own_monthly_end_date.value;
-        // 共創パートナー初期費用
-        var partner_initial_invoice_timing = record.partner_initial_invoice_timing.value;
-        var partner_initial_total_amount = record.partner_initial_total_amount.value;
-        var partner_initial_start_date = record.partner_initial_start_date.value;
-        var partner_initial_end_date = record.partner_initial_end_date.value;
-        // 共創パートナー月額費用
-        var partner_monthly_invoice_timing = record.partner_monthly_invoice_timing.value;
-        var partner_monthly_total_period_amount = record.partner_monthly_total_period_amount.value;
-        var partner_monthly_start_date = record.partner_monthly_start_date.value;
-        var partner_monthly_end_date = record.partner_monthly_end_date.value;
-        // 送金額
-        var grand_total_amount = record.grand_total_amount.value;
-        var consumption_tax = record.consumption_tax.value;
-        var grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
-        // item_name
-        // amount
+
+    }
+
+    function createInvoice(event) {
+        var record = event.record;
+        var deal_info = new DealInfo(record);
         var table_value = [];
-        if (own_initial_total_amount > 0 && own_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "初期費用（パトスロゴス）" + item_suffix;
+        if (deal_info.own_initial_total_amount > 0 && deal_info.own_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+            var item_name = "初期費用(パトスロゴス)" + deal_info.item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
-                        value: item_name
+                        value: deal_info.item_name
                     },
                     'start_date': {
-                        value: own_initial_start_date
+                        value: deal_info.own_initial_start_date
                     },
                     'end_date': {
-                        value: own_initial_end_date
+                        value: deal_info.own_initial_end_date
                     },
                     'amount': {
-                        value: own_initial_total_amount
+                        value: deal_info.own_initial_total_amount
                     }
                 }
             };
             table_value.push(newRow);
         }
-        if (own_monthly_total_period_amount > 0 && own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "期間費用（パトスロゴス）" + item_suffix;
+        if (deal_info.own_monthly_total_period_amount > 0 && deal_info.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+            var item_name = "期間費用(パトスロゴス)" + deal_info.item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
-                        value: item_name
+                        value: deal_info.item_name
                     },
                     'start_date': {
-                        value: own_monthly_start_date
+                        value: deal_info.own_monthly_start_date
                     },
                     'end_date': {
-                        value: own_monthly_end_date
+                        value: deal_info.own_monthly_end_date
                     },
                     'amount': {
-                        value: own_monthly_total_period_amount
+                        value: deal_info.own_monthly_total_period_amount
                     }
                 }
             };
             table_value.push(newRow);
         }
-        if (partner_initial_total_amount > 0 && partner_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "初期費用（共創パートナー）" + item_suffix;
+        if (deal_info.partner_initial_total_amount > 0 && deal_info.partner_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+            var item_name = "初期費用(共創パートナー)" + deal_info.item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
-                        value: item_name
+                        value: deal_info.item_name
                     },
                     'start_date': {
-                        value: partner_initial_start_date
+                        value: deal_info.partner_initial_start_date
                     },
                     'end_date': {
-                        value: partner_initial_end_date
+                        value: deal_info.partner_initial_end_date
                     },
                     'amount': {
-                        value: partner_initial_total_amount
+                        value:deal_info. partner_initial_total_amount
                     }
                 }
             };
             table_value.push(newRow);
         }
-        if (partner_monthly_total_period_amount > 0 && partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "期間費用（共創パートナー）" + item_suffix;
+        if (deal_info.partner_monthly_total_period_amount > 0 && deal_info.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+            var item_name = "期間費用(共創パートナー)" + deal_info.item_suffix;
             var newRow = {
                 value: {
                     'item_name': {
-                        value: item_name
+                        value: deal_info.item_name
                     },
                     'start_date': {
-                        value: partner_monthly_start_date
+                        value: deal_info.partner_monthly_start_date
                     },
                     'end_date': {
-                        value: partner_monthly_end_date
+                        value: deal_info.partner_monthly_end_date
                     },
                     'amount': {
-                        value: partner_monthly_total_period_amount
+                        value: deal_info.partner_monthly_total_period_amount
                     }
                 }
             };
             table_value.push(newRow);
         }
         var invoice_issue_date = dayjs();
-        var payment_due_date = getNextEndOfMonth(invoice_issue_date)
+        var payment_due_date = getNextEndOfMonth(invoice_issue_date);
         var newData = {
             "app": INVOICE_APP_ID,
             "record": {
-                "invoice_to_number": { "value": invoice_to_number },
-                "invoice_issue_date": { "value": invoice_issue_date.format('YYYY-MM-DD') },
-                "payment_due_date": { "value": payment_due_date.format('YYYY-MM-DD') },
-                "deal_number": { "value": deal_number },
-                "invoice_subtotal_amount": { "value": grand_total_amount },
-                "invoice_consumption_tax_amount": { "value": consumption_tax },
-                "invoice_amount": { "value": grand_total_amount_with_tax },
-                "invoice_details_table": { "value": table_value },
+                "invoice_to_number": { "value": deal_info.invoice_to_number },
+                "invoice_issue_date": { "value": deal_info.invoice_issue_date.format('YYYY-MM-DD') },
+                "payment_due_date": { "value": deal_info.payment_due_date.format('YYYY-MM-DD') },
+                "deal_number": { "value": deal_info.deal_number },
+                "invoice_subtotal_amount": { "value": deal_info.grand_total_amount },
+                "invoice_consumption_tax_amount": { "value": deal_info.consumption_tax },
+                "invoice_amount": { "value": deal_info.grand_total_amount_with_tax },
+                "invoice_details_table": { "value": deal_info.table_value },
             }
         };
         kintone.api(kintone.api.url('/k/v1/record', true), 'POST', newData, function (resp) {
