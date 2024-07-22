@@ -230,7 +230,7 @@
             this.consumption_tax = record.consumption_tax.value;
             this.grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
             for (var row_value of record.quotation_details_table.value) {
-                this.deal_details.push(new DealDetails(row_value));
+                this.deal_details.push(new DealDetails(row_value.value));
             }
         }
 
