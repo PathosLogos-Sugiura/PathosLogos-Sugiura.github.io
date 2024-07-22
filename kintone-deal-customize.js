@@ -63,7 +63,7 @@
         partner_initial_purchase_amount;
         partner_monthly_amount;
         partner_monthly_period_amount;
-        partner_monthly_purchase_amount;
+        partner_monthly_period_purchase_amount;
         partner_name;
         product_name;
         product_number;
@@ -89,7 +89,7 @@
             this.partner_initial_purchase_amount = value.partner_initial_purchase_amount.value;
             this.partner_monthly_amount = value.partner_monthly_amount.value;
             this.partner_monthly_period_amount = value.partner_monthly_period_amount.value;
-            this.partner_monthly_purchase_amount = value.partner_monthly_purchase_amount.value;
+            this.partner_monthly_period_purchase_amount = value.partner_monthly_period_purchase_amount.value;
             this.partner_name = value.partner_name.value;
             this.product_name = value.product_name.value;
             this.product_number = value.product_number.value;
@@ -153,10 +153,10 @@
             return sum;
         }
 
-        monthly_purchase_amount_sum() {
+        monthly_period_purchase_amount_sum() {
             var sum = 0;
             for (deal_detail of deal_details) {
-                sum = sum + deal_detail.partner_monthly_purchase_amount;
+                sum = sum + deal_detail.partner_monthly_period_purchase_amount;
             }
             return sum;
         }
