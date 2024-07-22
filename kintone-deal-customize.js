@@ -52,8 +52,6 @@
         charge_type;
         details_remarks;
         initial_amount;
-        list_price_purchase;
-        list_price_to_customer;
         month_count;
         monthly_amount;
         monthly_period_amount;
@@ -80,8 +78,6 @@
             this.charge_type = value.charge_type.value;
             this.details_remarks = value.details_remarks.value;
             this.initial_amount = value.initial_amount.value;
-            this.list_price_purchase = value.list_price_purchase.value;
-            this.list_price_to_customer = value.list_price_to_customer.value;
             this.month_count = value.month_count.value;
             this.monthly_amount = value.monthly_amount.value;
             this.monthly_period_amount = value.monthly_period_amount.value;
