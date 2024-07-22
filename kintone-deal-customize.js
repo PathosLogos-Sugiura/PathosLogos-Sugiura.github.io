@@ -56,6 +56,7 @@
         monthly_amount;
         monthly_period_amount;
         option_name;
+        discount_amount;
         own_initial_amount;
         own_monthly_amount;
         own_monthly_period_amount;
@@ -82,13 +83,18 @@
             this.monthly_amount = value.monthly_amount.value;
             this.monthly_period_amount = value.monthly_period_amount.value;
             this.option_name = value.option_name.value;
+            this.discount_amount = value.discount_amount.value;
             this.own_initial_amount = value.own_initial_amount.value;
+            this.own_initial_amount_actual = value.own_initial_amount_actual.value;
             this.own_monthly_amount = value.own_monthly_amount.value;
             this.own_monthly_period_amount = value.own_monthly_period_amount.value;
+            this.own_monthly_period_amount_actual = value.own_monthly_period_amount_actual.value;
             this.partner_initial_amount = value.partner_initial_amount.value;
+            this.partner_initial_amount_actual = value.partner_initial_amount_actual.value;
             this.partner_initial_purchase_amount = value.partner_initial_purchase_amount.value;
             this.partner_monthly_amount = value.partner_monthly_amount.value;
             this.partner_monthly_period_amount = value.partner_monthly_period_amount.value;
+            this.partner_monthly_period_amount_actual = value.partner_monthly_period_amount_actual.value;
             this.partner_monthly_period_purchase_amount = value.partner_monthly_period_purchase_amount.value;
             this.partner_name = value.partner_name.value;
             this.product_name = value.product_name.value;
@@ -203,26 +209,26 @@
             }
             // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
-            this.own_initial_total_amount = record.own_initial_total_amount.value;
+            this.own_initial_total_amount_actual = record.own_initial_total_amount_actual.value;
             this.own_initial_start_date = record.own_initial_start_date.value;
             this.own_initial_end_date = record.own_initial_end_date.value;
             // パトスロゴス月額費用
             this.own_monthly_invoice_timing = record.own_monthly_invoice_timing.value;
-            this.own_monthly_total_period_amount = record.own_monthly_total_period_amount.value;
+            this.own_monthly_total_period_amount_actual = record.own_monthly_total_period_amount_actual.value;
             this.own_monthly_start_date = record.own_monthly_start_date.value;
             this.own_monthly_end_date = record.own_monthly_end_date.value;
             // 共創パートナー初期費用
             this.partner_initial_invoice_timing = record.partner_initial_invoice_timing.value;
-            this.partner_initial_total_amount = record.partner_initial_total_amount.value;
+            this.partner_initial_total_amount_actual = record.partner_initial_total_amount_actual.value;
             this.partner_initial_start_date = record.partner_initial_start_date.value;
             this.partner_initial_end_date = record.partner_initial_end_date.value;
             // 共創パートナー月額費用
             this.partner_monthly_invoice_timing = record.partner_monthly_invoice_timing.value;
-            this.partner_monthly_total_period_amount = record.partner_monthly_total_period_amount.value;
+            this.partner_monthly_total_period_amount_actual = record.partner_monthly_total_period_amount_actual.value;
             this.partner_monthly_start_date = record.partner_monthly_start_date.value;
             this.partner_monthly_end_date = record.partner_monthly_end_date.value;
             // 送金額
-            this.grand_total_amount = record.grand_total_amount.value;
+            this.grand_total_amount_with_discount = record.grand_total_amount_with_discount.value;
             this.consumption_tax = record.consumption_tax.value;
             this.grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
             for (var row_value of record.quotation_details_table.value) {
@@ -315,7 +321,7 @@
             };
             table_value.push(newRow);
         }
-        if (deal_info.own_monthly_total_period_amount > 0 && deal_info.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+        if (deal_info.own_monthly_total_period_amount_actual > 0 && deal_info.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "期間費用(パトスロゴス)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
