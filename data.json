@@ -85,6 +85,10 @@
             "type": "FILE",
             "value": []
         },
+        "own_initial_total_amount_actual": {
+            "type": "CALC",
+            "value": "9900000"
+        },
         "grand_total_amount_with_discount": {
             "type": "CALC",
             "value": "13600000"
@@ -581,7 +585,7 @@
                         },
                         "option_name": {
                             "type": "SINGLE_LINE_TEXT",
-                            "value": "データベ ースコース"
+                            "value": "データベースコース"
                         },
                         "initial_amount": {
                             "type": "NUMBER",
@@ -761,10 +765,6 @@
                 "code": "hidekazu.sugiura@pathoslogos.co.jp",
                 "name": "杉浦英和"
             }
-        },
-        "own_initial_total_amount_discount_0": {
-            "type": "CALC",
-            "value": "9900000"
         },
         "partner_monthly_total_period_amount": {
             "type": "CALC",
