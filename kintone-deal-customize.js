@@ -129,6 +129,7 @@
                 is_end_month_split = true;
                 end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
             }
+            
         }
 
         initial_amount_sum() {
@@ -228,7 +229,7 @@
             this.consumption_tax = record.consumption_tax.value;
             this.grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
             for (var row_value of record.quotation_details_table.value) {
-                deal_details.push(new DealDetails(row_value));
+                this.deal_details.push(new DealDetails(row_value));
             }
         }
 
@@ -291,7 +292,7 @@
                         value: deal_info.own_initial_end_date
                     },
                     'amount': {
-                        value: deal_info.own_initial_total_amount
+                        value: deal_info.own_initial_total_amount_actual
                     }
                 }
             };
@@ -311,7 +312,7 @@
                         value: deal_info.own_monthly_end_date
                     },
                     'amount': {
-                        value: deal_info.own_monthly_total_period_amount
+                        value: deal_info.own_monthly_total_period_amount_actual
                     }
                 }
             };
@@ -331,7 +332,7 @@
                         value: deal_info.partner_initial_end_date
                     },
                     'amount': {
-                        value: deal_info.partner_initial_total_amount
+                        value: deal_info.partner_initial_total_amount_actual
                     }
                 }
             };
@@ -351,7 +352,7 @@
                         value: deal_info.partner_monthly_end_date
                     },
                     'amount': {
-                        value: deal_info.partner_monthly_total_period_amount
+                        value: deal_info.partner_monthly_total_period_amount_actual
                     }
                 }
             };
