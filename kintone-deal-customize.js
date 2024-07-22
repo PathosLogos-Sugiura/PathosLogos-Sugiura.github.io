@@ -76,6 +76,7 @@
         quotation_product_name;
         quote_amount;
         constructor(value) {
+            console.log(value);
             this.charge_type = value.charge_type.value;
             this.details_remarks = value.details_remarks.value;
             this.initial_amount = value.initial_amount.value;

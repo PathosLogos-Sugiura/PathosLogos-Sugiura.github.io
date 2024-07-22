@@ -2,27 +2,27 @@
     "record": {
         "deliver_to_number": {
             "type": "NUMBER",
-            "value": "1"
+            "value": "2"
         },
         "レコード番号": {
             "type": "RECORD_NUMBER",
-            "value": "1"
+            "value": "2"
         },
         "own_initial_end_date": {
             "type": "DATE",
-            "value": "2024-09-30"
+            "value": "2024-08-31"
         },
         "partner_initial_end_date": {
             "type": "DATE",
-            "value": "2024-08-31"
+            "value": "2024-09-15"
         },
         "own_monthly_total_period_amount": {
             "type": "CALC",
-            "value": "1176000"
+            "value": "1200000"
         },
         "ステータス": {
             "type": "STATUS",
-            "value": "見積発行済"
+            "value": "見積承認済"
         },
         "invoice_to_postal_code": {
             "type": "SINGLE_LINE_TEXT",
@@ -34,11 +34,11 @@
         },
         "partner_monthly_end_date": {
             "type": "DATE",
-            "value": "2025-07-31"
+            "value": "2025-09-30"
         },
         "own_monthly_total_amount": {
             "type": "CALC",
-            "value": "98000"
+            "value": "100000"
         },
         "internal_remarks": {
             "type": "MULTI_LINE_TEXT",
@@ -52,13 +52,17 @@
             "type": "CALC",
             "value": "1000000"
         },
+        "own_monthly_total_period_amount_discount": {
+            "type": "CALC",
+            "value": "200000"
+        },
         "own_monthly_start_date": {
             "type": "DATE",
             "value": "2024-08-01"
         },
         "deal_title": {
             "type": "SINGLE_LINE_TEXT",
-            "value": "テスト用案件"
+            "value": "Combosite導入について"
         },
         "invoice_to_name": {
             "type": "SINGLE_LINE_TEXT",
@@ -73,26 +77,30 @@
                 }
             ]
         },
+        "partner_monthly_total_period_amount_actual": {
+            "type": "CALC",
+            "value": "2100000"
+        },
         "purchase_order_file": {
             "type": "FILE",
             "value": []
         },
-        "initial_grand_total_amount": {
+        "grand_total_amount_with_discount": {
             "type": "CALC",
-            "value": "2000000"
+            "value": "13600000"
         },
         "作業者": {
             "type": "STATUS_ASSIGNEE",
             "value": [
                 {
-                    "code": "yashita.shigeo@pathoslogos.co.jp",
-                    "name": "矢下茂雄"
+                    "code": "hidekazu.sugiura@pathoslogos.co.jp",
+                    "name": "杉浦英和"
                 }
             ]
         },
         "partner_monthly_total_amount": {
             "type": "CALC",
-            "value": "108000"
+            "value": "200000"
         },
         "sales_introduction_partner_name": {
             "type": "SINGLE_LINE_TEXT",
@@ -102,7 +110,7 @@
             "type": "SUBTABLE",
             "value": [
                 {
-                    "id": "336",
+                    "id": "383",
                     "value": {
                         "partner_initial_amount": {
                             "type": "CALC",
@@ -112,17 +120,25 @@
                             "type": "SINGLE_LINE_TEXT",
                             "value": "式"
                         },
+                        "partner_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "partner_name": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": ""
                         },
                         "own_initial_amount": {
                             "type": "CALC",
-                            "value": "1000000"
+                            "value": "10000000"
                         },
                         "quotation_product_name": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": "導入支援サービス"
+                        },
+                        "discount_amount": {
+                            "type": "NUMBER",
+                            "value": "100000"
                         },
                         "monthly_amount": {
                             "type": "NUMBER",
@@ -134,9 +150,13 @@
                         },
                         "initial_amount": {
                             "type": "NUMBER",
-                            "value": "1000000"
+                            "value": "10000000"
                         },
                         "partner_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_monthly_period_amount_actual": {
                             "type": "CALC",
                             "value": "0"
                         },
@@ -144,23 +164,43 @@
                             "type": "CALC",
                             "value": "0"
                         },
+                        "partner_initial_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "product_number": {
                             "type": "NUMBER",
                             "value": "1"
                         },
-                        "list_price_to_customer": {
-                            "type": "NUMBER",
+                        "partner_monthly_period_purchase_amount": {
+                            "type": "CALC",
                             "value": "0"
                         },
                         "product_supplier": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": "パトスロゴス"
                         },
+                        "partner_initial_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "own_monthly_period_amount": {
                             "type": "CALC",
                             "value": "0"
                         },
-                        "partner_monthly_purchase_amount": {
+                        "partner_monthly_period_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_initial_amount_actual": {
+                            "type": "CALC",
+                            "value": "9900000"
+                        },
+                        "partner_monthly_amount_actual": {
                             "type": "CALC",
                             "value": "0"
                         },
@@ -178,7 +218,7 @@
                         },
                         "quote_amount": {
                             "type": "CALC",
-                            "value": "1000000"
+                            "value": "10000000"
                         },
                         "partner_monthly_amount": {
                             "type": "CALC",
@@ -192,18 +232,22 @@
                             "type": "SINGLE_LINE_TEXT",
                             "value": "初期"
                         },
+                        "own_monthly_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "purchase_amount": {
                             "type": "NUMBER",
                             "value": ""
+                        },
+                        "own_initial_amount_discount": {
+                            "type": "CALC",
+                            "value": "100000"
                         },
                         "qty": {
                             "type": "NUMBER",
                             "value": "1"
                         },
-                        "list_price_purchase": {
-                            "type": "NUMBER",
-                            "value": "0"
-                        },
                         "details_remarks": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": ""
@@ -211,7 +255,7 @@
                     }
                 },
                 {
-                    "id": "340",
+                    "id": "384",
                     "value": {
                         "partner_initial_amount": {
                             "type": "CALC",
@@ -220,6 +264,10 @@
                         "charge_type": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": "人"
+                        },
+                        "partner_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
                         },
                         "partner_name": {
                             "type": "SINGLE_LINE_TEXT",
@@ -231,15 +279,19 @@
                         },
                         "quotation_product_name": {
                             "type": "SINGLE_LINE_TEXT",
-                            "value": "共創プラットフォームPathosLogos基本ライセンス（正社員）"
+                            "value": "Combosite人事給与基本ライセンス"
+                        },
+                        "discount_amount": {
+                            "type": "NUMBER",
+                            "value": "200000"
                         },
                         "monthly_amount": {
                             "type": "NUMBER",
-                            "value": "18000"
+                            "value": "100000"
                         },
                         "option_name": {
                             "type": "SINGLE_LINE_TEXT",
-                            "value": "基本ライセンス（正社員）"
+                            "value": "基本ライセンス"
                         },
                         "initial_amount": {
                             "type": "NUMBER",
@@ -249,136 +301,51 @@
                             "type": "CALC",
                             "value": "0"
                         },
+                        "own_monthly_period_amount_actual": {
+                            "type": "CALC",
+                            "value": "1000000"
+                        },
                         "partner_initial_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_initial_amount_discount": {
                             "type": "CALC",
                             "value": "0"
                         },
                         "product_number": {
                             "type": "NUMBER",
-                            "value": "3"
+                            "value": "5"
                         },
-                        "list_price_to_customer": {
-                            "type": "NUMBER",
+                        "partner_monthly_period_purchase_amount": {
+                            "type": "CALC",
                             "value": "0"
                         },
                         "product_supplier": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": "パトスロゴス"
                         },
-                        "own_monthly_period_amount": {
-                            "type": "CALC",
-                            "value": "216000"
-                        },
-                        "partner_monthly_purchase_amount": {
+                        "partner_initial_amount_actual": {
                             "type": "CALC",
                             "value": "0"
-                        },
-                        "month_count": {
-                            "type": "NUMBER",
-                            "value": "12"
-                        },
-                        "product_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "共創プラットフォームPathosLogos"
-                        },
-                        "own_monthly_amount": {
-                            "type": "CALC",
-                            "value": "18000"
-                        },
-                        "quote_amount": {
-                            "type": "CALC",
-                            "value": "216000"
-                        },
-                        "partner_monthly_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "monthly_period_amount": {
-                            "type": "CALC",
-                            "value": "216000"
-                        },
-                        "product_type": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "月額"
-                        },
-                        "purchase_amount": {
-                            "type": "NUMBER",
-                            "value": ""
-                        },
-                        "qty": {
-                            "type": "NUMBER",
-                            "value": "100"
-                        },
-                        "list_price_purchase": {
-                            "type": "NUMBER",
-                            "value": "0"
-                        },
-                        "details_remarks": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": ""
-                        }
-                    }
-                },
-                {
-                    "id": "341",
-                    "value": {
-                        "partner_initial_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "charge_type": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "人"
-                        },
-                        "partner_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": ""
-                        },
-                        "own_initial_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "quotation_product_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "Combosite人事給与基本ライセンス（正社員）"
-                        },
-                        "monthly_amount": {
-                            "type": "NUMBER",
-                            "value": "80000"
-                        },
-                        "option_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "基本ライセンス（正社員）"
-                        },
-                        "initial_amount": {
-                            "type": "NUMBER",
-                            "value": ""
-                        },
-                        "partner_monthly_period_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "partner_initial_purchase_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "product_number": {
-                            "type": "NUMBER",
-                            "value": "6"
-                        },
-                        "list_price_to_customer": {
-                            "type": "NUMBER",
-                            "value": "0"
-                        },
-                        "product_supplier": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "パトスロゴス"
                         },
                         "own_monthly_period_amount": {
                             "type": "CALC",
-                            "value": "960000"
+                            "value": "1200000"
                         },
-                        "partner_monthly_purchase_amount": {
+                        "partner_monthly_period_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "200000"
+                        },
+                        "own_initial_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_monthly_amount_actual": {
                             "type": "CALC",
                             "value": "0"
                         },
@@ -392,11 +359,11 @@
                         },
                         "own_monthly_amount": {
                             "type": "CALC",
-                            "value": "80000"
+                            "value": "100000"
                         },
                         "quote_amount": {
                             "type": "CALC",
-                            "value": "960000"
+                            "value": "1200000"
                         },
                         "partner_monthly_amount": {
                             "type": "CALC",
@@ -404,23 +371,27 @@
                         },
                         "monthly_period_amount": {
                             "type": "CALC",
-                            "value": "960000"
+                            "value": "1200000"
                         },
                         "product_type": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": "月額"
                         },
+                        "own_monthly_amount_actual": {
+                            "type": "CALC",
+                            "value": "83333.3333"
+                        },
                         "purchase_amount": {
                             "type": "NUMBER",
                             "value": ""
                         },
+                        "own_initial_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "qty": {
                             "type": "NUMBER",
                             "value": "100"
-                        },
-                        "list_price_purchase": {
-                            "type": "NUMBER",
-                            "value": "0"
                         },
                         "details_remarks": {
                             "type": "SINGLE_LINE_TEXT",
@@ -429,7 +400,152 @@
                     }
                 },
                 {
-                    "id": "342",
+                    "id": "388",
+                    "value": {
+                        "partner_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "charge_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "人"
+                        },
+                        "partner_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "300000"
+                        },
+                        "partner_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "株式会社カオナビ"
+                        },
+                        "own_initial_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quotation_product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "カオナビエンタープライズエディション"
+                        },
+                        "discount_amount": {
+                            "type": "NUMBER",
+                            "value": "300000"
+                        },
+                        "monthly_amount": {
+                            "type": "NUMBER",
+                            "value": "200000"
+                        },
+                        "option_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "エンタープライズエディション"
+                        },
+                        "initial_amount": {
+                            "type": "NUMBER",
+                            "value": ""
+                        },
+                        "partner_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "2400000"
+                        },
+                        "own_monthly_period_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_initial_purchase_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_initial_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "product_number": {
+                            "type": "NUMBER",
+                            "value": "30"
+                        },
+                        "partner_monthly_period_purchase_amount": {
+                            "type": "CALC",
+                            "value": "1600000"
+                        },
+                        "product_supplier": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "共創パートナー"
+                        },
+                        "partner_initial_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_monthly_period_amount_actual": {
+                            "type": "CALC",
+                            "value": "2100000"
+                        },
+                        "own_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_initial_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_monthly_amount_actual": {
+                            "type": "CALC",
+                            "value": "175000"
+                        },
+                        "month_count": {
+                            "type": "NUMBER",
+                            "value": "12"
+                        },
+                        "product_name": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "カオナビ"
+                        },
+                        "own_monthly_amount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "quote_amount": {
+                            "type": "CALC",
+                            "value": "2400000"
+                        },
+                        "partner_monthly_amount": {
+                            "type": "CALC",
+                            "value": "200000"
+                        },
+                        "monthly_period_amount": {
+                            "type": "CALC",
+                            "value": "2400000"
+                        },
+                        "product_type": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": "月額"
+                        },
+                        "own_monthly_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "purchase_amount": {
+                            "type": "NUMBER",
+                            "value": "1600000"
+                        },
+                        "own_initial_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "qty": {
+                            "type": "NUMBER",
+                            "value": "100"
+                        },
+                        "details_remarks": {
+                            "type": "SINGLE_LINE_TEXT",
+                            "value": ""
+                        }
+                    }
+                },
+                {
+                    "id": "389",
                     "value": {
                         "partner_initial_amount": {
                             "type": "CALC",
@@ -439,9 +555,13 @@
                             "type": "SINGLE_LINE_TEXT",
                             "value": "式"
                         },
+                        "partner_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "partner_name": {
                             "type": "SINGLE_LINE_TEXT",
-                            "value": "株式会社チームスピリット"
+                            "value": "株式会社カオナビ"
                         },
                         "own_initial_amount": {
                             "type": "CALC",
@@ -449,7 +569,11 @@
                         },
                         "quotation_product_name": {
                             "type": "SINGLE_LINE_TEXT",
-                            "value": "チームスピリット初期導入費用"
+                            "value": "カオナビデータベースコース"
+                        },
+                        "discount_amount": {
+                            "type": "NUMBER",
+                            "value": "400000"
                         },
                         "monthly_amount": {
                             "type": "NUMBER",
@@ -457,7 +581,7 @@
                         },
                         "option_name": {
                             "type": "SINGLE_LINE_TEXT",
-                            "value": "初期導入費用"
+                            "value": "データベ ースコース"
                         },
                         "initial_amount": {
                             "type": "NUMBER",
@@ -467,27 +591,51 @@
                             "type": "CALC",
                             "value": "0"
                         },
+                        "own_monthly_period_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "partner_initial_purchase_amount": {
                             "type": "CALC",
-                            "value": "800000"
+                            "value": "400000"
+                        },
+                        "partner_initial_amount_discount": {
+                            "type": "CALC",
+                            "value": "400000"
                         },
                         "product_number": {
                             "type": "NUMBER",
-                            "value": "16"
+                            "value": "14"
                         },
-                        "list_price_to_customer": {
-                            "type": "NUMBER",
+                        "partner_monthly_period_purchase_amount": {
+                            "type": "CALC",
                             "value": "0"
                         },
                         "product_supplier": {
                             "type": "SINGLE_LINE_TEXT",
                             "value": "共創パートナー"
                         },
+                        "partner_initial_amount_actual": {
+                            "type": "CALC",
+                            "value": "600000"
+                        },
                         "own_monthly_period_amount": {
                             "type": "CALC",
                             "value": "0"
                         },
-                        "partner_monthly_purchase_amount": {
+                        "partner_monthly_period_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_monthly_period_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "own_initial_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
+                        "partner_monthly_amount_actual": {
                             "type": "CALC",
                             "value": "0"
                         },
@@ -497,7 +645,7 @@
                         },
                         "product_name": {
                             "type": "SINGLE_LINE_TEXT",
-                            "value": "チームスピリット"
+                            "value": "カオナビ"
                         },
                         "own_monthly_amount": {
                             "type": "CALC",
@@ -519,126 +667,21 @@
                             "type": "SINGLE_LINE_TEXT",
                             "value": "初期"
                         },
+                        "own_monthly_amount_actual": {
+                            "type": "CALC",
+                            "value": "0"
+                        },
                         "purchase_amount": {
                             "type": "NUMBER",
-                            "value": "800000"
+                            "value": "400000"
+                        },
+                        "own_initial_amount_discount": {
+                            "type": "CALC",
+                            "value": "0"
                         },
                         "qty": {
                             "type": "NUMBER",
                             "value": "1"
-                        },
-                        "list_price_purchase": {
-                            "type": "NUMBER",
-                            "value": "0"
-                        },
-                        "details_remarks": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": ""
-                        }
-                    }
-                },
-                {
-                    "id": "343",
-                    "value": {
-                        "partner_initial_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "charge_type": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "人"
-                        },
-                        "partner_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "株式会社エフアンドエム"
-                        },
-                        "own_initial_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "quotation_product_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "オフィスステーション労務"
-                        },
-                        "monthly_amount": {
-                            "type": "NUMBER",
-                            "value": "10000"
-                        },
-                        "option_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "労務"
-                        },
-                        "initial_amount": {
-                            "type": "NUMBER",
-                            "value": ""
-                        },
-                        "partner_monthly_period_amount": {
-                            "type": "CALC",
-                            "value": "120000"
-                        },
-                        "partner_initial_purchase_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "product_number": {
-                            "type": "NUMBER",
-                            "value": "18"
-                        },
-                        "list_price_to_customer": {
-                            "type": "NUMBER",
-                            "value": "0"
-                        },
-                        "product_supplier": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "共創パートナー"
-                        },
-                        "own_monthly_period_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "partner_monthly_purchase_amount": {
-                            "type": "CALC",
-                            "value": "100000"
-                        },
-                        "month_count": {
-                            "type": "NUMBER",
-                            "value": "12"
-                        },
-                        "product_name": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "オフィスステーション"
-                        },
-                        "own_monthly_amount": {
-                            "type": "CALC",
-                            "value": "0"
-                        },
-                        "quote_amount": {
-                            "type": "CALC",
-                            "value": "120000"
-                        },
-                        "partner_monthly_amount": {
-                            "type": "CALC",
-                            "value": "10000"
-                        },
-                        "monthly_period_amount": {
-                            "type": "CALC",
-                            "value": "120000"
-                        },
-                        "product_type": {
-                            "type": "SINGLE_LINE_TEXT",
-                            "value": "月額"
-                        },
-                        "purchase_amount": {
-                            "type": "NUMBER",
-                            "value": "100000"
-                        },
-                        "qty": {
-                            "type": "NUMBER",
-                            "value": "100"
-                        },
-                        "list_price_purchase": {
-                            "type": "NUMBER",
-                            "value": "0"
                         },
                         "details_remarks": {
                             "type": "SINGLE_LINE_TEXT",
@@ -654,66 +697,110 @@
         },
         "monthly_grand_total_amount": {
             "type": "CALC",
-            "value": "206000"
+            "value": "300000"
         },
         "grand_total_amount": {
             "type": "CALC",
-            "value": "2206000"
+            "value": "14600000"
+        },
+        "quotation_file_for_purchase": {
+            "type": "FILE",
+            "value": []
+        },
+        "partner_monthly_total_amount_actual": {
+            "type": "CALC",
+            "value": "175000"
+        },
+        "own_monthly_total_period_amount_actual": {
+            "type": "CALC",
+            "value": "1000000"
+        },
+        "grand_total_initial_discount_amount": {
+            "type": "CALC",
+            "value": "500000"
+        },
+        "partner_monthly_total_period_amount_discount": {
+            "type": "CALC",
+            "value": "300000"
         },
         "payment_due_date": {
             "type": "DATE",
             "value": null
         },
+        "initial_grand_total_amount_actual": {
+            "type": "CALC",
+            "value": "10500000"
+        },
         "作成日時": {
             "type": "CREATED_TIME",
-            "value": "2024-07-10T07:49:00Z"
+            "value": "2024-07-19T03:23:00Z"
         },
         "$id": {
             "type": "__ID__",
-            "value": "1"
+            "value": "2"
         },
         "partner_initial_start_date": {
             "type": "DATE",
-            "value": "2024-08-01"
+            "value": "2024-08-15"
         },
         "partner_initial_total_purchase_amount": {
             "type": "CALC",
-            "value": "800000"
+            "value": "400000"
         },
         "deliver_to_name": {
             "type": "SINGLE_LINE_TEXT",
-            "value": "シンプレクス・ホールディングス株式会社"
+            "value": "シンプレクス株式会社"
         },
         "partner_monthly_total_purchase_amount": {
             "type": "CALC",
-            "value": "900000"
+            "value": "1600000"
         },
         "更新者": {
             "type": "MODIFIER",
             "value": {
-                "code": "yashita.shigeo@pathoslogos.co.jp",
-                "name": "矢下茂雄"
+                "code": "hidekazu.sugiura@pathoslogos.co.jp",
+                "name": "杉浦英和"
             }
+        },
+        "own_initial_total_amount_discount_0": {
+            "type": "CALC",
+            "value": "9900000"
         },
         "partner_monthly_total_period_amount": {
             "type": "CALC",
-            "value": "1296000"
+            "value": "2400000"
         },
         "invoice_to_address2": {
             "type": "SINGLE_LINE_TEXT",
             "value": "虎ノ門ヒルズ森タワー19階"
         },
+        "partner_auto_renewal_months": {
+            "type": "NUMBER",
+            "value": "12"
+        },
         "deliver_to_postal_code": {
             "type": "SINGLE_LINE_TEXT",
             "value": "105-6319"
+        },
+        "monthly_grand_total_amount_actual": {
+            "type": "CALC",
+            "value": "258333.3333"
         },
         "own_monthly_invoice_timing": {
             "type": "DROP_DOWN",
             "value": "開始月一括"
         },
+        "partner_initial_total_amount_discount": {
+            "type": "CALC",
+            "value": "400000"
+        },
         "quotation_issue_date": {
             "type": "DATE",
-            "value": "2024-07-10"
+            "value": "2024-07-26"
+        },
+        "partner_initial_total_amount_actual": {
+            "type": "CALC",
+            "value": "600000"
         },
         "deliver_to_address2": {
             "type": "SINGLE_LINE_TEXT",
@@ -721,7 +808,7 @@
         },
         "quotation_remarks": {
             "type": "MULTI_LINE_TEXT",
-            "value": "御見積書に記載する備考の事項です。"
+            "value": ""
         },
         "invoice_to_address1": {
             "type": "SINGLE_LINE_TEXT",
@@ -733,7 +820,11 @@
         },
         "partner_monthly_total_pl_percent": {
             "type": "CALC",
-            "value": "30.56"
+            "value": "20.83"
+        },
+        "own_auto_renewal_months": {
+            "type": "NUMBER",
+            "value": "12"
         },
         "partner_initial_pl": {
             "type": "CALC",
@@ -745,26 +836,30 @@
         },
         "partner_monthly_start_date": {
             "type": "DATE",
-            "value": "2024-08-01"
+            "value": "2024-10-01"
         },
         "quotation_file": {
             "type": "FILE",
             "value": [
                 {
-                    "fileKey": "20240712063126FDDA0E3A2D22470288743A4DDE4D9C71084",
-                    "name": "シンプレクス・ホールディングス株式会社-2024-07-10.xlsx",
+                    "fileKey": "20240719112612802716AB84B44A62811655CC9070EF6C327",
+                    "name": "シンプレクス株式会社-2024-07-26.xlsx",
                     "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    "size": "36249"
+                    "size": "36218"
                 }
             ]
         },
+        "monthly_discount_amount_for_quotation": {
+            "type": "CALC",
+            "value": "-500000"
+        },
         "grand_total_amount_with_tax": {
             "type": "CALC",
-            "value": "2426600"
+            "value": "15960000"
         },
-        "monthly_grand_total_period_amount": {
-            "type": "CALC",
-            "value": "2472000"
+        "quotation_ref_number": {
+            "type": "SINGLE_LINE_TEXT",
+            "value": "0001"
         },
         "作成者": {
             "type": "CREATOR",
@@ -775,19 +870,23 @@
         },
         "quotation_due_date": {
             "type": "DATE",
-            "value": "2024-07-24"
+            "value": "2024-08-30"
+        },
+        "grand_total_monthly_discount_amount": {
+            "type": "CALC",
+            "value": "500000"
         },
         "$revision": {
             "type": "__REVISION__",
-            "value": "33"
+            "value": "27"
         },
         "更新日時": {
             "type": "UPDATED_TIME",
-            "value": "2024-07-12T06:52:00Z"
+            "value": "2024-07-19T11:27:00Z"
         },
         "own_initial_total_amount": {
             "type": "CALC",
-            "value": "1000000"
+            "value": "10000000"
         },
         "order_date": {
             "type": "DATE",
@@ -795,15 +894,23 @@
         },
         "consumption_tax": {
             "type": "CALC",
-            "value": "220600"
+            "value": "1360000"
         },
         "sales_introduction_partner_number": {
             "type": "NUMBER",
             "value": ""
         },
+        "own_monthly_total_amount_actual": {
+            "type": "CALC",
+            "value": "83333.3333"
+        },
+        "initial_discount_amount_for_quotation": {
+            "type": "CALC",
+            "value": "-500000"
+        },
         "purchase_order_remarks": {
             "type": "MULTI_LINE_TEXT",
-            "value": "注文に係る特記事項です。"
+            "value": ""
         },
         "partner_initial_pl_percent": {
             "type": "CALC",
@@ -813,13 +920,21 @@
             "type": "DROP_DOWN",
             "value": "開始月一括"
         },
+        "monthly_grand_total_period_amount_actual": {
+            "type": "CALC",
+            "value": "3100000"
+        },
         "invoice_to_number": {
             "type": "NUMBER",
             "value": "1"
         },
+        "own_initial_total_amount_discount": {
+            "type": "CALC",
+            "value": "100000"
+        },
         "partner_monthly_total_pl": {
             "type": "CALC",
-            "value": "396000"
+            "value": "500000"
         },
         "own_initial_invoice_timing": {
             "type": "DROP_DOWN",
