@@ -217,7 +217,7 @@
         deal_details = [];
         constructor(record) {
             // 案件レコード番号
-            this.deal_number = record.getId();
+            this.deal_number = record.レコード番号.value;
             // 請求先・納品先
             this.invoice_to_number = record.invoice_to_number.value;
             this.invoice_to_name = record.invoice_to_name.value;
