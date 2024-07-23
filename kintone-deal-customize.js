@@ -19,7 +19,7 @@
             type: 'submit',
         });
         header.appendChild(button1);
-        button1.addEventListener('click', function(click_event) {
+        button1.addEventListener('click', function (click_event) {
             createInvoice(event);
             alert("請求データを作成しました");
         });
@@ -28,7 +28,7 @@
             type: 'submit',
         });
         header.appendChild(button2);
-        button2.addEventListener('click', function(click_event) {
+        button2.addEventListener('click', function (click_event) {
             createRevenue(event);
             alert("売上データを作成しました");
         });
@@ -133,26 +133,39 @@
         }
 
         month_duration_for_finance() {
-            var start_month_ratio = 1.0;
+            var start_month_ratio = 0;
+            var end_month_ratio = 0;
             var dj_start_date = dayjs(this.start_date);
+            var dj_end_date = dayjs(this.end_date);
             var start_month_date = dj_start_date.date();
+            var end_month_date = dj_end_date.date();
             var is_start_month_split = false;
+            var is_end_month_split = false;
+            if (dj_end_date.isBefore(dj_start_date)) {
+                consoleError("End date is before start date");
+                return 0;
+            }
             if (start_month_date != 1) {
                 is_start_month_split = true;
                 var month_days = getEndOfMonth(this.start_date).date();
                 start_month_ratio = Math.round((month_days - start_month_date + 1) / month_days * 100) / 100;
             }
-            var end_month_ratio = 1.0;
-            var dj_end_date = dayjs(this.end_date);
-            var end_month_date = dj_end_date.date();
             var end_month_end_date = getEndOfMonth(this.end_date).date();
-            var is_end_month_split = false;
             if (end_month_date != end_month_end_date) {
                 is_end_month_split = true;
                 end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
             }
-            var month_difference = dj_end_date.diff(dj_start_date, 'month') + 1;
-            consoleLog('month_difference=' + month_difference);
+            var diff = dj_end_date.diff(dj_start_date, 'month');
+            if (!is_start_month_split && !is_end_month_split) {
+                diff = diff + 1;
+            } else if(!is_start_month_split && is_end_month_split) {
+                diff = diff + end_month_ratio;
+            } else if (is_start_month_split && !is_end_month_split) {
+                diff = diff + start_month_ratio;
+            } else if (is_start_month_split && is_end_month_split) {
+                diff = diff + start_month_ratio + end_month_ratio;
+            }
+            return diff;
         }
 
         initial_amount_sum() {
@@ -175,6 +188,14 @@
             var sum = 0;
             for (var deal_detail of this.deal_details) {
                 sum = sum + deal_detail.monthly_amount_actual;
+            }
+            return sum;
+        }
+
+        monthly_period_amount_sum() {
+            var sum = 0;
+            for (var deal_detail of this.deal_details) {
+                sum = sum + deal_detail.own_monthly_period_amount_actual;
             }
             return sum;
         }
@@ -305,6 +326,11 @@
             consoleLog("partner_name=" + deal_group.partner_name);
             consoleLog("productproduct_name_supplier=" + deal_group.product_name);
             consoleLog("month_duration_for_finance=" + deal_group.month_duration_for_finance());
+            consoleLog("initial_amount_sum=" + deal_group.initial_amount_sum());
+            consoleLog("initial_purchase_amount_sum=" + deal_group.initial_purchase_amount_sum());
+            consoleLog("monthly_amount_sum=" + deal_group.monthly_amount_sum());
+            consoleLog("monthly_period_amount_sum=" + deal_group.monthly_period_amount_sum());
+            consoleLog("monthly_period_purchase_amount_sum=" + deal_group.monthly_period_purchase_amount_sum());
         }
     }
 
