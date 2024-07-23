@@ -202,7 +202,7 @@
 
         monthly_period_purchase_amount_sum() {
             var sum = 0;
-            for (var deal_detail of deal_details) {
+            for (var deal_detail of this.deal_details) {
                 sum = sum + deal_detail.partner_monthly_period_purchase_amount;
             }
             return sum;
