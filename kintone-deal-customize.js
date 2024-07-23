@@ -11,7 +11,7 @@
     const PRODUCT_TYPE_MONTHLY = "月額";
 
     kintone.events.on(['app.record.detail.show'], function (event) {
-        if (!event.getLoginUser().includes('sugiura')) {
+        if (!kintone.getLoginUser().includes('sugiura')) {
             return;
         }
         const header = kintone.app.getHeaderMenuSpaceElement();
