@@ -299,7 +299,7 @@
         var record = event.record;
         var deal_info = new DealInfo(record);
         var deal_groups = deal_info.createDealDetailGroups();
-        consoleLog(deal_groups);
+        consoleLog(deal_groups.toString());
         for (var deal_group of deal_groups) {
             consoleLog(deal_group.product_supplier);
             consoleLog(deal_group.product_type);
