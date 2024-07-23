@@ -13,7 +13,7 @@
         if (!kintone.getLoginUser().email.includes('sugiura')) {
             return;
         }
-        const header = kintone.app.getHeaderMenuSpaceElement();
+        const header = kintone.app.record.getHeaderMenuSpaceElement();
         const button1 = new Kuc.Button({
             text: '請求データ作成',
             type: 'submit',
