@@ -1,5 +1,6 @@
 (function () {
     "use strict";
+    const Kuc = Kucs['1.x.x'];
     const INVOICE_APP_ID = 22;
     const APP_ID = 21;
 
@@ -10,14 +11,28 @@
     const PRODUCT_TYPE_MONTHLY = "月額";
 
     kintone.events.on(['app.record.detail.show'], function (event) {
-        const menuButton = document.createElement('button');
-        menuButton.id = 'menu_button';
-        menuButton.innerText = '請求データ作成';
-        menuButton.onclick = function () {
+        if (!event.getLoginUser().includes('sugiura')) {
+            return;
+        }
+        const header = kintone.app.getHeaderMenuSpaceElement();
+        const button1 = new Kuc.Button({
+            text: '請求データ作成',
+            type: 'submit',
+        });
+        header.appendChild(button1);
+        button1.addEventListener('click', event => {
             createInvoice(event);
             alert("請求データを作成しました");
-        };
-        kintone.app.record.getHeaderMenuSpaceElement().appendChild(menuButton);
+        });
+        const button2 = new Kuc.Button({
+            text: '売上データ作成',
+            type: 'submit',
+        });
+        header.appendChild(button2);
+        button2.addEventListener('click', event => {
+            createRevenue(event);
+            alert("売上データを作成しました");
+        });
         return event;
     });
 
@@ -108,6 +123,10 @@
     }
 
     class DealDetailGroup {
+        product_supplier;
+        product_type;
+        partner_name;
+        product_name;
         start_date;
         end_date;
         deal_details = [];
@@ -116,7 +135,8 @@
 
         month_duration_for_finance() {
             var start_month_ratio = 1.0;
-            var start_month_date = dayjs(this.start_date).date();
+            var dj_start_date = dayjs(this.start_date);
+            var start_month_date = dj_start_date.date();
             var is_start_month_split = false;
             if (start_month_date != 1) {
                 is_start_month_split = true;
@@ -124,14 +144,16 @@
                 start_month_ratio = Math.round((month_days - start_month_date + 1) / month_days * 100) / 100;
             }
             var end_month_ratio = 1.0;
-            var end_month_date = dayjs(this.end_date).date();
+            var dj_end_date = dayjs(this.end_date);
+            var end_month_date = dj_end_date.date();
             var end_month_end_date = getEndOfMonth(this.end_date).date();
             var is_end_month_split = false;
             if (end_month_date != end_month_end_date) {
                 is_end_month_split = true;
                 end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
             }
-            
+            var month_difference = dj_end_date.diff(dj_start_date, 'month') + 1;
+            consoleLog('month_difference=' + month_difference);
         }
 
         initial_amount_sum() {
@@ -196,7 +218,7 @@
         deal_details = [];
         constructor(record) {
             // 案件レコード番号
-            this.deal_number = record.レコード番号.value;
+            this.deal_number = record.getId();
             // 請求先・納品先
             this.invoice_to_number = record.invoice_to_number.value;
             this.invoice_to_name = record.invoice_to_name.value;
@@ -242,6 +264,10 @@
                 var detail_group = map.get(key);
                 if (detail_group == null) {
                     detail_group = new DealDetailGroup();
+                    detail_group.product_supplier = this.product_supplier;
+                    detail_group.product_type = this.product_type;
+                    detail_group.partner_name = this.partner_name;
+                    detail_group.product_name = this.product_name;
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                         detail_group.start_date = this.own_initial_start_date;
                         detail_group.end_date = this.own_initial_end_date;
@@ -273,7 +299,14 @@
     function createRevenue(event) {
         var record = event.record;
         var deal_info = new DealInfo(record);
-
+        var deal_groups = deal_info.createDealDetailGroups();
+        for (deal_group of deal_groups) {
+            consoleLog(deal_group.product_supplier);
+            consoleLog(deal_group.product_type);
+            consoleLog(deal_group.partner_name);
+            consoleLog(deal_group.product_name);
+            consoleLog(deal_group.month_duration_for_finance());
+        }
     }
 
     function createInvoice(event) {
