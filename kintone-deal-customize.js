@@ -19,7 +19,7 @@
             type: 'submit',
         });
         header.appendChild(button1);
-        button1.addEventListener('click', event => {
+        button1.addEventListener('click', function(click_event) {
             createInvoice(event);
             alert("請求データを作成しました");
         });
@@ -28,7 +28,7 @@
             type: 'submit',
         });
         header.appendChild(button2);
-        button2.addEventListener('click', event => {
+        button2.addEventListener('click', function(click_event) {
             createRevenue(event);
             alert("売上データを作成しました");
         });
