@@ -1,6 +1,5 @@
 (function () {
     "use strict";
-    const Kuc = Kucs['1.x.x'];
     const INVOICE_APP_ID = 22;
     const APP_ID = 21;
 
