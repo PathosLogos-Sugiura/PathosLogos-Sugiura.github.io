@@ -258,7 +258,7 @@
 
         createDealDetailGroups() {
             const map = new Map();
-            for (deal_detail of deal_details) {
+            for (var deal_detail of this.deal_details) {
                 var key = this.createKey(deal_detail);
                 var detail_group = map.get(key);
                 if (detail_group == null) {
