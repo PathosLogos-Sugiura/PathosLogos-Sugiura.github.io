@@ -263,10 +263,10 @@
                 var detail_group = map.get(key);
                 if (detail_group == null) {
                     detail_group = new DealDetailGroup();
-                    detail_group.product_supplier = this.product_supplier;
-                    detail_group.product_type = this.product_type;
-                    detail_group.partner_name = this.partner_name;
-                    detail_group.product_name = this.product_name;
+                    detail_group.product_supplier = deal_detail.product_supplier;
+                    detail_group.product_type = deal_detail.product_type;
+                    detail_group.partner_name = deal_detail.partner_name;
+                    detail_group.product_name = deal_detail.product_name;
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                         detail_group.start_date = this.own_initial_start_date;
                         detail_group.end_date = this.own_initial_end_date;
@@ -287,7 +287,7 @@
                 }
                 detail_group.deal_details.push(deal_detail);
             }
-            return map.values;
+            return map.values();
         }
 
         createKey(deal_detail) {
@@ -299,7 +299,6 @@
         var record = event.record;
         var deal_info = new DealInfo(record);
         var deal_groups = deal_info.createDealDetailGroups();
-        consoleLog(deal_groups.toString());
         for (var deal_group of deal_groups) {
             consoleLog(deal_group.product_supplier);
             consoleLog(deal_group.product_type);
