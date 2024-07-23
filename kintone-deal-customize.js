@@ -157,15 +157,15 @@
 
         initial_amount_sum() {
             var sum = 0;
-            for (deal_detail of deal_details) {
-                sum = sum + deal_detail.initial_amount;
+            for (deal_detail of this.deal_details) {
+                sum = sum + deal_detail.initial_amount_actual;
             }
             return sum;
         }
 
         initial_purchase_amount_sum() {
             var sum = 0;
-            for (deal_detail of deal_details) {
+            for (var deal_detail of this.deal_details) {
                 sum = sum + deal_detail.partner_initial_purchase_amount;
             }
             return sum;
@@ -173,15 +173,15 @@
 
         monthly_amount_sum() {
             var sum = 0;
-            for (deal_detail of deal_details) {
-                sum = sum + deal_detail.monthly_amount;
+            for (var deal_detail of this.deal_details) {
+                sum = sum + deal_detail.monthly_amount_actual;
             }
             return sum;
         }
 
         monthly_period_purchase_amount_sum() {
             var sum = 0;
-            for (deal_detail of deal_details) {
+            for (var deal_detail of deal_details) {
                 sum = sum + deal_detail.partner_monthly_period_purchase_amount;
             }
             return sum;
