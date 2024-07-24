@@ -128,13 +128,21 @@
         product_name;
         start_date;
         end_date;
+        start_month_ratio = 0;
+        end_month_ratio = 0;
+        month_duration_for_finance = 0;
+        month_duration = 0;
+        initial_amount_sum = 0;
+        initial_purchase_amount_sum = 0;
+        monthly_amount_sum = 0;
+        monthly_period_amount_sum = 0;
+        monthly_period_purchase_amount_sum = 0;
         deal_details = [];
         constructor() {
+            calc();
         }
 
-        month_duration_for_finance() {
-            var start_month_ratio = 0;
-            var end_month_ratio = 0;
+        calc() {
             var dj_start_date = dayjs(this.start_date);
             var dj_end_date = dayjs(this.end_date);
             var start_month_date = dj_start_date.date();
@@ -148,64 +156,30 @@
             if (start_month_date != 1) {
                 is_start_month_split = true;
                 var month_days = getEndOfMonth(this.start_date).date();
-                start_month_ratio = Math.round((month_days - start_month_date + 1) / month_days * 100) / 100;
+                this.start_month_ratio = Math.round((month_days - start_month_date + 1) / month_days * 100) / 100;
             }
             var end_month_end_date = getEndOfMonth(this.end_date).date();
             if (end_month_date != end_month_end_date) {
                 is_end_month_split = true;
-                end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
+                this.end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
             }
-            var diff = dj_end_date.diff(dj_start_date, 'month');
+            this.month_duration_for_finance = dj_end_date.diff(dj_start_date, 'month');
             if (!is_start_month_split && !is_end_month_split) {
-                diff = diff + 1;
-            } else if(!is_start_month_split && is_end_month_split) {
-                diff = diff + end_month_ratio;
+                this.month_duration_for_finance = this.month_duration_for_finance + 1;
+            } else if (!is_start_month_split && is_end_month_split) {
+                this.month_duration_for_finance = this.month_duration_for_finance + this.end_month_ratio;
             } else if (is_start_month_split && !is_end_month_split) {
-                diff = diff + start_month_ratio;
+                this.month_duration_for_finance = this.month_duration_for_finance + this.start_month_ratio;
             } else if (is_start_month_split && is_end_month_split) {
-                diff = diff + start_month_ratio + end_month_ratio;
+                this.month_duration_for_finance = this.month_duration_for_finance + this.start_month_ratio + this.end_month_ratio;
             }
-            return diff;
-        }
-
-        initial_amount_sum() {
-            var sum = 0;
             for (var deal_detail of this.deal_details) {
-                sum = sum + deal_detail.initial_amount_actual;
+                this.initial_amount_sum = this.initial_amount_sum + deal_detail.initial_amount_actual;
+                this.initial_purchase_amount_sum = this.initial_purchase_amount_sum + deal_detail.partner_initial_purchase_amount;
+                this.monthly_amount_sum = this.monthly_amount_sum + deal_detail.monthly_amount_actual;
+                this.monthly_period_amount_sum = this.monthly_period_amount_sum + deal_detail.own_monthly_period_amount_actual;
+                this.monthly_period_purchase_amount_sum = this.monthly_period_purchase_amount_sum + deal_detail.partner_monthly_period_purchase_amount;
             }
-            return sum;
-        }
-
-        initial_purchase_amount_sum() {
-            var sum = 0;
-            for (var deal_detail of this.deal_details) {
-                sum = sum + deal_detail.partner_initial_purchase_amount;
-            }
-            return sum;
-        }
-
-        monthly_amount_sum() {
-            var sum = 0;
-            for (var deal_detail of this.deal_details) {
-                sum = sum + deal_detail.monthly_amount_actual;
-            }
-            return sum;
-        }
-
-        monthly_period_amount_sum() {
-            var sum = 0;
-            for (var deal_detail of this.deal_details) {
-                sum = sum + deal_detail.own_monthly_period_amount_actual;
-            }
-            return sum;
-        }
-
-        monthly_period_purchase_amount_sum() {
-            var sum = 0;
-            for (var deal_detail of this.deal_details) {
-                sum = sum + deal_detail.partner_monthly_period_purchase_amount;
-            }
-            return sum;
         }
     }
 
@@ -325,12 +299,12 @@
             consoleLog("product_type=" + deal_group.product_type);
             consoleLog("partner_name=" + deal_group.partner_name);
             consoleLog("productproduct_name_supplier=" + deal_group.product_name);
-            consoleLog("month_duration_for_finance=" + deal_group.month_duration_for_finance());
-            consoleLog("initial_amount_sum=" + deal_group.initial_amount_sum());
-            consoleLog("initial_purchase_amount_sum=" + deal_group.initial_purchase_amount_sum());
-            consoleLog("monthly_amount_sum=" + deal_group.monthly_amount_sum());
-            consoleLog("monthly_period_amount_sum=" + deal_group.monthly_period_amount_sum());
-            consoleLog("monthly_period_purchase_amount_sum=" + deal_group.monthly_period_purchase_amount_sum());
+            consoleLog("month_duration_for_finance=" + deal_group.month_duration_for_finance);
+            consoleLog("initial_amount_sum=" + deal_group.initial_amount_sum);
+            consoleLog("initial_purchase_amount_sum=" + deal_group.initial_purchase_amount_sum);
+            consoleLog("monthly_amount_sum=" + deal_group.monthly_amount_sum);
+            consoleLog("monthly_period_amount_sum=" + deal_group.monthly_period_amount_sum);
+            consoleLog("monthly_period_purchase_amount_sum=" + deal_group.monthly_period_purchase_amount_sum);
         }
     }
 
