@@ -338,6 +338,9 @@
                 var detail_group = map.get(key);
                 if (detail_group == null) {
                     detail_group = new DealDetailGroup(deal_detail.product_supplier, deal_detail.product_type, deal_detail.partner_name, deal_detail.product_name);
+                    detail_group.deal_number = deal_detail.deal_number;
+                    detail_group.invoice_to_number = deal_detail.invoice_to_number;
+                    detail_group.deliver_to_number = deal_detail.deliver_to_number;
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                         detail_group.start_date = this.own_initial_start_date;
                         detail_group.end_date = this.own_initial_end_date;
