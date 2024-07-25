@@ -153,7 +153,7 @@
             this.product_type = product_type;
             this.partner_name = partner_name;
             this.product_name = product_name;
-            calc();
+            this.calc();
         }
 
         calc() {
@@ -334,7 +334,7 @@
         createDealDetailGroups() {
             const map = new Map();
             for (var deal_detail of this.deal_details) {
-                var key = createKey(deal_detail);
+                var key = this.createKey(deal_detail);
                 var detail_group = map.get(key);
                 if (detail_group == null) {
                     detail_group = new DealDetailGroup(product_supplier, product_type, partner_name, product_name);
