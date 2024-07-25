@@ -91,6 +91,9 @@
         quotation_product_name;
         quote_amount;
         constructor(deal_number, invoice_to_number, deliver_to_number, value) {
+            this.deal_number = deal_number;
+            this.invoice_to_number = invoice_to_number;
+            this.deliver_to_number = deliver_to_number;
             this.charge_type = value.charge_type.value;
             this.details_remarks = value.details_remarks.value;
             this.initial_amount = value.initial_amount.value;
