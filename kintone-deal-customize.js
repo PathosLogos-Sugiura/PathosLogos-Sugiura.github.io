@@ -232,7 +232,7 @@
                             month_entry.amount_for_sales = this.monthly_amount_sum;
                         }
                     }
-                } else if (i == month_duration_for_finance_round_up && this.is_end_month_split) {
+                } else if (i == this.month_duration_for_finance_round_up && this.is_end_month_split) {
                     month_entry.amount_for_finance = this.end_month_amount_for_finance;
                     month_entry.purchase_amount_for_finance = this.end_month_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
