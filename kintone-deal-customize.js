@@ -194,12 +194,12 @@
                 this.monthly_period_purchase_amount = this.monthly_period_purchase_amount + deal_detail.partner_monthly_period_purchase_amount;
             }
             if (this.product_type == PRODUCT_TYPE_INITIAL) {
-                this.monthly_amount_for_finance = Math.floor(this.initial_amount / month_duration_for_finance);
-                this.monthly_purchase_amount_for_finance = Math.floor(this.initial_purchase_amount / month_duration_for_finance);
+                this.monthly_amount_for_finance = Math.floor(this.initial_amount / this.month_duration_for_finance);
+                this.monthly_purchase_amount_for_finance = Math.floor(this.initial_purchase_amount / this.month_duration_for_finance);
             }
             if (this.product_type == PRODUCT_TYPE_MONTHLY) {
-                this.monthly_amount_for_finance = Math.floor(monthly_period_amount / month_duration_for_finance);
-                this.monthly_purchase_amount_for_finance = Math.floor(monthly_period_purchase_amount / month_duration_for_finance);
+                this.monthly_amount_for_finance = Math.floor(this.monthly_period_amount / this.month_duration_for_finance);
+                this.monthly_purchase_amount_for_finance = Math.floor(this.monthly_period_purchase_amount / this.month_duration_for_finance);
             }
             if (this.is_start_month_split) {
                 this.start_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.start_month_ratio);
