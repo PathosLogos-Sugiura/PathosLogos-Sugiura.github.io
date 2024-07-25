@@ -209,7 +209,7 @@
                 this.start_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.start_month_ratio);
                 this.start_month_purchase_amount_for_finance = Math.floor(this.monthly_purchase_amount_for_finance * this.start_month_ratio);
             }
-            var entry_date = getEndOfMonth(start_date);
+            var entry_date = getEndOfMonth(this.start_date);
             var free_months = 0;
             if (this.month_count < this.month_duration_for_finance_round_up) {
                 free_months = this.month_duration_for_finance_round_up - this.month_count;
