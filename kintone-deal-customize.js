@@ -62,6 +62,9 @@
     }
 
     class DealDetail {
+        deal_number;
+        invoice_to_number;
+        deliver_to_number;
         charge_type;
         details_remarks;
         initial_amount;
@@ -87,7 +90,7 @@
         qty;
         quotation_product_name;
         quote_amount;
-        constructor(value) {
+        constructor(deal_number, invoice_to_number, deliver_to_number, value) {
             this.charge_type = value.charge_type.value;
             this.details_remarks = value.details_remarks.value;
             this.initial_amount = value.initial_amount.value;
@@ -121,6 +124,9 @@
     }
 
     class DealDetailGroup {
+        deal_number;
+        invoice_to_number;
+        deliver_to_number;
         product_supplier;
         product_type;
         partner_name;
@@ -156,7 +162,6 @@
             this.deal_number = deal_detail.deal_number;
             this.invoice_to_number = deal_detail.invoice_to_number;
             this.deliver_to_number = deal_detail.deliver_to_number;
-            consoleLog(`deal_number=${this.deal_number} deal_detail.deal_number=${deal_detail.deal_number}`)
             this.calc();
         }
 
@@ -331,7 +336,7 @@
             this.consumption_tax = record.consumption_tax.value;
             this.grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
             for (var row_value of record.quotation_details_table.value) {
-                this.deal_details.push(new DealDetail(row_value.value));
+                this.deal_details.push(new DealDetail(deal_number, invoice_to_number, deliver_to_number, row_value.value));
             }
         }
 
