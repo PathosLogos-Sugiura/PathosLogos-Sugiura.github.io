@@ -148,11 +148,14 @@
         is_end_month_split = false;
         deal_details = [];
         monthly_entries = [];
-        constructor(product_supplier, product_type, partner_name, product_name) {
-            this.product_supplier = product_supplier;
-            this.product_type = product_type;
-            this.partner_name = partner_name;
-            this.product_name = product_name;
+        constructor(deal_detail) {
+            this.product_supplier = deal_detail.product_supplier;
+            this.product_type = deal_detail.product_type;
+            this.partner_name = deal_detail.partner_name;
+            this.product_name = deal_detail.product_name;
+            this.deal_number = deal_detail.deal_number;
+            this.invoice_to_number = deal_detail.invoice_to_number;
+            this.deliver_to_number = deal_detail.deliver_to_number;
             this.calc();
         }
 
@@ -337,10 +340,7 @@
                 var key = this.createKey(deal_detail);
                 var detail_group = map.get(key);
                 if (detail_group == null) {
-                    detail_group = new DealDetailGroup(deal_detail.product_supplier, deal_detail.product_type, deal_detail.partner_name, deal_detail.product_name);
-                    detail_group.deal_number = deal_detail.deal_number;
-                    detail_group.invoice_to_number = deal_detail.invoice_to_number;
-                    detail_group.deliver_to_number = deal_detail.deliver_to_number;
+                    detail_group = new DealDetailGroup(deal_detail);
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                         detail_group.start_date = this.own_initial_start_date;
                         detail_group.end_date = this.own_initial_end_date;
@@ -527,7 +527,7 @@
     }
 
     function callKintoneAPI(event, app_id, data) {
-        consoleLog( JSON.stringify(data));
+        consoleLog(JSON.stringify(data));
         kintone.api(kintone.api.url('/k/v1/record', true), 'POST', data, function (resp) {
             consoleLog(`Created new record in app=${app_id}`);
         }, function (error) {
