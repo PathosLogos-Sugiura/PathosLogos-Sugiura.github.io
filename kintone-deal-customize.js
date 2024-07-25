@@ -156,6 +156,7 @@
             this.deal_number = deal_detail.deal_number;
             this.invoice_to_number = deal_detail.invoice_to_number;
             this.deliver_to_number = deal_detail.deliver_to_number;
+            consoleLog(`deal_number=${this.deal_number} deal_detail.deal_number=${deal_detail.deal_number}`)
             this.calc();
         }
 
