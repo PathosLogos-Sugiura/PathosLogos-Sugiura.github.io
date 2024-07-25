@@ -1,6 +1,7 @@
 (function () {
     "use strict";
     const INVOICE_APP_ID = 22;
+    const REVENUE_APP_ID = 23;
     const APP_ID = 21;
 
     const INVOICE_TIMING_BULK_INITIAL = "開始月一括";
@@ -50,19 +51,17 @@
 
     class MonthlyEntry {
         date;
-        product_supplier;
-        charge_type;
-        partner_name;
-        product_name;
+        month_index;
+        month_count;
         amount_for_sales;
         amount_for_finance;
+        purchase_amount_for_finance;
 
-        constructor(date) {
-            this.date = date;
+        constructor() {
         }
     }
 
-    class DealDetails {
+    class DealDetail {
         charge_type;
         details_remarks;
         initial_amount;
@@ -128,17 +127,32 @@
         product_name;
         start_date;
         end_date;
+        month_count;
         start_month_ratio = 0;
         end_month_ratio = 0;
         month_duration_for_finance = 0;
+        month_duration_for_finance_round_up = 0;
         month_duration = 0;
-        initial_amount_sum = 0;
-        initial_purchase_amount_sum = 0;
+        initial_amount = 0;
+        initial_purchase_amount = 0;
         monthly_amount_sum = 0;
-        monthly_period_amount_sum = 0;
-        monthly_period_purchase_amount_sum = 0;
+        monthly_amount_for_finance = 0;
+        monthly_purchase_amount_for_finance = 0;
+        monthly_period_amount = 0;
+        monthly_period_purchase_amount = 0;
+        start_month_amount_for_finance = 0;
+        start_month_purchase_amount_for_finance = 0;
+        end_month_amount_for_finance = 0;
+        end_month_purchase_amount_for_finance = 0;
+        is_start_month_split = false;
+        is_end_month_split = false;
         deal_details = [];
-        constructor() {
+        monthly_entries = [];
+        constructor(product_supplier, product_type, partner_name, product_name) {
+            this.product_supplier = product_supplier;
+            this.product_type = product_type;
+            this.partner_name = partner_name;
+            this.product_name = product_name;
             calc();
         }
 
@@ -147,38 +161,102 @@
             var dj_end_date = dayjs(this.end_date);
             var start_month_date = dj_start_date.date();
             var end_month_date = dj_end_date.date();
-            var is_start_month_split = false;
-            var is_end_month_split = false;
             if (dj_end_date.isBefore(dj_start_date)) {
                 consoleError("End date is before start date");
                 return 0;
             }
             if (start_month_date != 1) {
-                is_start_month_split = true;
+                this.is_start_month_split = true;
                 var month_days = getEndOfMonth(this.start_date).date();
                 this.start_month_ratio = Math.round((month_days - start_month_date + 1) / month_days * 100) / 100;
             }
             var end_month_end_date = getEndOfMonth(this.end_date).date();
             if (end_month_date != end_month_end_date) {
-                is_end_month_split = true;
+                this.is_end_month_split = true;
                 this.end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
             }
             this.month_duration_for_finance = dj_end_date.diff(dj_start_date, 'month');
-            if (!is_start_month_split && !is_end_month_split) {
+            if (!this.is_start_month_split && !this.is_end_month_split) {
                 this.month_duration_for_finance = this.month_duration_for_finance + 1;
-            } else if (!is_start_month_split && is_end_month_split) {
+            } else if (!this.is_start_month_split && this.is_end_month_split) {
                 this.month_duration_for_finance = this.month_duration_for_finance + this.end_month_ratio;
-            } else if (is_start_month_split && !is_end_month_split) {
+            } else if (this.is_start_month_split && !this.is_end_month_split) {
                 this.month_duration_for_finance = this.month_duration_for_finance + this.start_month_ratio;
-            } else if (is_start_month_split && is_end_month_split) {
+            } else if (this.is_start_month_split && this.is_end_month_split) {
                 this.month_duration_for_finance = this.month_duration_for_finance + this.start_month_ratio + this.end_month_ratio;
             }
+            this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance);
             for (var deal_detail of this.deal_details) {
-                this.initial_amount_sum = this.initial_amount_sum + deal_detail.initial_amount_actual;
-                this.initial_purchase_amount_sum = this.initial_purchase_amount_sum + deal_detail.partner_initial_purchase_amount;
+                this.initial_amount = this.initial_amount + deal_detail.initial_amount_actual;
+                this.initial_purchase_amount = this.initial_purchase_amount + deal_detail.partner_initial_purchase_amount;
                 this.monthly_amount_sum = this.monthly_amount_sum + deal_detail.monthly_amount_actual;
-                this.monthly_period_amount_sum = this.monthly_period_amount_sum + deal_detail.own_monthly_period_amount_actual;
-                this.monthly_period_purchase_amount_sum = this.monthly_period_purchase_amount_sum + deal_detail.partner_monthly_period_purchase_amount;
+                this.monthly_period_amount = this.monthly_period_amount + deal_detail.own_monthly_period_amount_actual;
+                this.monthly_period_purchase_amount = this.monthly_period_purchase_amount + deal_detail.partner_monthly_period_purchase_amount;
+            }
+            if (this.product_type == PRODUCT_TYPE_INITIAL) {
+                this.monthly_amount_for_finance = Math.floor(this.initial_amount / month_duration_for_finance);
+                this.monthly_purchase_amount_for_finance = Math.floor(this.initial_purchase_amount / month_duration_for_finance);
+            }
+            if (this.product_type == PRODUCT_TYPE_MONTHLY) {
+                this.monthly_amount_for_finance = Math.floor(monthly_period_amount / month_duration_for_finance);
+                this.monthly_purchase_amount_for_finance = Math.floor(monthly_period_purchase_amount / month_duration_for_finance);
+            }
+            if (this.is_start_month_split) {
+                this.start_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.start_month_ratio);
+                this.start_month_purchase_amount_for_finance = Math.floor(this.monthly_purchase_amount_for_finance * this.start_month_ratio);
+            }
+            if (this.is_start_month_split) {
+                this.start_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.start_month_ratio);
+                this.start_month_purchase_amount_for_finance = Math.floor(this.monthly_purchase_amount_for_finance * this.start_month_ratio);
+            }
+            var entry_date = getEndOfMonth(start_date);
+            var free_months = 0;
+            if (this.month_count < this.month_duration_for_finance_round_up) {
+                free_months = this.month_duration_for_finance_round_up - this.month_count;
+            }
+            for (var i = 1; i <= this.month_duration_for_finance_round_up; i++) {
+                var month_entry = new MonthlyEntry();
+                month_entry.date = entry_date;
+                month_entry.month_index = i;
+                month_entry.month_count = this.month_duration_for_finance_round_up;
+                if (i == 1 && this.is_start_month_split) {
+                    month_entry.amount_for_finance = this.start_month_amount_for_finance;
+                    month_entry.purchase_amount_for_finance = this.start_month_purchase_amount_for_finance;
+                    if (this.product_type == PRODUCT_TYPE_INITIAL) {
+                        month_entry.amount_for_sales = this.start_month_amount_for_finance;
+                    }
+                    if (this.product_type == PRODUCT_TYPE_MONTHLY) {
+                        if (this.is_start_month_split) {
+                            month_entry.amount_for_sales = 0;
+                        } else {
+                            month_entry.amount_for_sales = this.monthly_amount_sum;
+                        }
+                    }
+                } else if (i == month_duration_for_finance_round_up && this.is_end_month_split) {
+                    month_entry.amount_for_finance = this.end_month_amount_for_finance;
+                    month_entry.purchase_amount_for_finance = this.end_month_purchase_amount_for_finance;
+                    if (this.product_type == PRODUCT_TYPE_INITIAL) {
+                        month_entry.amount_for_sales = this.end_month_amount_for_finance;
+                    }
+                    if (this.product_type == PRODUCT_TYPE_MONTHLY) {
+                        month_entry.amount_for_sales = this.monthly_amount_sum;
+                    }
+                } else {
+                    month_entry.amount_for_finance = this.monthly_amount_for_finance;
+                    month_entry.purchase_amount_for_finance = this.month_purchase_amount_for_finance;
+                    if (this.product_type == PRODUCT_TYPE_INITIAL) {
+                        month_entry.amount_for_sales = this.monthly_amount_for_finance;
+                    }
+                    if (this.product_type == PRODUCT_TYPE_MONTHLY) {
+                        if (i <= free_months) {
+                            month_entry.amount_for_sales = 0;
+                        } else {
+                            month_entry.amount_for_sales = this.monthly_amount_sum;
+                        }
+                    }
+                }
+                this.monthly_entries.push(month_entry);
+                entry_date = getNextEndOfMonth(entry_date);
             }
         }
     }
@@ -209,6 +287,7 @@
         grand_total_amount;
         consumption_tax;
         grand_total_amount_with_tax;
+        payment_due_date;
         deal_details = [];
         constructor(record) {
             // 案件レコード番号
@@ -222,6 +301,7 @@
             if (this.invoice_to_number != this.deliver_to_number) {
                 this.invoice_item_suffix = "(" + this.deliver_to_name + "様利用分)";
             }
+            this.payment_due_date = record.payment_due_date.value;
             // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
             this.own_initial_total_amount_actual = record.own_initial_total_amount_actual.value;
@@ -247,21 +327,17 @@
             this.consumption_tax = record.consumption_tax.value;
             this.grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
             for (var row_value of record.quotation_details_table.value) {
-                this.deal_details.push(new DealDetails(row_value.value));
+                this.deal_details.push(new DealDetail(row_value.value));
             }
         }
 
         createDealDetailGroups() {
             const map = new Map();
             for (var deal_detail of this.deal_details) {
-                var key = this.createKey(deal_detail);
+                var key = createKey(deal_detail);
                 var detail_group = map.get(key);
                 if (detail_group == null) {
-                    detail_group = new DealDetailGroup();
-                    detail_group.product_supplier = deal_detail.product_supplier;
-                    detail_group.product_type = deal_detail.product_type;
-                    detail_group.partner_name = deal_detail.partner_name;
-                    detail_group.product_name = deal_detail.product_name;
+                    detail_group = new DealDetailGroup(product_supplier, product_type, partner_name, product_name);
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                         detail_group.start_date = this.own_initial_start_date;
                         detail_group.end_date = this.own_initial_end_date;
@@ -280,6 +356,10 @@
                     }
                     map.set(key, detail_group);
                 }
+                if (detail_group.month_count != 0 && detail_group.month_count != deal_detail.month_count) {
+                    consoleError("There are mixed month_count in product_supplier=" + product_supplier + " product_type=" + product_type + " partner_name=" + partner_name + "product_name=" + product_name);
+                }
+                detail_group.month_count = deal_detail.month_count;
                 detail_group.deal_details.push(deal_detail);
             }
             return map.values();
@@ -295,17 +375,27 @@
         var deal_info = new DealInfo(record);
         var deal_groups = deal_info.createDealDetailGroups();
         for (var deal_group of deal_groups) {
-            consoleLog("product_supplier=" + deal_group.product_supplier);
-            consoleLog("product_type=" + deal_group.product_type);
-            consoleLog("partner_name=" + deal_group.partner_name);
-            consoleLog("productproduct_name_supplier=" + deal_group.product_name);
-            consoleLog("month_duration_for_finance=" + deal_group.month_duration_for_finance);
-            consoleLog("initial_amount_sum=" + deal_group.initial_amount_sum);
-            consoleLog("initial_purchase_amount_sum=" + deal_group.initial_purchase_amount_sum);
-            consoleLog("monthly_amount_sum=" + deal_group.monthly_amount_sum);
-            consoleLog("monthly_period_amount_sum=" + deal_group.monthly_period_amount_sum);
-            consoleLog("monthly_period_purchase_amount_sum=" + deal_group.monthly_period_purchase_amount_sum);
+            for (var month_entry of deal_group.monthly_entries) {
+                var newData = {
+                    "app": REVENUE_APP_ID,
+                    "record": {
+                        "deal_number": { "value": deal_group.deal_number },
+                        "deliver_to_number": { "value": deal_group.deliver_to_number },
+                        "invoice_to_number": { "value": deal_group.invoice_to_number },
+                        "revenue_date": { "value": month_entry.date.format("YYYY-MM-DD") },
+                        "product_supplier": { "value": deal_group.product_supplier },
+                        "product_type": { "value": deal_group.product_type },
+                        "partner_name": { "value": deal_group.partner_name },
+                        "amount_for_sales": { "value": month_entry.amount_for_sales },
+                        "amount_for_finance": { "value": month_entry.amount_for_finance },
+                        "month_index": { "value": deal_group.grand_total_amount_with_tax },
+                        "month_count": { "value": deal_group.month_duration_for_finance_round_up },
+                    }
+                };
+                callKintoneAPI(event, REVENUE_APP_ID, newData);
+            }
         }
+
     }
 
     function createInvoice(event) {
@@ -407,12 +497,7 @@
                 "invoice_details_table": { "value": table_value },
             }
         };
-        kintone.api(kintone.api.url('/k/v1/record', true), 'POST', newData, function (resp) {
-            consoleLog("Created new invoice record.");
-        }, function (error) {
-            event.error = "請求書登録時にエラーが発生しました";
-            consoleError("Error occured during invoice registration:", error);
-        });
+        callKintoneAPI(event, INVOICE_APP_ID, newData);
     }
 
     // 指定された日付の月末を算出
@@ -435,6 +520,15 @@
     // コンソールにエラー出力（ブラウザで見やすいように接頭語をつけている）
     function consoleError(message, error) {
         console.error("[PathosLogos] " + message, error);
+    }
+
+    function callKintoneAPI(event, app_id, data) {
+        kintone.api(kintone.api.url('/k/v1/record', true), 'POST', newData, function (resp) {
+            consoleLog("Created new record in app=" + app_id);
+        }, function (error) {
+            event.error = "登録時にエラーが発生しました";
+            consoleError("Error occured during creating error in app=" + app_id, error);
+        });
     }
 }
 )();
