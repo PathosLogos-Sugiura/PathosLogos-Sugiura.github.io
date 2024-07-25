@@ -337,7 +337,7 @@
                 var key = this.createKey(deal_detail);
                 var detail_group = map.get(key);
                 if (detail_group == null) {
-                    detail_group = new DealDetailGroup(product_supplier, product_type, partner_name, product_name);
+                    detail_group = new DealDetailGroup(this.product_supplier, this.product_type, this.partner_name, this.product_name);
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                         detail_group.start_date = this.own_initial_start_date;
                         detail_group.end_date = this.own_initial_end_date;
