@@ -524,7 +524,7 @@
     }
 
     function callKintoneAPI(event, app_id, data) {
-        consoleLog(data);
+        consoleLog( JSON.stringify(data));
         kintone.api(kintone.api.url('/k/v1/record', true), 'POST', data, function (resp) {
             consoleLog(`Created new record in app=${app_id}`);
         }, function (error) {
