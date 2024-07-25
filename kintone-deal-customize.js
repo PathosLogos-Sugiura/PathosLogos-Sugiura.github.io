@@ -356,10 +356,12 @@
                     }
                     map.set(key, detail_group);
                 }
-                if (detail_group.month_count != 0 && detail_group.month_count != deal_detail.month_count) {
-                    consoleError("There are mixed month_count in product_supplier=${this.product_supplier} product_type=${this.product_type} partner_name=${this.partner_name} product_name=${this.product_name}");
+                if (deal_detail.product_type == PRODUCT_TYPE_MONTHLY) {
+                    if (detail_group.month_count != 0 && detail_group.month_count != deal_detail.month_count) {
+                        consoleError(`There are mixed month_count in product_supplier=${this.product_supplier} product_type=${this.product_type} partner_name=${this.partner_name} product_name=${this.product_name}`);
+                    }
+                    detail_group.month_count = deal_detail.month_count;
                 }
-                detail_group.month_count = deal_detail.month_count;
                 detail_group.deal_details.push(deal_detail);
             }
             return map.values();
@@ -514,20 +516,20 @@
 
     // コンソールにログ出力（ブラウザで見やすいように接頭語をつけている）
     function consoleLog(message) {
-        console.log("[PathosLogos] " + message);
+        console.log(`[PathosLogos] ${message}`);
     }
 
     // コンソールにエラー出力（ブラウザで見やすいように接頭語をつけている）
     function consoleError(message, error) {
-        console.error("[PathosLogos] " + message, error);
+        console.error(`[PathosLogos] ${message}`, error);
     }
 
     function callKintoneAPI(event, app_id, data) {
-        kintone.api(kintone.api.url('/k/v1/record', true), 'POST', newData, function (resp) {
-            consoleLog("Created new record in app=" + app_id);
+        kintone.api(kintone.api.url('/k/v1/record', true), 'POST', data, function (resp) {
+            consoleLog(`Created new record in app=${app_id}`);
         }, function (error) {
             event.error = "登録時にエラーが発生しました";
-            consoleError("Error occured during creating error in app=" + app_id, error);
+            consoleError(`Error occured during creating error in app=${app_id}`, error);
         });
     }
 }
