@@ -357,7 +357,7 @@
                     map.set(key, detail_group);
                 }
                 if (detail_group.month_count != 0 && detail_group.month_count != deal_detail.month_count) {
-                    consoleError("There are mixed month_count in product_supplier=" + product_supplier + " product_type=" + product_type + " partner_name=" + partner_name + "product_name=" + product_name);
+                    consoleError("There are mixed month_count in product_supplier=${this.product_supplier} product_type=${this.product_type} partner_name=${this.partner_name} product_name=${this.product_name}");
                 }
                 detail_group.month_count = deal_detail.month_count;
                 detail_group.deal_details.push(deal_detail);
