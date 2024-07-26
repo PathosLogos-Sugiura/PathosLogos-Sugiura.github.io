@@ -175,7 +175,6 @@
             this.deal_number = deal_detail.deal_number;
             this.invoice_to_number = deal_detail.invoice_to_number;
             this.deliver_to_number = deal_detail.deliver_to_number;
-            this.calc();
         }
 
         calc() {
@@ -407,7 +406,13 @@
                 }
                 detail_group.deal_details.push(deal_detail);
             }
-            return map.values();
+            var ret_array = [];
+            for (detail_group of map.values()) {
+                // データが揃ったここで計算しないとちゃんと計算されない
+                detail_group.calc();
+                ret_array.push(detail_group);
+            }
+            return ret_array;
         }
 
         createKey(deal_detail) {
