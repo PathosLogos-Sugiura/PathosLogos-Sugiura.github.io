@@ -177,7 +177,7 @@
             this.deliver_to_number = deal_detail.deliver_to_number;
         }
 
-        calc() {
+        calculate() {
             consoleLog(`Calculate product_supplier=${this.product_supplier} product_type=${this.product_type} partner_name=${this.partner_name} product_name=${this.product_name}`);
             var dj_start_date = dayjs(this.start_date);
             var dj_end_date = dayjs(this.end_date);
@@ -203,22 +203,22 @@
             consoleLog(`is_end_month_split=${this.is_end_month_split} end_month_ratio=${this.end_month_ratio}`);
             this.month_duration_for_finance = dj_end_date.diff(dj_start_date, 'month');
             if (!this.is_start_month_split && !this.is_end_month_split) {
-                this.month_duration_for_finance = this.month_duration_for_finance + 1;
+                this.month_duration_for_finance += 1;
             } else if (!this.is_start_month_split && this.is_end_month_split) {
-                this.month_duration_for_finance = this.month_duration_for_finance + this.end_month_ratio;
+                this.month_duration_for_finance += this.end_month_ratio;
             } else if (this.is_start_month_split && !this.is_end_month_split) {
-                this.month_duration_for_finance = this.month_duration_for_finance + this.start_month_ratio;
+                this.month_duration_for_finance += this.start_month_ratio;
             } else if (this.is_start_month_split && this.is_end_month_split) {
-                this.month_duration_for_finance = this.month_duration_for_finance + this.start_month_ratio + this.end_month_ratio;
+                this.month_duration_for_finance += (this.start_month_ratio + this.end_month_ratio);
             }
             this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance);
             consoleLog(`month_duration_for_finance=${this.month_duration_for_finance} month_duration_for_finance_round_up=${this.month_duration_for_finance_round_up}`);
             for (var deal_detail of this.deal_details) {
-                this.initial_amount = this.initial_amount + Math.max(deal_detail.own_initial_amount_actual, deal_detail.partner_initial_amount_actual);
-                this.initial_purchase_amount = this.initial_purchase_amount + deal_detail.partner_initial_purchase_amount;
-                this.monthly_amount = this.monthly_amount + Math.floor(Math.max(deal_detail.own_monthly_amount_actual, deal_detail.partner_monthly_amount_actual));
-                this.monthly_period_amount = this.monthly_period_amount + Math.max(deal_detail.own_monthly_period_amount_actual, deal_detail.partner_monthly_period_amount_actual);
-                this.monthly_period_purchase_amount = this.monthly_period_purchase_amount + deal_detail.partner_monthly_period_purchase_amount;
+                this.initial_amount += Math.max(deal_detail.own_initial_amount_actual, deal_detail.partner_initial_amount_actual);
+                this.initial_purchase_amount += deal_detail.partner_initial_purchase_amount;
+                this.monthly_amount += Math.floor(Math.max(deal_detail.own_monthly_amount_actual, deal_detail.partner_monthly_amount_actual));
+                this.monthly_period_amount += Math.max(deal_detail.own_monthly_period_amount_actual, deal_detail.partner_monthly_period_amount_actual);
+                this.monthly_period_purchase_amount += deal_detail.partner_monthly_period_purchase_amount;
             }
             consoleLog(`initial_amount=${this.initial_amount}`);
             consoleLog(`initial_purchase_amount=${this.initial_purchase_amount}`);
@@ -253,6 +253,8 @@
                 free_months = this.month_duration_for_finance_round_up - this.month_count;
             }
             consoleLog(`free_months=${free_months}`);
+            var amount_for_finance_sum = 0;
+            var purchase_amount_for_finance_sum = 0;
             for (var i = 1; i <= this.month_duration_for_finance_round_up; i++) {
                 consoleLog(`index=${i}`);
                 consoleLog(`entry_date=${entry_date}`);
@@ -262,7 +264,9 @@
                 month_entry.month_count = this.month_duration_for_finance_round_up;
                 if (i == 1 && this.is_start_month_split) {
                     month_entry.amount_for_finance = this.start_month_amount_for_finance;
+                    amount_for_finance_sum += this.start_month_amount_for_finance;
                     month_entry.purchase_amount_for_finance = this.start_month_purchase_amount_for_finance;
+                    purchase_amount_for_finance_sum += this.start_month_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.start_month_amount_for_finance;
                     }
@@ -275,16 +279,36 @@
                     }
                 } else if (i == this.month_duration_for_finance_round_up && this.is_end_month_split) {
                     month_entry.amount_for_finance = this.end_month_amount_for_finance;
+                    amount_for_finance_sum += this.end_month_amount_for_finance;
                     month_entry.purchase_amount_for_finance = this.end_month_purchase_amount_for_finance;
+                    purchase_amount_for_finance_sum += this.end_month_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.end_month_amount_for_finance;
+                        var amount_diff = initial_amount - amount_for_finance_sum;
+                        var purchase_amount_diff = initial_purchase_amount - purchase_amount_for_finance_sum;
+                        if (amount_diff > 0) {
+                            month_entry.amount_for_finance += amount_diff;
+                        }
+                        if (purchase_amount_diff > 0) {
+                            month_entry.purchase_amount_for_finance += purchase_amount_diff;
+                        }
                     }
                     if (this.product_type == PRODUCT_TYPE_MONTHLY) {
                         month_entry.amount_for_sales = this.monthly_amount;
+                        var amount_diff = monthly_period_amount - amount_for_finance_sum;
+                        var purchase_amount_diff = monthly_period_purchase_amount - purchase_amount_for_finance_sum;
+                        if (amount_diff > 0) {
+                            month_entry.amount_for_finance += amount_diff;
+                        }
+                        if (purchase_amount_diff > 0) {
+                            month_entry.purchase_amount_for_finance += purchase_amount_diff;
+                        }
                     }
                 } else {
                     month_entry.amount_for_finance = this.monthly_amount_for_finance;
+                    amount_for_finance_sum += this.monthly_amount_for_finance;
                     month_entry.purchase_amount_for_finance = this.month_purchase_amount_for_finance;
+                    purchase_amount_for_finance_sum += this.month_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.monthly_amount_for_finance;
                     }
@@ -340,7 +364,7 @@
             this.deliver_to_name = record.deliver_to_name.value;
             this.invoice_item_suffix = "";
             if (this.invoice_to_number != this.deliver_to_number) {
-                this.invoice_item_suffix = "(" + this.deliver_to_name + "様利用分)";
+                this.invoice_item_suffix = `(${this.deliver_to_name}様利用分)`;
             }
             this.payment_due_date = record.payment_due_date.value;
             // パトスロゴス初期費用
@@ -409,7 +433,7 @@
             var ret_array = [];
             for (detail_group of map.values()) {
                 // データが揃ったここで計算しないとちゃんと計算されない
-                detail_group.calc();
+                detail_group.calculate();
                 ret_array.push(detail_group);
             }
             return ret_array;
@@ -457,18 +481,10 @@
             var item_name = "初期費用(パトスロゴス)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
-                    'item_name': {
-                        value: item_name
-                    },
-                    'start_date': {
-                        value: deal_info.own_initial_start_date
-                    },
-                    'end_date': {
-                        value: deal_info.own_initial_end_date
-                    },
-                    'amount': {
-                        value: deal_info.own_initial_total_amount_actual
-                    }
+                    'item_name': { value: item_name },
+                    'start_date': { value: deal_info.own_initial_start_date },
+                    'end_date': { value: deal_info.own_initial_end_date },
+                    'amount': { value: deal_info.own_initial_total_amount_actual }
                 }
             };
             table_value.push(newRow);
@@ -477,18 +493,10 @@
             var item_name = "初期費用(共創パートナー)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
-                    'item_name': {
-                        value: item_name
-                    },
-                    'start_date': {
-                        value: deal_info.partner_initial_start_date
-                    },
-                    'end_date': {
-                        value: deal_info.partner_initial_end_date
-                    },
-                    'amount': {
-                        value: deal_info.partner_initial_total_amount_actual
-                    }
+                    'item_name': { value: item_name },
+                    'start_date': { value: deal_info.partner_initial_start_date },
+                    'end_date': { value: deal_info.partner_initial_end_date },
+                    'amount': { value: deal_info.partner_initial_total_amount_actual }
                 }
             };
             table_value.push(newRow);
@@ -497,18 +505,10 @@
             var item_name = "期間費用(パトスロゴス)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
-                    'item_name': {
-                        value: item_name
-                    },
-                    'start_date': {
-                        value: deal_info.own_monthly_start_date
-                    },
-                    'end_date': {
-                        value: deal_info.own_monthly_end_date
-                    },
-                    'amount': {
-                        value: deal_info.own_monthly_total_period_amount_actual
-                    }
+                    'item_name': { value: item_name },
+                    'start_date': { value: deal_info.own_monthly_start_date },
+                    'end_date': { value: deal_info.own_monthly_end_date },
+                    'amount': { value: deal_info.own_monthly_total_period_amount_actual }
                 }
             };
             table_value.push(newRow);
@@ -517,18 +517,10 @@
             var item_name = "期間費用(共創パートナー)" + deal_info.invoice_item_suffix;
             var newRow = {
                 value: {
-                    'item_name': {
-                        value: item_name
-                    },
-                    'start_date': {
-                        value: deal_info.partner_monthly_start_date
-                    },
-                    'end_date': {
-                        value: deal_info.partner_monthly_end_date
-                    },
-                    'amount': {
-                        value: deal_info.partner_monthly_total_period_amount_actual
-                    }
+                    'item_name': { value: item_name },
+                    'start_date': { value: deal_info.partner_monthly_start_date },
+                    'end_date': { value: deal_info.partner_monthly_end_date },
+                    'amount': { value: deal_info.partner_monthly_total_period_amount_actual }
                 }
             };
             table_value.push(newRow);
@@ -574,15 +566,14 @@
     }
 
     function dumpObject(obj) {
-        // Using JSON.stringify with a replacer to handle functions and circular references
         const jsonString = JSON.stringify(obj, (key, value) => {
-          if (typeof value === 'function') {
-            return value.toString(); // Convert functions to their string representation
-          }
-          return value;
-        }, 2); // Pretty print with 2 spaces indentation      
+            if (typeof value === 'function') {
+                return value.toString();
+            }
+            return value;
+        }, 2);
         consoleLog(jsonString);
-      }
+    }
 
     function callKintoneAPI(event, app_id, data) {
         consoleLog(JSON.stringify(data));
