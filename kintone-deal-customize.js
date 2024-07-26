@@ -407,6 +407,7 @@
     function createRevenue(event) {
         var record = event.record;
         var deal_info = new DealInfo(record);
+        dumpObject(deal_info);
         var deal_groups = deal_info.createDealDetailGroups();
         for (var deal_group of deal_groups) {
             for (var month_entry of deal_group.monthly_entries) {
@@ -554,6 +555,17 @@
     function consoleError(message, error) {
         console.error(`[PathosLogos] ${message}`, error);
     }
+
+    function dumpObject(obj) {
+        // Using JSON.stringify with a replacer to handle functions and circular references
+        const jsonString = JSON.stringify(obj, (key, value) => {
+          if (typeof value === 'function') {
+            return value.toString(); // Convert functions to their string representation
+          }
+          return value;
+        }, 2); // Pretty print with 2 spaces indentation      
+        consoleLog(jsonString);
+      }
 
     function callKintoneAPI(event, app_id, data) {
         consoleLog(JSON.stringify(data));
