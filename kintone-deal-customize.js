@@ -286,23 +286,9 @@
                     var purchase_amount_diff = 0;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.end_month_amount_for_finance;
-                        amount_diff = initial_amount - amount_for_finance_sum;
-                        purchase_amount_diff = initial_purchase_amount - purchase_amount_for_finance_sum;
                     }
                     if (this.product_type == PRODUCT_TYPE_MONTHLY) {
                         month_entry.amount_for_sales = this.monthly_amount;
-                        amount_diff = monthly_period_amount - amount_for_finance_sum;
-                        purchase_amount_diff = monthly_period_purchase_amount - purchase_amount_for_finance_sum;
-                    }
-                    consoleLog(`amount_for_finance_sum=${amount_for_finance_sum}`);
-                    consoleLog(`purchase_amount_for_finance_sum=${purchase_amount_for_finance_sum}`);
-                    consoleLog(`amount_diff=${amount_diff}`);
-                    consoleLog(`purchase_amount_diff=${purchase_amount_diff}`);
-                    if (amount_diff > 0) {
-                        month_entry.amount_for_finance += amount_diff;
-                    }
-                    if (purchase_amount_diff > 0) {
-                        month_entry.purchase_amount_for_finance += purchase_amount_diff;
                     }
                 } else {
                     month_entry.amount_for_finance = this.monthly_amount_for_finance;
@@ -318,6 +304,26 @@
                         } else {
                             month_entry.amount_for_sales = this.monthly_amount;
                         }
+                    }
+                }
+                if (i == this.month_duration_for_finance_round_up) {
+                    if (this.product_type == PRODUCT_TYPE_INITIAL) {
+                        amount_diff = initial_amount - amount_for_finance_sum;
+                        purchase_amount_diff = initial_purchase_amount - purchase_amount_for_finance_sum;
+                    }
+                    if (this.product_type == PRODUCT_TYPE_MONTHLY) {
+                        amount_diff = monthly_period_amount - amount_for_finance_sum;
+                        purchase_amount_diff = monthly_period_purchase_amount - purchase_amount_for_finance_sum;
+                    }
+                    consoleLog(`amount_for_finance_sum=${amount_for_finance_sum}`);
+                    consoleLog(`purchase_amount_for_finance_sum=${purchase_amount_for_finance_sum}`);
+                    consoleLog(`amount_diff=${amount_diff}`);
+                    consoleLog(`purchase_amount_diff=${purchase_amount_diff}`);
+                    if (amount_diff > 0) {
+                        month_entry.amount_for_finance += amount_diff;
+                    }
+                    if (purchase_amount_diff > 0) {
+                        month_entry.purchase_amount_for_finance += purchase_amount_diff;
                     }
                 }
                 this.monthly_entries.push(month_entry);
