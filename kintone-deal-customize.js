@@ -372,19 +372,19 @@
                     consoleLog(`Creating new DealDetailGroup object for ${key}`);
                     detail_group = new DealDetailGroup(deal_detail);
                     consoleLog(`product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
-                    if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
+                    if (deal_detail.product_supplier === PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_INITIAL) {
                         consoleLog(`Pattern 1 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
                         detail_group.start_date = this.own_initial_start_date;
                         detail_group.end_date = this.own_initial_end_date;
-                    } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type == PRODUCT_TYPE_MONTHLY) {
+                    } else if (deal_detail.product_supplier === PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
                         consoleLog(`Pattern 2 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
                         detail_group.start_date = this.own_monthly_start_date;
                         detail_group.end_date = this.own_monthly_end_date;
-                    } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
+                    } else if (deal_detail.product_supplier === PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type === PRODUCT_TYPE_INITIAL) {
                         consoleLog(`Pattern 3 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
                         detail_group.start_date = this.partner_initial_start_date;
                         detail_group.end_date = this.partner_initial_end_date;
-                    } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type == PRODUCT_TYPE_MONTHLY) {
+                    } else if (deal_detail.product_supplier === PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
                         consoleLog(`Pattern 4 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
                         detail_group.start_date = this.partner_monthly_start_date;
                         detail_group.end_date = this.partner_monthly_end_date;
