@@ -144,7 +144,7 @@
         month_duration = 0;
         initial_amount = 0;
         initial_purchase_amount = 0;
-        monthly_amount_sum = 0;
+        monthly_amount = 0;
         monthly_amount_for_finance = 0;
         monthly_purchase_amount_for_finance = 0;
         monthly_period_amount = 0;
@@ -169,24 +169,27 @@
         }
 
         calc() {
+            consoleLog(`Calculate product_supplier=${this.product_supplier} product_type=${this.product_type} partner_name=${this.partner_name} product_name=${this.product_name}`);
             var dj_start_date = dayjs(this.start_date);
             var dj_end_date = dayjs(this.end_date);
             var start_month_date = dj_start_date.date();
             var end_month_date = dj_end_date.date();
             if (dj_end_date.isBefore(dj_start_date)) {
                 consoleError("End date is before start date");
-                return 0;
+                return;
             }
             if (start_month_date != 1) {
                 this.is_start_month_split = true;
                 var month_days = getEndOfMonth(this.start_date).date();
                 this.start_month_ratio = Math.round((month_days - start_month_date + 1) / month_days * 100) / 100;
             }
+            consoleLog(`is_start_month_split=${this.is_start_month_split} start_month_ratio=${this.start_month_ratio}`);
             var end_month_end_date = getEndOfMonth(this.end_date).date();
             if (end_month_date != end_month_end_date) {
                 this.is_end_month_split = true;
                 this.end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
             }
+            consoleLog(`is_end_month_split=${this.is_end_month_split} end_month_ratio=${this.end_month_ratio}`);
             this.month_duration_for_finance = dj_end_date.diff(dj_start_date, 'month');
             if (!this.is_start_month_split && !this.is_end_month_split) {
                 this.month_duration_for_finance = this.month_duration_for_finance + 1;
@@ -198,13 +201,19 @@
                 this.month_duration_for_finance = this.month_duration_for_finance + this.start_month_ratio + this.end_month_ratio;
             }
             this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance);
+            consoleLog(`month_duration_for_finance=${this.month_duration_for_finance} month_duration_for_finance_round_up=${this.month_duration_for_finance_round_up}`);
             for (var deal_detail of this.deal_details) {
                 this.initial_amount = this.initial_amount + deal_detail.initial_amount_actual;
                 this.initial_purchase_amount = this.initial_purchase_amount + deal_detail.partner_initial_purchase_amount;
-                this.monthly_amount_sum = this.monthly_amount_sum + deal_detail.monthly_amount_actual;
+                this.monthly_amount = this.monthly_amount + deal_detail.monthly_amount_actual;
                 this.monthly_period_amount = this.monthly_period_amount + deal_detail.own_monthly_period_amount_actual;
                 this.monthly_period_purchase_amount = this.monthly_period_purchase_amount + deal_detail.partner_monthly_period_purchase_amount;
             }
+            consoleLog(`initial_amount=${this.initial_amount}`);
+            consoleLog(`initial_purchase_amount=${this.initial_purchase_amount}`);
+            consoleLog(`monthly_amount=${this.monthly_amount}`);
+            consoleLog(`monthly_period_amount=${this.monthly_period_amount}`);
+            consoleLog(`monthly_period_purchase_amount=${this.monthly_period_purchase_amount}`);
             if (this.product_type == PRODUCT_TYPE_INITIAL) {
                 this.monthly_amount_for_finance = Math.floor(this.initial_amount / this.month_duration_for_finance);
                 this.monthly_purchase_amount_for_finance = Math.floor(this.initial_purchase_amount / this.month_duration_for_finance);
@@ -217,16 +226,25 @@
                 this.start_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.start_month_ratio);
                 this.start_month_purchase_amount_for_finance = Math.floor(this.monthly_purchase_amount_for_finance * this.start_month_ratio);
             }
-            if (this.is_start_month_split) {
-                this.start_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.start_month_ratio);
-                this.start_month_purchase_amount_for_finance = Math.floor(this.monthly_purchase_amount_for_finance * this.start_month_ratio);
+            if (this.is_end_month_split) {
+                this.end_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.end_month_ratio);
+                this.end_month_purchase_amount_for_finance = Math.floor(this.monthly_purchase_amount_for_finance * this.end_month_ratio);
             }
+            consoleLog(`monthly_amount_for_finance=${this.monthly_amount_for_finance}`);
+            consoleLog(`monthly_purchase_amount_for_finance=${this.monthly_purchase_amount_for_finance}`);
+            consoleLog(`start_month_amount_for_finance=${this.start_month_amount_for_finance}`);
+            consoleLog(`start_month_purchase_amount_for_finance=${this.start_month_purchase_amount_for_finance}`);
+            consoleLog(`end_month_amount_for_finance=${this.end_month_amount_for_finance}`);
+            consoleLog(`end_month_purchase_amount_for_finance=${this.end_month_purchase_amount_for_finance}`);
             var entry_date = getEndOfMonth(this.start_date);
             var free_months = 0;
             if (this.month_count < this.month_duration_for_finance_round_up) {
                 free_months = this.month_duration_for_finance_round_up - this.month_count;
             }
+            consoleLog(`free_months=${free_months}`);
             for (var i = 1; i <= this.month_duration_for_finance_round_up; i++) {
+                consoleLog(`index=${i}`);
+                consoleLog(`entry_date=${entry_date}`);
                 var month_entry = new MonthlyEntry();
                 month_entry.date = entry_date;
                 month_entry.month_index = i;
@@ -241,7 +259,7 @@
                         if (this.is_start_month_split) {
                             month_entry.amount_for_sales = 0;
                         } else {
-                            month_entry.amount_for_sales = this.monthly_amount_sum;
+                            month_entry.amount_for_sales = this.monthly_amount;
                         }
                     }
                 } else if (i == this.month_duration_for_finance_round_up && this.is_end_month_split) {
@@ -251,7 +269,7 @@
                         month_entry.amount_for_sales = this.end_month_amount_for_finance;
                     }
                     if (this.product_type == PRODUCT_TYPE_MONTHLY) {
-                        month_entry.amount_for_sales = this.monthly_amount_sum;
+                        month_entry.amount_for_sales = this.monthly_amount;
                     }
                 } else {
                     month_entry.amount_for_finance = this.monthly_amount_for_finance;
@@ -263,7 +281,7 @@
                         if (i <= free_months) {
                             month_entry.amount_for_sales = 0;
                         } else {
-                            month_entry.amount_for_sales = this.monthly_amount_sum;
+                            month_entry.amount_for_sales = this.monthly_amount;
                         }
                     }
                 }
