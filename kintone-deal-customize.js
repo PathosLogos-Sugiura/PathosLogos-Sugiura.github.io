@@ -282,8 +282,6 @@
                     amount_for_finance_sum += this.end_month_amount_for_finance;
                     month_entry.purchase_amount_for_finance = this.end_month_purchase_amount_for_finance;
                     purchase_amount_for_finance_sum += this.end_month_purchase_amount_for_finance;
-                    var amount_diff = 0;
-                    var purchase_amount_diff = 0;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.end_month_amount_for_finance;
                     }
@@ -307,6 +305,8 @@
                     }
                 }
                 if (i == this.month_duration_for_finance_round_up) {
+                    var amount_diff = 0;
+                    var purchase_amount_diff = 0;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         amount_diff = initial_amount - amount_for_finance_sum;
                         purchase_amount_diff = initial_purchase_amount - purchase_amount_for_finance_sum;
