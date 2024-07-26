@@ -414,6 +414,7 @@
         var deal_info = new DealInfo(record);
         dumpObject(deal_info);
         var deal_groups = deal_info.createDealDetailGroups();
+        dumpObject(deal_groups);
         for (var deal_group of deal_groups) {
             for (var month_entry of deal_group.monthly_entries) {
                 var newData = {
