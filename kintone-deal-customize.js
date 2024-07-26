@@ -74,12 +74,18 @@
         option_name;
         discount_amount;
         own_initial_amount;
+        own_initial_amount_actual;
         own_monthly_amount;
+        own_monthly_amount_actual;
         own_monthly_period_amount;
+        own_monthly_period_amount_actual;
         partner_initial_amount;
+        partner_initial_amount_actual;
         partner_initial_purchase_amount;
         partner_monthly_amount;
+        partner_monthly_amount_actual;
         partner_monthly_period_amount;
+        partner_monthly_period_amount_actual;
         partner_monthly_period_purchase_amount;
         partner_name;
         product_name;
@@ -105,12 +111,14 @@
             this.own_initial_amount = value.own_initial_amount.value;
             this.own_initial_amount_actual = value.own_initial_amount_actual.value;
             this.own_monthly_amount = value.own_monthly_amount.value;
+            this.own_monthly_amount_actual = value.own_monthly_amount_actual.value;
             this.own_monthly_period_amount = value.own_monthly_period_amount.value;
             this.own_monthly_period_amount_actual = value.own_monthly_period_amount_actual.value;
             this.partner_initial_amount = value.partner_initial_amount.value;
             this.partner_initial_amount_actual = value.partner_initial_amount_actual.value;
             this.partner_initial_purchase_amount = value.partner_initial_purchase_amount.value;
             this.partner_monthly_amount = value.partner_monthly_amount.value;
+            this.partner_monthly_amount_actual = value.partner_monthly_amount_actual.value;
             this.partner_monthly_period_amount = value.partner_monthly_period_amount.value;
             this.partner_monthly_period_amount_actual = value.partner_monthly_period_amount_actual.value;
             this.partner_monthly_period_purchase_amount = value.partner_monthly_period_purchase_amount.value;
@@ -207,7 +215,7 @@
             this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance);
             consoleLog(`month_duration_for_finance=${this.month_duration_for_finance} month_duration_for_finance_round_up=${this.month_duration_for_finance_round_up}`);
             for (var deal_detail of this.deal_details) {
-                this.initial_amount = this.initial_amount + deal_detail.initial_amount_actual;
+                this.initial_amount = this.initial_amount + Math.max(deal_detail.own_initial_amount_actual, deal_detail.partner_initial_amount_actual);
                 this.initial_purchase_amount = this.initial_purchase_amount + deal_detail.partner_initial_purchase_amount;
                 this.monthly_amount = this.monthly_amount + deal_detail.monthly_amount_actual;
                 this.monthly_period_amount = this.monthly_period_amount + deal_detail.own_monthly_period_amount_actual;
