@@ -178,6 +178,8 @@
                 consoleError("End date is before start date");
                 return;
             }
+            consoleLog(`start_date=${this.start_date} end_date=${this.end_date}`);
+            consoleLog(`dj_start_date=${dj_start_date} dj_end_date=${dj_end_date}`);
             if (start_month_date != 1) {
                 this.is_start_month_split = true;
                 var month_days = getEndOfMonth(this.start_date).date();
@@ -420,7 +422,7 @@
                         "partner_name": { "value": deal_group.partner_name },
                         "amount_for_sales": { "value": month_entry.amount_for_sales },
                         "amount_for_finance": { "value": month_entry.amount_for_finance },
-                        "month_index": { "value": deal_group.grand_total_amount_with_tax },
+                        "month_index": { "value": month_entry.month_index },
                         "month_count": { "value": deal_group.month_duration_for_finance_round_up },
                     }
                 };
