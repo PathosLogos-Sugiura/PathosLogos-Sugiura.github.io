@@ -217,7 +217,7 @@
             for (var deal_detail of this.deal_details) {
                 this.initial_amount = this.initial_amount + Math.max(deal_detail.own_initial_amount_actual, deal_detail.partner_initial_amount_actual);
                 this.initial_purchase_amount = this.initial_purchase_amount + deal_detail.partner_initial_purchase_amount;
-                this.monthly_amount = this.monthly_amount + Math.max(deal_detail.own_monthly_amount_actual, deal_detail.partner_monthly_amount_actual);
+                this.monthly_amount = this.monthly_amount + Math.floor(Math.max(deal_detail.own_monthly_amount_actual, deal_detail.partner_monthly_amount_actual));
                 this.monthly_period_amount = this.monthly_period_amount + Math.max(deal_detail.own_monthly_period_amount_actual, deal_detail.partner_monthly_period_amount_actual);
                 this.monthly_period_purchase_amount = this.monthly_period_purchase_amount + deal_detail.partner_monthly_period_purchase_amount;
             }
