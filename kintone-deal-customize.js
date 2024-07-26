@@ -157,7 +157,9 @@
         is_end_month_split = false;
         deal_details = [];
         monthly_entries = [];
-        constructor(deal_detail) {
+        constructor(start_date, end_date, deal_detail) {
+            this.start_date = start_date;
+            this.end_date = end_date;
             this.product_supplier = deal_detail.product_supplier;
             this.product_type = deal_detail.product_type;
             this.partner_name = deal_detail.partner_name;
@@ -369,28 +371,24 @@
                 var key = this.createKey(deal_detail);
                 var detail_group = map.get(key);
                 if (detail_group == null) {
-                    consoleLog(`Creating new DealDetailGroup object for ${key}`);
-                    detail_group = new DealDetailGroup(deal_detail);
-                    consoleLog(`product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
+                    var start_date;
+                    var end_date;
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_INITIAL) {
-                        consoleLog(`Pattern 1 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
-                        detail_group.start_date = this.own_initial_start_date;
-                        detail_group.end_date = this.own_initial_end_date;
+                        start_date = this.own_initial_start_date;
+                        end_date = this.own_initial_end_date;
                     } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
-                        consoleLog(`Pattern 2 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
-                        detail_group.start_date = this.own_monthly_start_date;
-                        detail_group.end_date = this.own_monthly_end_date;
+                        start_date = this.own_monthly_start_date;
+                        end_date = this.own_monthly_end_date;
                     } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type === PRODUCT_TYPE_INITIAL) {
-                        consoleLog(`Pattern 3 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
-                        detail_group.start_date = this.partner_initial_start_date;
-                        detail_group.end_date = this.partner_initial_end_date;
+                        start_date = this.partner_initial_start_date;
+                        end_date = this.partner_initial_end_date;
                     } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
-                        consoleLog(`Pattern 4 product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type}`);
-                        detail_group.start_date = this.partner_monthly_start_date;
-                        detail_group.end_date = this.partner_monthly_end_date;
+                        start_date = this.partner_monthly_start_date;
+                        end_date = this.partner_monthly_end_date;
                     } else {
                         consoleError('Could not set start and end date.');
                     }
+                    detail_group = new DealDetailGroup(start_date, end_date, deal_detail);
                     map.set(key, detail_group);
                 }
                 if (deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
