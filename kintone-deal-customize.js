@@ -37,8 +37,6 @@
     });
 
     kintone.events.on(['app.record.detail.process.proceed'], function (event) {
-        alert("動作確認テスト");
-        return;
         if (event.nextStatus.value != "受注済") {
             return;
         }
