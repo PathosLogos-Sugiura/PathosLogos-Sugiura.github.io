@@ -68,7 +68,6 @@
         charge_type;
         details_remarks;
         initial_amount;
-        month_count;
         monthly_amount;
         monthly_period_amount;
         option_name;
@@ -103,7 +102,6 @@
             this.charge_type = value.charge_type.value;
             this.details_remarks = value.details_remarks.value;
             this.initial_amount = value.initial_amount.value;
-            this.month_count = value.month_count.value;
             this.monthly_amount = value.monthly_amount.value;
             this.monthly_period_amount = value.monthly_period_amount.value;
             this.option_name = value.option_name.value;
@@ -144,7 +142,8 @@
         product_name;
         start_date;
         end_date;
-        month_count;
+        charge_months;
+        auto_renewal_months;
         start_month_ratio = 0;
         end_month_ratio = 0;
         month_duration_for_finance = 0;
@@ -249,8 +248,8 @@
             consoleLog(`end_month_purchase_amount_for_finance=${this.end_month_purchase_amount_for_finance}`);
             var entry_date = getEndOfMonth(this.start_date);
             var free_months = 0;
-            if (this.month_count < this.month_duration_for_finance_round_up) {
-                free_months = this.month_duration_for_finance_round_up - this.month_count;
+            if (this.charge_months < this.month_duration_for_finance_round_up) {
+                free_months = this.month_duration_for_finance_round_up - this.charge_months;
             }
             consoleLog(`free_months=${free_months}`);
             var amount_for_finance_sum = 0;
@@ -347,6 +346,8 @@
         own_monthly_total_period_amount;
         own_monthly_start_date;
         own_monthly_end_date;
+        own_charge_months;
+        own_auto_renewal_months;
         partner_initial_invoice_timing;
         partner_initial_total_amount;
         partner_initial_start_date;
@@ -355,6 +356,8 @@
         partner_monthly_total_period_amount;
         partner_monthly_start_date;
         partner_monthly_end_date;
+        partner_charge_months;
+        partner_auto_renewal_months;
         grand_total_amount;
         consumption_tax;
         grand_total_amount_with_tax;
@@ -383,6 +386,8 @@
             this.own_monthly_total_period_amount_actual = record.own_monthly_total_period_amount_actual.value;
             this.own_monthly_start_date = record.own_monthly_start_date.value;
             this.own_monthly_end_date = record.own_monthly_end_date.value;
+            this.own_charge_months = record.own_charge_months.value;
+            this.own_auto_renewal_months = record.own_auto_renewal_months.value;
             // 共創パートナー初期費用
             this.partner_initial_invoice_timing = record.partner_initial_invoice_timing.value;
             this.partner_initial_total_amount_actual = record.partner_initial_total_amount_actual.value;
@@ -393,6 +398,8 @@
             this.partner_monthly_total_period_amount_actual = record.partner_monthly_total_period_amount_actual.value;
             this.partner_monthly_start_date = record.partner_monthly_start_date.value;
             this.partner_monthly_end_date = record.partner_monthly_end_date.value;
+            this.partner_charge_months = record.partner_charge_months.value;
+            this.partner_auto_renewal_months = record.partner_auto_renewal_months.value;
             // 送金額
             this.grand_total_amount_with_discount = record.grand_total_amount_with_discount.value;
             this.consumption_tax = record.consumption_tax.value;
@@ -428,11 +435,13 @@
                     detail_group = new DealDetailGroup(start_date, end_date, deal_detail);
                     map.set(key, detail_group);
                 }
-                if (deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
-                    if (detail_group.month_count != 0 && detail_group.month_count != deal_detail.month_count) {
-                        consoleError(`There are mixed month_count in product_supplier=${deal_detail.product_supplier} product_type=${deal_detail.product_type} partner_name=${deal_detail.partner_name} product_name=${deal_detail.product_name}`);
-                    }
-                    detail_group.month_count = deal_detail.month_count;
+                if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
+                    detail_group.charge_months = this.own_charge_months;
+                    detail_group.auto_renewal_months = this.own_auto_renewal_months;
+                }
+                if (deal_detail.product_supplier == PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
+                    detail_group.charge_months = this.partner_charge_months;
+                    detail_group.auto_renewal_months = this.partner_auto_renewal_months;
                 }
                 detail_group.deal_details.push(deal_detail);
             }
@@ -453,9 +462,7 @@
     function createRevenue(event) {
         var record = event.record;
         var deal_info = new DealInfo(record);
-        dumpObject(deal_info);
         var deal_groups = deal_info.createDealDetailGroups();
-        dumpObject(deal_groups);
         for (var deal_group of deal_groups) {
             for (var month_entry of deal_group.monthly_entries) {
                 var newData = {
@@ -470,6 +477,7 @@
                         "partner_name": { "value": deal_group.partner_name },
                         "amount_for_sales": { "value": month_entry.amount_for_sales },
                         "amount_for_finance": { "value": month_entry.amount_for_finance },
+                        "purchase_amount_for_finance": { "value": month_entry.purchase_amount_for_finance },
                         "month_index": { "value": month_entry.month_index },
                         "month_count": { "value": deal_group.month_duration_for_finance_round_up },
                     }
