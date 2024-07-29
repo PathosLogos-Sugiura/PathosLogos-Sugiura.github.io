@@ -469,7 +469,7 @@
         }
         var params = [];
         if (isNotEndOfMonth(record.own_initial_end_date)) {
-            params,push('自社初期サービス終了日');
+            params.push('自社初期サービス終了日');
         }
         if (isNotEndOfMonth(record.partner_initial_end_date)) {
             params.push( '共創パートナー初期サービス終了日');
