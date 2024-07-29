@@ -467,16 +467,16 @@
         if (record.deal_type.value == '初期移行') {
             return;
         }
-        if (isNotEndOfMonth(record.own_initial_end_date)) {
+        if (isNotEndOfMonth(record.own_initial_end_date.value)) {
             record.own_initial_end_date.error = '月末日を設定してください。';
         }
-        if (isNotEndOfMonth(record.partner_initial_end_date)) {
+        if (isNotEndOfMonth(record.partner_initial_end_date.value)) {
             record.partner_initial_end_date.error = '月末日を設定してください。';
         }
-        if (isNotEndOfMonth(record.own_monthly_end_date)) {
+        if (isNotEndOfMonth(record.own_monthly_end_date.value)) {
             record.own_monthly_end_date.error = '月末日を設定してください。';
         }
-        if (isNotEndOfMonth(record.partner_monthly_end_date)) {
+        if (isNotEndOfMonth(record.partner_monthly_end_date.value)) {
             record.partner_monthly_end_date.error = '月末日を設定してください。';
         }
     }
