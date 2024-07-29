@@ -290,8 +290,8 @@
                 } else {
                     month_entry.amount_for_finance = this.monthly_amount_for_finance;
                     amount_for_finance_sum += this.monthly_amount_for_finance;
-                    month_entry.purchase_amount_for_finance = this.month_purchase_amount_for_finance;
-                    purchase_amount_for_finance_sum += this.month_purchase_amount_for_finance;
+                    month_entry.purchase_amount_for_finance = this.monthly_purchase_amount_for_finance;
+                    purchase_amount_for_finance_sum += this.monthly_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.monthly_amount_for_finance;
                     }
