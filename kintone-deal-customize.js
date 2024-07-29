@@ -10,6 +10,11 @@
     const PRODUCT_TYPE_INITIAL = "初期";
     const PRODUCT_TYPE_MONTHLY = "月額";
 
+    kintone.events.on(['app.record.create.submit', 'app.record.edit.submit'], function (event) {
+        validateInput(event);
+        return event;
+    });
+
     kintone.events.on(['app.record.detail.show'], function (event) {
         if (!kintone.getLoginUser().email.includes('sugiura')) {
             return;
@@ -457,6 +462,31 @@
         }
     }
 
+    function validateInput(event) {
+        var record = event.record;
+        if (record.deal_type.value == '初期移行') {
+            return;
+        }
+        var params = [];
+        if (isNotEndOfMonth(record.own_initial_end_date)) {
+            params,push('自社初期サービス終了日');
+        }
+        if (isNotEndOfMonth(record.partner_initial_end_date)) {
+            params.push( '共創パートナー初期サービス終了日');
+        }
+        if (isNotEndOfMonth(record.own_monthly_end_date)) {
+            params.push('自社月額サービス終了日');
+        }
+        if (isNotEndOfMonth(record.partner_monthly_end_date)) {
+            params.push('共創パートナー月額サービス終了日');
+        }
+        if (params.length > 0) {
+            event.error(`${params.join('・')}は月末日を設定してください。`)
+            return;
+        }
+    }
+
+
     function createRevenue(event) {
         var record = event.record;
         var deal_info = new DealInfo(record);
@@ -553,6 +583,19 @@
             }
         };
         callKintoneAPI(event, INVOICE_APP_ID, newData);
+    }
+
+    function isNotEndOfMonth(date) {
+        return !isEndOfMonth(date);
+    }
+
+    function isEndOfMonth(date) {
+        var dj_date = dayjs(date);
+        var eo_date = getEndOfMonth(date);
+        if (dj_date.date() == eo_date.date()) {
+            return true;
+        }
+        return false;
     }
 
     // 指定された日付の月末を算出
