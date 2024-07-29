@@ -467,22 +467,17 @@
         if (record.deal_type.value == '初期移行') {
             return;
         }
-        var params = [];
         if (isNotEndOfMonth(record.own_initial_end_date)) {
-            params.push('自社初期サービス終了日');
+            record.own_initial_end_date.error = '月末日を設定してください。';
         }
         if (isNotEndOfMonth(record.partner_initial_end_date)) {
-            params.push( '共創パートナー初期サービス終了日');
+            record.partner_initial_end_date.error = '月末日を設定してください。';
         }
         if (isNotEndOfMonth(record.own_monthly_end_date)) {
-            params.push('自社月額サービス終了日');
+            record.own_monthly_end_date.error = '月末日を設定してください。';
         }
         if (isNotEndOfMonth(record.partner_monthly_end_date)) {
-            params.push('共創パートナー月額サービス終了日');
-        }
-        if (params.length > 0) {
-            event.error(`${params.join('・')}は月末日を設定してください。`)
-            return;
+            record.partner_monthly_end_date.error = '月末日を設定してください。';
         }
     }
 
