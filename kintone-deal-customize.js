@@ -519,7 +519,7 @@
             } else if (isNotEndOfMonth(record.own_monthly_end_date.value)) {
                 record.own_monthly_end_date.error = '月末日を入力してください';
             }
-            if (record.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+            if (record.own_monthly_invoice_timing.value == INVOICE_TIMING_BULK_INITIAL) {
                 if (isBlank(record.own_monthly_payment_due_date.value)) {
                     record.own_monthly_payment_due_date.error = '入力してください';
                 } else if (isNotEndOfMonth(record.own_monthly_payment_due_date.value)) {
@@ -538,7 +538,7 @@
             } else if (isNotEndOfMonth(record.partner_monthly_end_date.value)) {
                 record.partner_monthly_end_date.error = '月末日を入力してください';
             }
-            if (record.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+            if (record.partner_monthly_invoice_timing.value == INVOICE_TIMING_BULK_INITIAL) {
                 if (isBlank(record.partner_monthly_payment_due_date.value)) {
                     record.partner_monthly_payment_due_date.error = '入力してください';
                 } else if (isNotEndOfMonth(record.partner_monthly_payment_due_date.value)) {
