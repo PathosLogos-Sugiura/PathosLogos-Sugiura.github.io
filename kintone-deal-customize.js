@@ -663,11 +663,11 @@
             table_value.push(newRow);
             initial_map.set(payment_due_date, table_value);
         }
-        initial_map.forEach(function (value, key) {
+        initial_map.forEach(function (table_value, payment_due_date) {
             var invoice_issue_date = getPriorEndOfMonth(key);
             var invoice_amount = 0;
-            value.forEach(function (value) {
-                invoice_amount += Number(value.value.amount.value);
+            table_value.forEach(function (row) {
+                invoice_amount += Number(row.value.amount.value);
             });
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
@@ -681,7 +681,7 @@
                     "invoice_subtotal_amount": { "value": invoice_amount },
                     "invoice_consumption_tax_amount": { "value": consumption_tax },
                     "invoice_amount": { "value": invoice_amount_with_tax },
-                    "invoice_details_table": { "value": value },
+                    "invoice_details_table": { "value": table_value },
                 }
             };
             callKintoneAPI(event, INVOICE_APP_ID, newData);
@@ -696,10 +696,6 @@
             if (deal_group.invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
                 continue;
             }
-            var table_value = monthly_map.get(payment_due_date);
-            if (table_value == null) {
-                table_value = [];
-            }
             var item_name = '';
             if (deal_group.product_supplier == PRODUCT_SUPPLIER_OWN) {
                 item_name = '月額費用(パトスロゴス)' + deal_info.invoice_item_suffix;
@@ -709,6 +705,10 @@
             for (var month_entry of deal_group.monthly_entries) {
                 if (month_entry.amount_for_sales == 0) {
                     continue;
+                }
+                var table_value = monthly_map.get(month_entry.invoice_date);
+                if (table_value == null) {
+                    table_value = [];
                 }
                 var invoice_date = formatKintoneDate(month_entry.invoice_date);
                 var newRow = {
@@ -723,11 +723,12 @@
                 monthly_map.set(invoice_date, table_value);
             }
         }
-        monthly_map.forEach(function (value, key) {
-            var invoice_issue_date = getPriorEndOfMonth(key);
+        monthly_map.forEach(function (table_value, invoice_date) {
+            var invoice_issue_date = invoice_date;
+            var payment_due_date = getNextEndOfMonth(invoice_date);
             var invoice_amount = 0;
-            value.forEach(function (value) {
-                invoice_amount += Number(value.value.amount.value);
+            table_value.forEach(function (row) {
+                invoice_amount += Number(row.value.amount.value);
             });
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
@@ -736,12 +737,12 @@
                 "record": {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
                     "invoice_issue_date": { "value": formatKintoneDate(invoice_issue_date) },
-                    "payment_due_date": { "value": key },
+                    "payment_due_date": { "value": payment_due_date },
                     "deal_number": { "value": deal_info.deal_number },
                     "invoice_subtotal_amount": { "value": invoice_amount },
                     "invoice_consumption_tax_amount": { "value": consumption_tax },
                     "invoice_amount": { "value": invoice_amount_with_tax },
-                    "invoice_details_table": { "value": value },
+                    "invoice_details_table": { "value": table_value },
                 }
             };
             callKintoneAPI(event, INVOICE_APP_ID, newData);
