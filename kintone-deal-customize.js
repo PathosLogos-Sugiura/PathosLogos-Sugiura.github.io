@@ -519,10 +519,12 @@
             } else if (isNotEndOfMonth(record.own_monthly_end_date.value)) {
                 record.own_monthly_end_date.error = '月末日を入力してください';
             }
-            if (record.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL && isBlank(record.own_monthly_payment_due_date.value)) {
-                record.own_monthly_payment_due_date.error = '入力してください';
-            } else if (isNotEndOfMonth(record.own_monthly_payment_due_date.value)) {
-                record.own_monthly_payment_due_date.error = '月末日を入力してください';
+            if (record.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+                if (isBlank(record.own_monthly_payment_due_date.value)) {
+                    record.own_monthly_payment_due_date.error = '入力してください';
+                } else if (isNotEndOfMonth(record.own_monthly_payment_due_date.value)) {
+                    record.own_monthly_payment_due_date.error = '月末日を入力してください';
+                }
             }
         }
         if (record.partner_monthly_total_period_amount.value > 0) {
@@ -536,10 +538,12 @@
             } else if (isNotEndOfMonth(record.partner_monthly_end_date.value)) {
                 record.partner_monthly_end_date.error = '月末日を入力してください';
             }
-            if (record.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL && isBlank(record.partner_monthly_payment_due_date.value)) {
-                record.partner_monthly_payment_due_date.error = '入力してください';
-            } else if (isNotEndOfMonth(record.partner_monthly_payment_due_date.value)) {
-                record.partner_monthly_payment_due_date.error = '月末日を入力してください';
+            if (record.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
+                if (isBlank(record.partner_monthly_payment_due_date.value)) {
+                    record.partner_monthly_payment_due_date.error = '入力してください';
+                } else if (isNotEndOfMonth(record.partner_monthly_payment_due_date.value)) {
+                    record.partner_monthly_payment_due_date.error = '月末日を入力してください';
+                }
             }
         }
         for (var row_value of record.quotation_details_table.value) {
