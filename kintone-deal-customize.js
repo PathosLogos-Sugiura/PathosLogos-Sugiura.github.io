@@ -660,7 +660,7 @@
             var invoice_issue_date = getPriorEndOfMonth(key);
             var invoice_amount = 0;
             value.forEach(function (value) {
-                invoice_amount += value.amount.value;
+                invoice_amount += value.value.amount.value;
             });
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
@@ -716,7 +716,7 @@
             var invoice_issue_date = getPriorEndOfMonth(key);
             var invoice_amount = 0;
             value.forEach(function (value) {
-                invoice_amount += value.amount.value;
+                invoice_amount += value.value.amount.value;
             });
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
