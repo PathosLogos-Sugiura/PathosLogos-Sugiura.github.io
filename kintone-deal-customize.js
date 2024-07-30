@@ -664,7 +664,7 @@
             initial_map.set(payment_due_date, table_value);
         }
         initial_map.forEach(function (table_value, payment_due_date) {
-            var invoice_issue_date = getPriorEndOfMonth(key);
+            var invoice_issue_date = getPriorEndOfMonth(payment_due_date);
             var invoice_amount = 0;
             table_value.forEach(function (row) {
                 invoice_amount += Number(row.value.amount.value);
@@ -676,7 +676,7 @@
                 "record": {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
                     "invoice_issue_date": { "value": formatKintoneDate(invoice_issue_date) },
-                    "payment_due_date": { "value": key },
+                    "payment_due_date": { "value": payment_due_date },
                     "deal_number": { "value": deal_info.deal_number },
                     "invoice_subtotal_amount": { "value": invoice_amount },
                     "invoice_consumption_tax_amount": { "value": consumption_tax },
