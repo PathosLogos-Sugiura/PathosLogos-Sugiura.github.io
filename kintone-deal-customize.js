@@ -5,6 +5,7 @@
     const APP_ID = 21;
 
     const INVOICE_TIMING_BULK_INITIAL = "開始月一括";
+    const INVOICE_TIMING_MONTHLY = "月次";
     const PRODUCT_SUPPLIER_OWN = "パトスロゴス";
     const PRODUCT_SUPPLIER_PARTNER = "共創パートナー";
     const PRODUCT_TYPE_INITIAL = "初期";
@@ -53,7 +54,8 @@
     });
 
     class MonthlyEntry {
-        date;
+        revenue_date;
+        invoice_date;
         month_index;
         month_count;
         amount_for_sales;
@@ -143,6 +145,7 @@
         product_type;
         partner_name;
         product_name;
+        order_date;
         start_date;
         end_date;
         charge_months;
@@ -167,7 +170,8 @@
         is_end_month_split = false;
         deal_details = [];
         monthly_entries = [];
-        constructor(start_date, end_date, deal_detail) {
+        constructor(order_date, start_date, end_date, deal_detail) {
+            this.order_date = order_date;
             this.start_date = start_date;
             this.end_date = end_date;
             this.product_supplier = deal_detail.product_supplier;
@@ -261,7 +265,8 @@
                 consoleLog(`index=${i}`);
                 consoleLog(`entry_date=${entry_date}`);
                 var month_entry = new MonthlyEntry();
-                month_entry.date = entry_date;
+                month_entry.revenue_date = entry_date;
+                month_entry.invoice_date = getPriorEndOfMonth(entry_date);
                 month_entry.month_index = i;
                 month_entry.month_count = this.month_duration_for_finance_round_up;
                 if (i == 1 && this.is_start_month_split) {
@@ -342,20 +347,24 @@
         deliver_to_name;
         invoice_item_suffix;
         own_initial_invoice_timing;
+        own_initial_payment_due_date;
         own_initial_total_amount;
         own_initial_start_date;
         own_initial_end_date;
         own_monthly_invoice_timing;
+        own_monthly_payment_due_date;
         own_monthly_total_period_amount;
         own_monthly_start_date;
         own_monthly_end_date;
         own_charge_months;
         own_auto_renewal_months;
         partner_initial_invoice_timing;
+        partner_initial_payment_due_date;
         partner_initial_total_amount;
         partner_initial_start_date;
         partner_initial_end_date;
         partner_monthly_invoice_timing;
+        partner_monthly_payment_due_date;
         partner_monthly_total_period_amount;
         partner_monthly_start_date;
         partner_monthly_end_date;
@@ -364,7 +373,6 @@
         grand_total_amount;
         consumption_tax;
         grand_total_amount_with_tax;
-        payment_due_date;
         deal_details = [];
         constructor(record) {
             // 案件レコード番号
@@ -378,14 +386,15 @@
             if (this.invoice_to_number != this.deliver_to_number) {
                 this.invoice_item_suffix = `(${this.deliver_to_name}様利用分)`;
             }
-            this.payment_due_date = record.payment_due_date.value;
             // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
+            this.own_initial_payment_due_date = record.own_initial_payment_due_date.value;
             this.own_initial_total_amount_actual = record.own_initial_total_amount_actual.value;
             this.own_initial_start_date = record.own_initial_start_date.value;
             this.own_initial_end_date = record.own_initial_end_date.value;
             // パトスロゴス月額費用
             this.own_monthly_invoice_timing = record.own_monthly_invoice_timing.value;
+            this.own_monthly_payment_due_date = record.own_monthly_payment_due_date.value;
             this.own_monthly_total_period_amount_actual = record.own_monthly_total_period_amount_actual.value;
             this.own_monthly_start_date = record.own_monthly_start_date.value;
             this.own_monthly_end_date = record.own_monthly_end_date.value;
@@ -393,11 +402,13 @@
             this.own_auto_renewal_months = record.own_auto_renewal_months.value;
             // 共創パートナー初期費用
             this.partner_initial_invoice_timing = record.partner_initial_invoice_timing.value;
+            this.partner_initial_payment_due_date = record.partner_initial_payment_due_date.value;
             this.partner_initial_total_amount_actual = record.partner_initial_total_amount_actual.value;
             this.partner_initial_start_date = record.partner_initial_start_date.value;
             this.partner_initial_end_date = record.partner_initial_end_date.value;
             // 共創パートナー月額費用
             this.partner_monthly_invoice_timing = record.partner_monthly_invoice_timing.value;
+            this.partner_monthly_payment_due_date = record.partner_monthly_payment_due_date.value;
             this.partner_monthly_total_period_amount_actual = record.partner_monthly_total_period_amount_actual.value;
             this.partner_monthly_start_date = record.partner_monthly_start_date.value;
             this.partner_monthly_end_date = record.partner_monthly_end_date.value;
@@ -435,7 +446,7 @@
                     } else {
                         consoleError('Could not set start and end date.');
                     }
-                    detail_group = new DealDetailGroup(start_date, end_date, deal_detail);
+                    detail_group = new DealDetailGroup(this.order_date, start_date, end_date, deal_detail);
                     map.set(key, detail_group);
                 }
                 if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
@@ -467,17 +478,74 @@
         if (record.deal_type.value == '初期移行') {
             return;
         }
-        if (isNotEndOfMonth(record.own_initial_end_date.value)) {
-            record.own_initial_end_date.error = '月末日を設定してください。';
+        if (record.own_initial_total_amount.value > 0) {
+            if (isBlank(record.own_initial_start_date.value)) {
+                record.own_initial_start_date.error = '入力してください';
+            }
+            if (isBlank(record.own_initial_end_date.value)) {
+                record.own_initial_end_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.own_initial_end_date.value)) {
+                record.own_initial_end_date.error = '月末日を入力してください';
+            }
+            if (isBlank(record.own_initial_payment_due_date.value)) {
+                record.own_initial_end_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.own_initial_payment_due_date.value)) {
+                record.own_initial_end_date.error = '月末日を入力してください';
+            }
         }
-        if (isNotEndOfMonth(record.partner_initial_end_date.value)) {
-            record.partner_initial_end_date.error = '月末日を設定してください。';
+        if (record.partner_initial_total_amount.value > 0) {
+            if (isBlank(record.partner_initial_start_date.value)) {
+                record.partner_initial_start_date.error = '入力してください';
+            }
+            if (isBlank(record.partner_initial_end_date.value)) {
+                record.partner_initial_start_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.partner_initial_end_date.value)) {
+                record.partner_initial_end_date.error = '月末日を入力してください';
+            }
+            if (isBlank(record.partner_initial_payment_due_date.value)) {
+                record.own_initial_end_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.partner_initial_payment_due_date.value)) {
+                record.own_initial_end_date.error = '月末日を入力してください';
+            }
         }
-        if (isNotEndOfMonth(record.own_monthly_end_date.value)) {
-            record.own_monthly_end_date.error = '月末日を設定してください。';
+        if (record.own_monthly_total_period_amount.value > 0) {
+            if (isBlank(record.own_monthly_start_date.value)) {
+                record.own_monthly_start_date.error = '入力してください';
+            } else if (isNotStartOfMonth(record.own_monthly_start_date.value)) {
+                record.own_monthly_start_date.error = '月初日を設定してください。';
+            }
+            if (isBlank(record.own_monthly_end_date.value)) {
+                record.own_monthly_end_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.own_monthly_end_date.value)) {
+                record.own_monthly_end_date.error = '月末日を入力してください';
+            }
+            if (record.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL && isBlank(record.own_monthly_payment_due_date.value)) {
+                record.own_monthly_payment_due_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.own_monthly_payment_due_date.value)) {
+                record.own_monthly_payment_due_date.error = '月末日を入力してください';
+            }
         }
-        if (isNotEndOfMonth(record.partner_monthly_end_date.value)) {
-            record.partner_monthly_end_date.error = '月末日を設定してください。';
+        if (record.partner_monthly_total_period_amount.value > 0) {
+            if (isBlank(record.partner_monthly_start_date.value)) {
+                record.partner_monthly_start_date.error = '入力してください';
+            } else if (isNotStartOfMonth(record.own_monthly_start_date.value)) {
+                record.partner_monthly_start_date.error = '月初日を設定してください。';
+            }
+            if (isBlank(record.partner_monthly_end_date.value)) {
+                record.partner_monthly_end_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.partner_monthly_end_date.value)) {
+                record.partner_monthly_end_date.error = '月末日を入力してください';
+            }
+            if (record.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL && isBlank(record.partner_monthly_payment_due_date.value)) {
+                record.partner_monthly_payment_due_date.error = '入力してください';
+            } else if (isNotEndOfMonth(record.partner_monthly_payment_due_date.value)) {
+                record.partner_monthly_payment_due_date.error = '月末日を入力してください';
+            }
+        }
+        for (var row_value of record.quotation_details_table.value) {
+            if (row_value.product_supplier.value == PRODUCT_SUPPLIER_PARTNER && isBlank(row_value.purchase_amount.value)) {
+                row_value.purchase_amount.error = '仕入額を入力してください';
+            }
         }
     }
 
@@ -494,7 +562,8 @@
                         "deal_number": { "value": deal_group.deal_number },
                         "deliver_to_number": { "value": deal_group.deliver_to_number },
                         "invoice_to_number": { "value": deal_group.invoice_to_number },
-                        "revenue_date": { "value": month_entry.date.format("YYYY-MM-DD") },
+                        "order_date": { "value": deal_group.order_date.format("YYYY-MM-DD") },
+                        "revenue_date": { "value": month_entry.revenue_date.format("YYYY-MM-DD") },
                         "product_supplier": { "value": deal_group.product_supplier },
                         "product_type": { "value": deal_group.product_type },
                         "partner_name": { "value": deal_group.partner_name },
@@ -513,9 +582,11 @@
     function createInvoice(event) {
         var record = event.record;
         var deal_info = new DealInfo(record);
-        var table_value = [];
+        const initial_map = new Map();
         if (deal_info.own_initial_total_amount_actual > 0 && deal_info.own_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "初期費用(パトスロゴス)" + deal_info.invoice_item_suffix;
+            var payment_due_date = deal_info.own_initial_payment_due_date.format("YYYY-MM-DD");
+            var table_value = [];
             var newRow = {
                 value: {
                     'item_name': { value: item_name },
@@ -525,9 +596,15 @@
                 }
             };
             table_value.push(newRow);
+            initial_map.set(payment_due_date, table_value);
         }
         if (deal_info.partner_initial_total_amount_actual > 0 && deal_info.partner_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "初期費用(共創パートナー)" + deal_info.invoice_item_suffix;
+            var payment_due_date = deal_info.partner_initial_payment_due_date.format("YYYY-MM-DD");
+            var table_value = initial_map.get(payment_due_date);
+            if (table_value == null) {
+                table_value = [];
+            }
             var newRow = {
                 value: {
                     'item_name': { value: item_name },
@@ -537,9 +614,15 @@
                 }
             };
             table_value.push(newRow);
+            initial_map.set(payment_due_date, table_value);
         }
         if (deal_info.own_monthly_total_period_amount_actual > 0 && deal_info.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "期間費用(パトスロゴス)" + deal_info.invoice_item_suffix;
+            var payment_due_date = deal_info.own_monthly_payment_due_date.format("YYYY-MM-DD");
+            var table_value = initial_map.get(payment_due_date);
+            if (table_value == null) {
+                table_value = [];
+            }
             var newRow = {
                 value: {
                     'item_name': { value: item_name },
@@ -549,9 +632,15 @@
                 }
             };
             table_value.push(newRow);
+            initial_map.set(payment_due_date, table_value);
         }
         if (deal_info.partner_monthly_total_period_amount_actual > 0 && deal_info.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "期間費用(共創パートナー)" + deal_info.invoice_item_suffix;
+            var payment_due_date = deal_info.own_monthly_payment_due_date.format("YYYY-MM-DD");
+            var table_value = initial_map.get(payment_due_date);
+            if (table_value == null) {
+                table_value = [];
+            }
             var newRow = {
                 value: {
                     'item_name': { value: item_name },
@@ -561,33 +650,114 @@
                 }
             };
             table_value.push(newRow);
+            initial_map.set(payment_due_date, table_value);
         }
-        var invoice_issue_date = dayjs();
-        var payment_due_date = getEndOfMonth(deal_info.payment_due_date);
-        var newData = {
-            "app": INVOICE_APP_ID,
-            "record": {
-                "invoice_to_number": { "value": deal_info.invoice_to_number },
-                "invoice_issue_date": { "value": invoice_issue_date.format('YYYY-MM-DD') },
-                "payment_due_date": { "value": payment_due_date.format('YYYY-MM-DD') },
-                "deal_number": { "value": deal_info.deal_number },
-                "invoice_subtotal_amount": { "value": deal_info.grand_total_amount_with_discount },
-                "invoice_consumption_tax_amount": { "value": deal_info.consumption_tax },
-                "invoice_amount": { "value": deal_info.grand_total_amount_with_tax },
-                "invoice_details_table": { "value": table_value },
+        initial_map.forEach(function(value, key) {
+            var invoice_issue_date = getPriorEndOfMonth(key);
+            var invoice_amount = 0;
+            value.forEach(function(value) {
+                invoice_amount += value.amount.value;
+            });
+            var consumption_tax = Math.floor(invoice_amount * 0.1);
+            var invoice_amount_with_tax = invoice_amount + consumption_tax;
+            var newData = {
+                "app": INVOICE_APP_ID,
+                "record": {
+                    "invoice_to_number": { "value": deal_info.invoice_to_number },
+                    "invoice_issue_date": { "value": invoice_issue_date.format('YYYY-MM-DD') },
+                    "payment_due_date": { "value": key },
+                    "deal_number": { "value": deal_info.deal_number },
+                    "invoice_subtotal_amount": { "value": invoice_amount },
+                    "invoice_consumption_tax_amount": { "value": consumption_tax },
+                    "invoice_amount": { "value": invoice_amount_with_tax },
+                    "invoice_details_table": { "value": value },
+                }
+            };
+            callKintoneAPI(event, INVOICE_APP_ID, newData);
+        });
+        if (deal_info.own_monthly_invoice_timing != INVOICE_TIMING_MONTHLY && deal_info.partner_monthly_invoice_timing != INVOICE_TIMING_MONTHLY) {
+            // 全て開始月一括請求の場合はここで終わり。
+            return;
+        }
+        var deal_groups = deal_info.createDealDetailGroups();
+        const monthly_map = new Map();
+        for (var deal_group of deal_groups) {
+            if (deal_group.product_type == PRODUCT_TYPE_INITIAL) {
+                continue;
             }
-        };
-        callKintoneAPI(event, INVOICE_APP_ID, newData);
+            var item_name = '';
+            if (deal_group.product_supplier == PRODUCT_SUPPLIER_OWN) {
+                item_name = '月額費用(パトスロゴス)' + deal_info.invoice_item_suffix;
+            }
+            if (deal_group.product_supplier == PRODUCT_SUPPLIER_PARTNER) {
+                item_name = '月額費用(共創パートナー)' + deal_info.invoice_item_suffix;
+            }
+            for (var month_entry of deal_group.monthly_entries) {
+                if (month_entry.amount_for_sales == 0) {
+                    continue;
+                }
+                var invoice_date = month_entry.invoice_date.format('YYYY-MM-DD');
+                var newRow = {
+                    value: {
+                        'item_name': { value: item_name },
+                        'start_date': { value: getStartOfMonth(month_entry.revenue_date).format('YYYY-MM-^DD') },
+                        'end_date': { value: month_entry.revenue_date.format('YYYY-MM-^DD') },
+                        'amount': { value: month_entry.amount_for_sales }
+                    }
+                };
+                monthly_map.set(invoice_date, newRow);
+            }
+        }
+        monthly_map.forEach(function(value, key) {
+            var invoice_issue_date = getPriorEndOfMonth(key);
+            var invoice_amount = 0;
+            value.forEach(function(value) {
+                invoice_amount += value.amount.value;
+            });
+            var consumption_tax = Math.floor(invoice_amount * 0.1);
+            var invoice_amount_with_tax = invoice_amount + consumption_tax;
+            var newData = {
+                "app": INVOICE_APP_ID,
+                "record": {
+                    "invoice_to_number": { "value": deal_info.invoice_to_number },
+                    "invoice_issue_date": { "value": invoice_issue_date.format('YYYY-MM-DD') },
+                    "payment_due_date": { "value": key },
+                    "deal_number": { "value": deal_info.deal_number },
+                    "invoice_subtotal_amount": { "value": invoice_amount },
+                    "invoice_consumption_tax_amount": { "value": consumption_tax },
+                    "invoice_amount": { "value": invoice_amount_with_tax },
+                    "invoice_details_table": { "value": value },
+                }
+            };
+            callKintoneAPI(event, INVOICE_APP_ID, newData);
+        });
+    }
+
+    function isNotBlank(value) {
+        return !isBlank(value);
+    }
+
+    function isBlank(value) {
+        if (value == null) {
+            return true;
+        }
+        if (value.toString().trim().length == 0) {
+            return true;
+        }
+    }
+
+    function isNotStartOfMonth(date) {
+        var dj_date = dayjs(date);
+        if (dj_date.date() != 1) {
+            return true;
+        }
+        return false;
     }
 
     function isNotEndOfMonth(date) {
-        return !isEndOfMonth(date);
-    }
-
-    function isEndOfMonth(date) {
         var dj_date = dayjs(date);
         var eo_date = getEndOfMonth(date);
-        if (dj_date.date() == eo_date.date()) {
+        if (dj_date.date() != eo_date.date()) {
             return true;
         }
         return false;
@@ -595,14 +765,22 @@
 
     // 指定された日付の月末を算出
     function getEndOfMonth(date) {
-        var end_date = dayjs(date).endOf('month');
-        return end_date;
+        return dayjs(date).endOf('month');
+    }
+
+    // 指定された日付の月初を算出
+    function getStartOfMonth(date) {
+        return dayjs(date).startOf('month');
     }
 
     // 指定された日付の翌月末を算出
     function getNextEndOfMonth(date) {
-        var end_date = dayjs(date).add(1, 'month').endOf('month');
-        return end_date;
+        return dayjs(date).add(1, 'month').endOf('month');
+    }
+
+    // 指定された日付の前月末を算出
+    function getPriorEndOfMonth(date) {
+        return dayjs(date).subtract(1, 'month').endOf('month');
     }
 
     // コンソールにログ出力（ブラウザで見やすいように接頭語をつけている）
