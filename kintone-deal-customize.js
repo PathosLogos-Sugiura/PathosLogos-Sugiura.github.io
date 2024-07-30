@@ -148,6 +148,7 @@
         order_date;
         start_date;
         end_date;
+        invoice_timing;
         charge_months;
         auto_renewal_months;
         start_month_ratio = 0;
@@ -170,10 +171,11 @@
         is_end_month_split = false;
         deal_details = [];
         monthly_entries = [];
-        constructor(order_date, start_date, end_date, deal_detail) {
+        constructor(order_date, start_date, end_date, invoice_timing, deal_detail) {
             this.order_date = order_date;
             this.start_date = start_date;
             this.end_date = end_date;
+            this.invoice_timing = invoice_timing;
             this.product_supplier = deal_detail.product_supplier;
             this.product_type = deal_detail.product_type;
             this.partner_name = deal_detail.partner_name;
@@ -431,22 +433,27 @@
                 if (detail_group == null) {
                     var start_date;
                     var end_date;
+                    var invoice_timing;
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_INITIAL) {
                         start_date = this.own_initial_start_date;
                         end_date = this.own_initial_end_date;
+                        invoice_timing = this.own_initial_invoice_timing;
                     } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
                         start_date = this.own_monthly_start_date;
                         end_date = this.own_monthly_end_date;
+                        invoice_timing = this.own_monthly_invoice_timing;
                     } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type === PRODUCT_TYPE_INITIAL) {
                         start_date = this.partner_initial_start_date;
                         end_date = this.partner_initial_end_date;
+                        invoice_timing = this.partner_initial_invoice_timing;
                     } else if (deal_detail.product_supplier == PRODUCT_SUPPLIER_PARTNER && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
                         start_date = this.partner_monthly_start_date;
                         end_date = this.partner_monthly_end_date;
+                        invoice_timing = this.partner_monthly_invoice_timing;
                     } else {
                         consoleError('Could not set start and end date.');
                     }
-                    detail_group = new DealDetailGroup(this.order_date, start_date, end_date, deal_detail);
+                    detail_group = new DealDetailGroup(this.order_date, start_date, end_date, invoice_timing, deal_detail);
                     map.set(key, detail_group);
                 }
                 if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_MONTHLY) {
@@ -686,7 +693,7 @@
         var deal_groups = deal_info.createDealDetailGroups();
         const monthly_map = new Map();
         for (var deal_group of deal_groups) {
-            if (deal_group.product_type == PRODUCT_TYPE_INITIAL) {
+            if (deal_group.invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
                 continue;
             }
             var table_value = monthly_map.get(payment_due_date);
@@ -696,8 +703,7 @@
             var item_name = '';
             if (deal_group.product_supplier == PRODUCT_SUPPLIER_OWN) {
                 item_name = '月額費用(パトスロゴス)' + deal_info.invoice_item_suffix;
-            }
-            if (deal_group.product_supplier == PRODUCT_SUPPLIER_PARTNER) {
+            } else if (deal_group.product_supplier == PRODUCT_SUPPLIER_PARTNER) {
                 item_name = '月額費用(共創パートナー)' + deal_info.invoice_item_suffix;
             }
             for (var month_entry of deal_group.monthly_entries) {
