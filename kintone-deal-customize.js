@@ -737,7 +737,7 @@
                 "record": {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
                     "invoice_issue_date": { "value": formatKintoneDate(invoice_issue_date) },
-                    "payment_due_date": { "value": payment_due_date },
+                    "payment_due_date": { "value": formatKintoneDate(payment_due_date) },
                     "deal_number": { "value": deal_info.deal_number },
                     "invoice_subtotal_amount": { "value": invoice_amount },
                     "invoice_consumption_tax_amount": { "value": consumption_tax },
