@@ -488,9 +488,9 @@
                 record.own_initial_end_date.error = '月末日を入力してください';
             }
             if (isBlank(record.own_initial_payment_due_date.value)) {
-                record.own_initial_end_date.error = '入力してください';
+                record.own_initial_payment_due_date.error = '入力してください';
             } else if (isNotEndOfMonth(record.own_initial_payment_due_date.value)) {
-                record.own_initial_end_date.error = '月末日を入力してください';
+                record.own_initial_payment_due_date.error = '月末日を入力してください';
             }
         }
         if (record.partner_initial_total_amount.value > 0) {
@@ -503,9 +503,9 @@
                 record.partner_initial_end_date.error = '月末日を入力してください';
             }
             if (isBlank(record.partner_initial_payment_due_date.value)) {
-                record.own_initial_end_date.error = '入力してください';
+                record.partner_initial_payment_due_date.error = '入力してください';
             } else if (isNotEndOfMonth(record.partner_initial_payment_due_date.value)) {
-                record.own_initial_end_date.error = '月末日を入力してください';
+                record.partner_initial_payment_due_date.error = '月末日を入力してください';
             }
         }
         if (record.own_monthly_total_period_amount.value > 0) {
