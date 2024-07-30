@@ -640,7 +640,7 @@
         }
         if (deal_info.partner_monthly_total_period_amount_actual > 0 && deal_info.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "期間費用(共創パートナー)" + deal_info.invoice_item_suffix;
-            var payment_due_date = formatKintoneDate(deal_info.own_monthly_payment_due_date);
+            var payment_due_date = formatKintoneDate(deal_info.partner_monthly_payment_due_date);
             var table_value = initial_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
@@ -723,6 +723,7 @@
             value.forEach(function (value) {
                 invoice_amount += value.value.amount.value;
             });
+            consoleLog(invoice_amount);
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
             var newData = {
