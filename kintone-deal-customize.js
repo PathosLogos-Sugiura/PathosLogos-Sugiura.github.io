@@ -566,8 +566,8 @@
                         "deal_number": { "value": deal_group.deal_number },
                         "deliver_to_number": { "value": deal_group.deliver_to_number },
                         "invoice_to_number": { "value": deal_group.invoice_to_number },
-                        "order_date": { "value": deal_group.order_date.format("YYYY-MM-DD") },
-                        "revenue_date": { "value": month_entry.revenue_date.format("YYYY-MM-DD") },
+                        "order_date": { "value": formatKintoneDate(deal_group.order_date) },
+                        "revenue_date": { "value": formatKintoneDate(month_entry.revenue_date) },
                         "product_supplier": { "value": deal_group.product_supplier },
                         "product_type": { "value": deal_group.product_type },
                         "partner_name": { "value": deal_group.partner_name },
@@ -589,7 +589,7 @@
         const initial_map = new Map();
         if (deal_info.own_initial_total_amount_actual > 0 && deal_info.own_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "初期費用(パトスロゴス)" + deal_info.invoice_item_suffix;
-            var payment_due_date = deal_info.own_initial_payment_due_date.format("YYYY-MM-DD");
+            var payment_due_date = formatKintoneDate(deal_info.own_initial_payment_due_date);
             var table_value = [];
             var newRow = {
                 value: {
@@ -604,7 +604,7 @@
         }
         if (deal_info.partner_initial_total_amount_actual > 0 && deal_info.partner_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "初期費用(共創パートナー)" + deal_info.invoice_item_suffix;
-            var payment_due_date = deal_info.partner_initial_payment_due_date.format("YYYY-MM-DD");
+            var payment_due_date = formatKintoneDate(deal_info.partner_initial_payment_due_date);
             var table_value = initial_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
@@ -622,7 +622,7 @@
         }
         if (deal_info.own_monthly_total_period_amount_actual > 0 && deal_info.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "期間費用(パトスロゴス)" + deal_info.invoice_item_suffix;
-            var payment_due_date = deal_info.own_monthly_payment_due_date.format("YYYY-MM-DD");
+            var payment_due_date = formatKintoneDate(deal_info.own_monthly_payment_due_date);
             var table_value = initial_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
@@ -640,7 +640,7 @@
         }
         if (deal_info.partner_monthly_total_period_amount_actual > 0 && deal_info.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
             var item_name = "期間費用(共創パートナー)" + deal_info.invoice_item_suffix;
-            var payment_due_date = deal_info.own_monthly_payment_due_date.format("YYYY-MM-DD");
+            var payment_due_date = formatKintoneDate(deal_info.own_monthly_payment_due_date);
             var table_value = initial_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
@@ -668,7 +668,7 @@
                 "app": INVOICE_APP_ID,
                 "record": {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
-                    "invoice_issue_date": { "value": invoice_issue_date.format('YYYY-MM-DD') },
+                    "invoice_issue_date": { "value": formatKintoneDate(invoice_issue_date) },
                     "payment_due_date": { "value": key },
                     "deal_number": { "value": deal_info.deal_number },
                     "invoice_subtotal_amount": { "value": invoice_amount },
@@ -700,12 +700,12 @@
                 if (month_entry.amount_for_sales == 0) {
                     continue;
                 }
-                var invoice_date = month_entry.invoice_date.format('YYYY-MM-DD');
+                var invoice_date = formatKintoneDate(month_entry.invoice_date);
                 var newRow = {
                     value: {
                         'item_name': { value: item_name },
-                        'start_date': { value: getStartOfMonth(month_entry.revenue_date).format('YYYY-MM-^DD') },
-                        'end_date': { value: month_entry.revenue_date.format('YYYY-MM-^DD') },
+                        'start_date': { value: formatKintoneDate(getStartOfMonth(month_entry.revenue_date)) },
+                        'end_date': { value: formatKintoneDate(month_entry.revenue_date) },
                         'amount': { value: month_entry.amount_for_sales }
                     }
                 };
@@ -724,7 +724,7 @@
                 "app": INVOICE_APP_ID,
                 "record": {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
-                    "invoice_issue_date": { "value": invoice_issue_date.format('YYYY-MM-DD') },
+                    "invoice_issue_date": { "value": formatKintoneDate(invoice_issue_date) },
                     "payment_due_date": { "value": key },
                     "deal_number": { "value": deal_info.deal_number },
                     "invoice_subtotal_amount": { "value": invoice_amount },
@@ -765,6 +765,13 @@
             return true;
         }
         return false;
+    }
+
+    function formatKintoneDate(value) {
+        if (value instanceof dayjs) {
+            return value.format('YYYY-MM-DD');
+        }
+        return dayjs(value).format('YYYY-MM-DD');
     }
 
     // 指定された日付の月末を算出
