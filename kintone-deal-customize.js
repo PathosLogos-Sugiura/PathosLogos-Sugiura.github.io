@@ -689,7 +689,7 @@
             if (deal_group.product_type == PRODUCT_TYPE_INITIAL) {
                 continue;
             }
-            var table_value = initial_map.get(payment_due_date);
+            var table_value = monthly_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
             }
@@ -723,7 +723,6 @@
             value.forEach(function (value) {
                 invoice_amount += Number(value.value.amount.value);
             });
-            consoleLog(invoice_amount);
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
             var newData = {
