@@ -264,8 +264,6 @@
             var amount_for_finance_sum = 0;
             var purchase_amount_for_finance_sum = 0;
             for (var i = 1; i <= this.month_duration_for_finance_round_up; i++) {
-                consoleLog(`index=${i}`);
-                consoleLog(`entry_date=${entry_date}`);
                 var month_entry = new MonthlyEntry();
                 month_entry.revenue_date = entry_date;
                 month_entry.invoice_date = getPriorEndOfMonth(entry_date);
@@ -324,10 +322,6 @@
                         amount_diff = this.monthly_period_amount - amount_for_finance_sum;
                         purchase_amount_diff = this.monthly_period_purchase_amount - purchase_amount_for_finance_sum;
                     }
-                    consoleLog(`amount_for_finance_sum=${amount_for_finance_sum}`);
-                    consoleLog(`purchase_amount_for_finance_sum=${purchase_amount_for_finance_sum}`);
-                    consoleLog(`amount_diff=${amount_diff}`);
-                    consoleLog(`purchase_amount_diff=${purchase_amount_diff}`);
                     if (amount_diff > 0) {
                         month_entry.amount_for_finance += amount_diff;
                     }
@@ -706,11 +700,11 @@
                 if (month_entry.amount_for_sales == 0) {
                     continue;
                 }
-                var table_value = monthly_map.get(month_entry.invoice_date);
+                var invoice_date = formatKintoneDate(month_entry.invoice_date);
+                var table_value = monthly_map.get(invoice_date);
                 if (table_value == null) {
                     table_value = [];
                 }
-                var invoice_date = formatKintoneDate(month_entry.invoice_date);
                 var newRow = {
                     value: {
                         'item_name': { value: item_name },
@@ -724,7 +718,6 @@
             }
         }
         monthly_map.forEach(function (table_value, invoice_date) {
-            var invoice_issue_date = invoice_date;
             var payment_due_date = getNextEndOfMonth(invoice_date);
             var invoice_amount = 0;
             table_value.forEach(function (row) {
@@ -736,7 +729,7 @@
                 "app": INVOICE_APP_ID,
                 "record": {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
-                    "invoice_issue_date": { "value": formatKintoneDate(invoice_issue_date) },
+                    "invoice_issue_date": { "value": invoice_date },
                     "payment_due_date": { "value": formatKintoneDate(payment_due_date) },
                     "deal_number": { "value": deal_info.deal_number },
                     "invoice_subtotal_amount": { "value": invoice_amount },
