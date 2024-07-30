@@ -689,6 +689,10 @@
             if (deal_group.product_type == PRODUCT_TYPE_INITIAL) {
                 continue;
             }
+            var table_value = initial_map.get(payment_due_date);
+            if (table_value == null) {
+                table_value = [];
+            }
             var item_name = '';
             if (deal_group.product_supplier == PRODUCT_SUPPLIER_OWN) {
                 item_name = '月額費用(パトスロゴス)' + deal_info.invoice_item_suffix;
@@ -709,7 +713,8 @@
                         'amount': { value: month_entry.amount_for_sales }
                     }
                 };
-                monthly_map.set(invoice_date, newRow);
+                table_value.push(newRow);
+                monthly_map.set(invoice_date, table_value);
             }
         }
         monthly_map.forEach(function (value, key) {
