@@ -543,8 +543,8 @@
             }
         }
         for (var row_value of record.quotation_details_table.value) {
-            dumpObject(row_value);
-            if (row_value.product_supplier.value == PRODUCT_SUPPLIER_PARTNER && (row_value.purchase_amount.value == null || isBlank(row_value.purchase_amount.value))) {
+            consoleLog(row_value.purchase_amount.value);
+            if (row_value.product_supplier.value == PRODUCT_SUPPLIER_PARTNER && (!row_value.purchase_amount.has('value') || isBlank(row_value.purchase_amount.value))) {
                 row_value.purchase_amount.error = '仕入額を入力してください';
             }
         }
@@ -653,10 +653,10 @@
             table_value.push(newRow);
             initial_map.set(payment_due_date, table_value);
         }
-        initial_map.forEach(function(value, key) {
+        initial_map.forEach(function (value, key) {
             var invoice_issue_date = getPriorEndOfMonth(key);
             var invoice_amount = 0;
-            value.forEach(function(value) {
+            value.forEach(function (value) {
                 invoice_amount += value.amount.value;
             });
             var consumption_tax = Math.floor(invoice_amount * 0.1);
@@ -709,10 +709,10 @@
                 monthly_map.set(invoice_date, newRow);
             }
         }
-        monthly_map.forEach(function(value, key) {
+        monthly_map.forEach(function (value, key) {
             var invoice_issue_date = getPriorEndOfMonth(key);
             var invoice_amount = 0;
-            value.forEach(function(value) {
+            value.forEach(function (value) {
                 invoice_amount += value.amount.value;
             });
             var consumption_tax = Math.floor(invoice_amount * 0.1);
