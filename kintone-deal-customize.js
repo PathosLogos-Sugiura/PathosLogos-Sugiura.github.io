@@ -543,7 +543,6 @@
             }
         }
         for (var row_value of record.quotation_details_table.value) {
-            consoleLog(row_value.purchase_amount.value);
             if (row_value.product_supplier.value == PRODUCT_SUPPLIER_PARTNER && (!row_value.purchase_amount.has('value') || isBlank(row_value.purchase_amount.value))) {
                 row_value.purchase_amount.error = '仕入額を入力してください';
             }
