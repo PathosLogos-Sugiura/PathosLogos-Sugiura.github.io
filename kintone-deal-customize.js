@@ -106,34 +106,34 @@
             this.deliver_to_number = deliver_to_number;
             this.charge_type = value.charge_type.value;
             this.details_remarks = value.details_remarks.value;
-            this.initial_amount = value.initial_amount.value;
-            this.monthly_amount = value.monthly_amount.value;
-            this.monthly_period_amount = value.monthly_period_amount.value;
+            this.initial_amount = Number(value.initial_amount.value);
+            this.monthly_amount = Number(value.monthly_amount.value);
+            this.monthly_period_amount = Number(value.monthly_period_amount.value);
             this.option_name = value.option_name.value;
-            this.discount_amount = value.discount_amount.value;
-            this.own_initial_amount = value.own_initial_amount.value;
-            this.own_initial_amount_actual = value.own_initial_amount_actual.value;
-            this.own_monthly_amount = value.own_monthly_amount.value;
-            this.own_monthly_amount_actual = value.own_monthly_amount_actual.value;
-            this.own_monthly_period_amount = value.own_monthly_period_amount.value;
-            this.own_monthly_period_amount_actual = value.own_monthly_period_amount_actual.value;
-            this.partner_initial_amount = value.partner_initial_amount.value;
-            this.partner_initial_amount_actual = value.partner_initial_amount_actual.value;
-            this.partner_initial_purchase_amount = value.partner_initial_purchase_amount.value;
-            this.partner_monthly_amount = value.partner_monthly_amount.value;
-            this.partner_monthly_amount_actual = value.partner_monthly_amount_actual.value;
-            this.partner_monthly_period_amount = value.partner_monthly_period_amount.value;
-            this.partner_monthly_period_amount_actual = value.partner_monthly_period_amount_actual.value;
-            this.partner_monthly_period_purchase_amount = value.partner_monthly_period_purchase_amount.value;
+            this.discount_amount = Number(value.discount_amount.value);
+            this.own_initial_amount = Number(value.own_initial_amount.value);
+            this.own_initial_amount_actual = Number(value.own_initial_amount_actual.value);
+            this.own_monthly_amount = Number(value.own_monthly_amount.value);
+            this.own_monthly_amount_actual = Number(value.own_monthly_amount_actual.value);
+            this.own_monthly_period_amount = Number(value.own_monthly_period_amount.value);
+            this.own_monthly_period_amount_actual = Number(value.own_monthly_period_amount_actual.value);
+            this.partner_initial_amount = Number(value.partner_initial_amount.value);
+            this.partner_initial_amount_actual = Number(value.partner_initial_amount_actual.value);
+            this.partner_initial_purchase_amount = Number(value.partner_initial_purchase_amount.value);
+            this.partner_monthly_amount = Number(value.partner_monthly_amount.value);
+            this.partner_monthly_amount_actual = Number(value.partner_monthly_amount_actual.value);
+            this.partner_monthly_period_amount = Number(value.partner_monthly_period_amount.value);
+            this.partner_monthly_period_amount_actual = Number(value.partner_monthly_period_amount_actual.value);
+            this.partner_monthly_period_purchase_amount = Number(value.partner_monthly_period_purchase_amount.value);
             this.partner_name = value.partner_name.value;
             this.product_name = value.product_name.value;
             this.product_number = value.product_number.value;
             this.product_supplier = value.product_supplier.value;
             this.product_type = value.product_type.value;
-            this.purchase_amount = value.purchase_amount.value;
-            this.qty = value.qty.value;
+            this.purchase_amount = Number(value.purchase_amount.value);
+            this.qty = Number(value.qty.value);
             this.quotation_product_name = value.quotation_product_name.value;
-            this.quote_amount = value.quote_amount.value;
+            this.quote_amount = Number(value.quote_amount.value);
         }
     }
 
@@ -250,14 +250,14 @@
                 month_entry.revenue_date = entry_date;
                 month_entry.invoice_date = getPriorEndOfMonth(entry_date);
                 month_entry.month_index = i;
-                month_entry.month_count = Number(this.month_duration_for_finance_round_up);
+                month_entry.month_count = this.month_duration_for_finance_round_up;
                 if (i == 1 && this.is_start_month_split) {
-                    month_entry.amount_for_finance = Number(this.start_month_amount_for_finance);
-                    amount_for_finance_sum += Number(this.start_month_amount_for_finance);
-                    month_entry.purchase_amount_for_finance = Number(this.start_month_purchase_amount_for_finance);
-                    purchase_amount_for_finance_sum += Number(this.start_month_purchase_amount_for_finance);
+                    month_entry.amount_for_finance = this.start_month_amount_for_finance;
+                    amount_for_finance_sum += this.start_month_amount_for_finance;
+                    month_entry.purchase_amount_for_finance = this.start_month_purchase_amount_for_finance;
+                    purchase_amount_for_finance_sum += this.start_month_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
-                        month_entry.amount_for_sales = Number(this.start_month_amount_for_finance);
+                        month_entry.amount_for_sales = this.start_month_amount_for_finance;
                     }
                     if (this.product_type == PRODUCT_TYPE_MONTHLY) {
                         if (this.is_start_month_split) {
@@ -268,9 +268,9 @@
                     }
                 } else if (i == this.month_duration_for_finance_round_up && this.is_end_month_split) {
                     month_entry.amount_for_finance = this.end_month_amount_for_finance;
-                    amount_for_finance_sum += Number(this.end_month_amount_for_finance);
+                    amount_for_finance_sum += this.end_month_amount_for_finance;
                     month_entry.purchase_amount_for_finance = this.end_month_purchase_amount_for_finance;
-                    purchase_amount_for_finance_sum += Number(this.end_month_purchase_amount_for_finance);
+                    purchase_amount_for_finance_sum += this.end_month_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.end_month_amount_for_finance;
                     }
@@ -279,9 +279,9 @@
                     }
                 } else {
                     month_entry.amount_for_finance = this.monthly_amount_for_finance;
-                    amount_for_finance_sum += Number(this.monthly_amount_for_finance);
+                    amount_for_finance_sum += this.monthly_amount_for_finance;
                     month_entry.purchase_amount_for_finance = this.monthly_purchase_amount_for_finance;
-                    purchase_amount_for_finance_sum += Number(this.monthly_purchase_amount_for_finance);
+                    purchase_amount_for_finance_sum += this.monthly_purchase_amount_for_finance;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         month_entry.amount_for_sales = this.monthly_amount_for_finance;
                     }
@@ -305,10 +305,10 @@
                         purchase_amount_diff = this.monthly_period_purchase_amount - purchase_amount_for_finance_sum;
                     }
                     if (amount_diff > 0) {
-                        month_entry.amount_for_finance += Number(amount_diff);
+                        month_entry.amount_for_finance += amount_diff;
                     }
                     if (purchase_amount_diff > 0) {
-                        month_entry.purchase_amount_for_finance += Number(purchase_amount_diff);
+                        month_entry.purchase_amount_for_finance += purchase_amount_diff;
                     }
                 }
                 this.monthly_entries.push(month_entry);
@@ -367,35 +367,35 @@
             // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
             this.own_initial_payment_due_date = record.own_initial_payment_due_date.value;
-            this.own_initial_total_amount_actual = record.own_initial_total_amount_actual.value;
+            this.own_initial_total_amount_actual = Number(record.own_initial_total_amount_actual.value);
             this.own_initial_start_date = record.own_initial_start_date.value;
             this.own_initial_end_date = record.own_initial_end_date.value;
             // パトスロゴス月額費用
             this.own_monthly_invoice_timing = record.own_monthly_invoice_timing.value;
             this.own_monthly_payment_due_date = record.own_monthly_payment_due_date.value;
-            this.own_monthly_total_period_amount_actual = record.own_monthly_total_period_amount_actual.value;
+            this.own_monthly_total_period_amount_actual = Number(record.own_monthly_total_period_amount_actual.value);
             this.own_monthly_start_date = record.own_monthly_start_date.value;
             this.own_monthly_end_date = record.own_monthly_end_date.value;
-            this.own_charge_months = record.own_charge_months.value;
-            this.own_auto_renewal_months = record.own_auto_renewal_months.value;
+            this.own_charge_months = Number(record.own_charge_months.value);
+            this.own_auto_renewal_months = Number(record.own_auto_renewal_months.value);
             // 共創パートナー初期費用
             this.partner_initial_invoice_timing = record.partner_initial_invoice_timing.value;
             this.partner_initial_payment_due_date = record.partner_initial_payment_due_date.value;
-            this.partner_initial_total_amount_actual = record.partner_initial_total_amount_actual.value;
+            this.partner_initial_total_amount_actual = Number(record.partner_initial_total_amount_actual.value);
             this.partner_initial_start_date = record.partner_initial_start_date.value;
             this.partner_initial_end_date = record.partner_initial_end_date.value;
             // 共創パートナー月額費用
             this.partner_monthly_invoice_timing = record.partner_monthly_invoice_timing.value;
             this.partner_monthly_payment_due_date = record.partner_monthly_payment_due_date.value;
-            this.partner_monthly_total_period_amount_actual = record.partner_monthly_total_period_amount_actual.value;
+            this.partner_monthly_total_period_amount_actual = Number(record.partner_monthly_total_period_amount_actual.value);
             this.partner_monthly_start_date = record.partner_monthly_start_date.value;
             this.partner_monthly_end_date = record.partner_monthly_end_date.value;
-            this.partner_charge_months = record.partner_charge_months.value;
-            this.partner_auto_renewal_months = record.partner_auto_renewal_months.value;
-            // 送金額
-            this.grand_total_amount_with_discount = record.grand_total_amount_with_discount.value;
-            this.consumption_tax = record.consumption_tax.value;
-            this.grand_total_amount_with_tax = record.grand_total_amount_with_tax.value;
+            this.partner_charge_months = Number(record.partner_charge_months.value);
+            this.partner_auto_renewal_months = Number(record.partner_auto_renewal_months.value);
+            // 総合計
+            this.grand_total_amount_with_discount = Number(record.grand_total_amount_with_discount.value);
+            this.consumption_tax = Number(record.consumption_tax.value);
+            this.grand_total_amount_with_tax = Number(record.grand_total_amount_with_tax.value);
             for (var row_value of record.quotation_details_table.value) {
                 this.deal_details.push(new DealDetail(this.deal_number, this.invoice_to_number, this.deliver_to_number, row_value.value));
             }
