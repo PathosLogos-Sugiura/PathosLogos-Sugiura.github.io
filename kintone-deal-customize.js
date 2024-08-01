@@ -10,6 +10,9 @@
     const PRODUCT_SUPPLIER_PARTNER = "共創パートナー";
     const PRODUCT_TYPE_INITIAL = "初期";
     const PRODUCT_TYPE_MONTHLY = "月額";
+    const KYC_STATUS_CHECKED = "チェック済";
+    const DEAL_STATUS_ACTIVE = "受注済";
+    const PRODUCT_STATUS_ACTIVE = "販売中";
 
     kintone.events.on(['app.record.create.submit', 'app.record.edit.submit'], function (event) {
         validateInput(event);
@@ -148,7 +151,6 @@
         order_date;
         start_date;
         end_date;
-        invoice_timing;
         charge_months;
         auto_renewal_months;
         start_month_ratio = 0;
@@ -175,7 +177,6 @@
             this.order_date = order_date;
             this.start_date = start_date;
             this.end_date = end_date;
-            this.invoice_timing = invoice_timing;
             this.product_supplier = deal_detail.product_supplier;
             this.product_type = deal_detail.product_type;
             this.partner_name = deal_detail.partner_name;
@@ -324,6 +325,7 @@
         deliver_to_number;
         deliver_to_name;
         invoice_item_suffix;
+        kyc_status;
         order_date;
         own_initial_invoice_timing;
         own_initial_payment_due_date;
@@ -365,7 +367,8 @@
             if (this.invoice_to_number != this.deliver_to_number) {
                 this.invoice_item_suffix = `(${this.deliver_to_name}様利用分)`;
             }
-            this.order_date = record.order_date;
+            this.kyc_status = record.kyc_status.value;
+            this.order_date = record.order_date.value;
             // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
             this.own_initial_payment_due_date = record.own_initial_payment_due_date.value;
@@ -463,6 +466,9 @@
         if (record.deal_type.value == '初期移行') {
             return;
         }
+        if (record.kyc_status.value != KYC_STATUS_CHECKED) {
+            record.invoice_to_number.error = 'KYCチェック済の顧客のみ入力可能です';
+        }
         if (record.own_initial_total_amount.value > 0) {
             if (isBlank(record.own_initial_start_date.value)) {
                 record.own_initial_start_date.error = '入力してください';
@@ -534,6 +540,9 @@
         for (var row_value of record.quotation_details_table.value) {
             if (row_value.value.product_supplier.value == PRODUCT_SUPPLIER_PARTNER && isBlank(row_value.value.purchase_amount.value)) {
                 row_value.value.purchase_amount.error = '仕入額を入力してください';
+            }
+            if (record.ステータス.value != DEAL_STATUS_ACTIVE && row_value.value.product_status != PRODUCT_STATUS_ACTIVE) {
+                row_value.value.product_number.error = '販売中ではありません';
             }
         }
     }
