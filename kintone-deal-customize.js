@@ -324,6 +324,7 @@
         deliver_to_number;
         deliver_to_name;
         invoice_item_suffix;
+        order_date;
         own_initial_invoice_timing;
         own_initial_payment_due_date;
         own_initial_total_amount;
@@ -364,6 +365,7 @@
             if (this.invoice_to_number != this.deliver_to_number) {
                 this.invoice_item_suffix = `(${this.deliver_to_name}様利用分)`;
             }
+            this.order_date = record.order_date;
             // パトスロゴス初期費用
             this.own_initial_invoice_timing = record.own_initial_invoice_timing.value;
             this.own_initial_payment_due_date = record.own_initial_payment_due_date.value;
