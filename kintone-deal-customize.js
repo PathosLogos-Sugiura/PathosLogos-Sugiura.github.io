@@ -541,7 +541,8 @@
             if (row_value.value.product_supplier.value == PRODUCT_SUPPLIER_PARTNER && isBlank(row_value.value.purchase_amount.value)) {
                 row_value.value.purchase_amount.error = '仕入額を入力してください';
             }
-            if (record.ステータス.value != DEAL_STATUS_ACTIVE && row_value.value.product_status != PRODUCT_STATUS_ACTIVE) {
+            if (record.ステータス.value != DEAL_STATUS_ACTIVE && row_value.value.product_status.value != PRODUCT_STATUS_ACTIVE) {
+                consoleLog(record.ステータス.value);
                 row_value.value.product_number.error = '販売中ではありません';
             }
         }
