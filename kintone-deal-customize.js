@@ -20,6 +20,10 @@
     });
 
     kintone.events.on(['app.record.detail.show'], function (event) {
+        // Style change for summary fields.
+        var element = kintone.app.record.getFieldElement('own_initial_total_amount_actual');
+        element.style.color = '#3598da';
+        element.style.fontWeight = 'bold';
         if (!kintone.getLoginUser().email.includes('sugiura')) {
             return;
         }
