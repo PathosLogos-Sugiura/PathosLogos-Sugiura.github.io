@@ -582,7 +582,6 @@
                         "deal_number": { "value": deal_group.deal_number },
                         "deliver_to_number": { "value": deal_group.deliver_to_number },
                         "invoice_to_number": { "value": deal_group.invoice_to_number },
-                        "order_date": { "value": formatKintoneDate(deal_group.order_date) },
                         "revenue_date": { "value": formatKintoneDate(month_entry.revenue_date) },
                         "product_supplier": { "value": deal_group.product_supplier },
                         "product_type": { "value": deal_group.product_type },
