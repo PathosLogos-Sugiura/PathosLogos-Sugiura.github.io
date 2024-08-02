@@ -42,28 +42,27 @@
         applyHightLightStyle('grand_total_amount_with_discount');
         applyHightLightStyle('consumption_tax');
         applyHightLightStyle('grand_total_amount_with_tax');
-        if (!kintone.getLoginUser().email.includes('sugiura')) {
-            return;
+        if (event.record.show_revenue_invoice_button.value == SHOW_BUTTON_YES) {
+            const header = kintone.app.record.getHeaderMenuSpaceElement();
+            const button1 = new Kuc.Button({
+                text: '請求データ作成',
+                type: 'submit',
+            });
+            header.appendChild(button1);
+            button1.addEventListener('click', function (click_event) {
+                createInvoice(event);
+                alert("請求データを作成しました");
+            });
+            const button2 = new Kuc.Button({
+                text: '売上データ作成',
+                type: 'submit',
+            });
+            header.appendChild(button2);
+            button2.addEventListener('click', function (click_event) {
+                createRevenue(event);
+                alert("売上データを作成しました");
+            });
         }
-        const header = kintone.app.record.getHeaderMenuSpaceElement();
-        const button1 = new Kuc.Button({
-            text: '請求データ作成',
-            type: 'submit',
-        });
-        header.appendChild(button1);
-        button1.addEventListener('click', function (click_event) {
-            createInvoice(event);
-            alert("請求データを作成しました");
-        });
-        const button2 = new Kuc.Button({
-            text: '売上データ作成',
-            type: 'submit',
-        });
-        header.appendChild(button2);
-        button2.addEventListener('click', function (click_event) {
-            createRevenue(event);
-            alert("売上データを作成しました");
-        });
         return event;
     });
 
