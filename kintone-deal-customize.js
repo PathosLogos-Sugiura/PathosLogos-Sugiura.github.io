@@ -15,6 +15,7 @@
     const PRODUCT_STATUS_ACTIVE = "販売中";
     const FONT_COLOR = '#3598da';
     const FONT_WEIGHT = 'bold';
+    const FONT_SIZE = '16px';
 
     kintone.events.on(['app.record.create.submit', 'app.record.edit.submit'], function (event) {
         validateInput(event);
@@ -23,58 +24,23 @@
 
     kintone.events.on(['app.record.detail.show'], function (event) {
         // Style change for summary fields.
-        var element = kintone.app.record.getFieldElement('own_initial_total_amount_actual');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('partner_initial_total_amount_actual');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('initial_grand_total_amount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('initial_grand_total_discount_amount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('initial_grand_total_amount_actual');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('own_monthly_total_period_amount_actual');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('partner_monthly_total_period_amount_actual');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('monthly_grand_total_amount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('monthly_grand_total_amount_actual');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('monthly_grand_total_period_amount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('monthly_grand_total_discount_amount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('monthly_grand_total_period_amount_actual');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('grand_total_amount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('grand_total_discount_amount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('grand_total_amount_with_discount');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('consumption_tax');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-        element = kintone.app.record.getFieldElement('grand_total_amount_with_tax');
-        element.style.color = FONT_COLOR;
-        element.style.fontWeight = FONT_WEIGHT;
-                if (!kintone.getLoginUser().email.includes('sugiura')) {
+        applyHightLightStyle('partner_initial_total_amount_actual');
+        applyHightLightStyle('initial_grand_total_amount');
+        applyHightLightStyle('initial_grand_total_discount_amount');
+        applyHightLightStyle('initial_grand_total_amount_actual');
+        applyHightLightStyle('own_monthly_total_period_amount_actual');
+        applyHightLightStyle('partner_monthly_total_period_amount_actual');
+        applyHightLightStyle('monthly_grand_total_amount');
+        applyHightLightStyle('monthly_grand_total_amount_actual');
+        applyHightLightStyle('monthly_grand_total_period_amount');
+        applyHightLightStyle('monthly_grand_total_discount_amount');
+        applyHightLightStyle('monthly_grand_total_period_amount_actual');
+        applyHightLightStyle('grand_total_amount');
+        applyHightLightStyle('grand_total_discount_amount');
+        applyHightLightStyle('grand_total_amount_with_discount');
+        applyHightLightStyle('consumption_tax');
+        applyHightLightStyle('grand_total_amount_with_tax');
+        if (!kintone.getLoginUser().email.includes('sugiura')) {
             return;
         }
         const header = kintone.app.record.getHeaderMenuSpaceElement();
@@ -855,6 +821,13 @@
     // コンソールにエラー出力（ブラウザで見やすいように接頭語をつけている）
     function consoleError(message, error) {
         console.error(`[PathosLogos] ${message}`, error);
+    }
+
+    function applyHightLightStyle(element_name) {
+        var element = kintone.app.record.getFieldElement(element_name);
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element.style.fontSize = FONT_SIZE;
     }
 
     function dumpObject(obj) {
