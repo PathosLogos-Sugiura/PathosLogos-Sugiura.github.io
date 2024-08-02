@@ -13,6 +13,8 @@
     const KYC_STATUS_CHECKED = "チェック済";
     const DEAL_STATUS_ACTIVE = "受注済";
     const PRODUCT_STATUS_ACTIVE = "販売中";
+    const FONT_COLOR = '#3598da';
+    const FONT_WEIGHT = 'bold';
 
     kintone.events.on(['app.record.create.submit', 'app.record.edit.submit'], function (event) {
         validateInput(event);
@@ -22,8 +24,41 @@
     kintone.events.on(['app.record.detail.show'], function (event) {
         // Style change for summary fields.
         var element = kintone.app.record.getFieldElement('own_initial_total_amount_actual');
-        element.style.color = '#3598da';
-        element.style.fontWeight = 'bold';
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('partner_initial_total_amount_actual');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('initial_grand_total_amount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('initial_grand_total_discount_amount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('initial_grand_total_amount_actual');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('own_monthly_total_period_amount_actual');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('partner_monthly_total_period_amount_actual');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('monthly_grand_total_amount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('monthly_grand_total_amount_actual');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('monthly_grand_total_period_amount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('monthly_grand_total_discount_amount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('monthly_grand_total_period_amount_actual');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
         if (!kintone.getLoginUser().email.includes('sugiura')) {
             return;
         }
