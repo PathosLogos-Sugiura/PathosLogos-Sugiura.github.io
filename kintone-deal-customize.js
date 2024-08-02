@@ -59,7 +59,22 @@
         element = kintone.app.record.getFieldElement('monthly_grand_total_period_amount_actual');
         element.style.color = FONT_COLOR;
         element.style.fontWeight = FONT_WEIGHT;
-        if (!kintone.getLoginUser().email.includes('sugiura')) {
+        element = kintone.app.record.getFieldElement('grand_total_amount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('grand_total_discount_amount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('grand_total_amount_with_discount');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('consumption_tax');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+        element = kintone.app.record.getFieldElement('grand_total_amount_with_tax');
+        element.style.color = FONT_COLOR;
+        element.style.fontWeight = FONT_WEIGHT;
+                if (!kintone.getLoginUser().email.includes('sugiura')) {
             return;
         }
         const header = kintone.app.record.getHeaderMenuSpaceElement();
