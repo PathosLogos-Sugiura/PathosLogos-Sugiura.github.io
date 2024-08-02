@@ -13,6 +13,7 @@
     const KYC_STATUS_CHECKED = "チェック済";
     const DEAL_STATUS_ACTIVE = "受注済";
     const PRODUCT_STATUS_ACTIVE = "販売中";
+    const SHOW_BUTTON_YES = "する";
     const FONT_COLOR = '#3598da';
     const FONT_WEIGHT = 'bold';
     const FONT_SIZE = '16px';
@@ -24,6 +25,7 @@
 
     kintone.events.on(['app.record.detail.show'], function (event) {
         // Style change for summary fields.
+        applyHightLightStyle('own_initial_total_amount_actual');
         applyHightLightStyle('partner_initial_total_amount_actual');
         applyHightLightStyle('initial_grand_total_amount');
         applyHightLightStyle('initial_grand_total_discount_amount');
