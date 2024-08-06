@@ -594,7 +594,7 @@
                 continue;
             }
             var table_value = [];
-            for ( deal_detail of deal_group.deal_details) {
+            for (var deal_detail of deal_group.deal_details) {
                 var amount = 0;
                 if (deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                     amount = partner_initial_purchase_amount;
