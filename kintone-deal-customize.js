@@ -567,10 +567,10 @@
                 row_value.value.product_number.error = '販売中ではありません';
             }
         }
-        if (record.own_charge_months.value > 0 && record.own_auto_renewal_months.value == 0) {
+        if (record.own_charge_months.value > 0 && isBlankOrZero(record.own_auto_renewal_months.value)) {
             record.own_auto_renewal_months.error = '入力してください';
         }
-        if (record.partner_charge_months.value > 0 && record.partner_auto_renewal_months.value == 0) {
+        if (record.partner_charge_months.value > 0 && isBlankOrZero(record.partner_auto_renewal_months.value)) {
             record.partner_auto_renewal_months.error = '入力してください';
         }
     }
