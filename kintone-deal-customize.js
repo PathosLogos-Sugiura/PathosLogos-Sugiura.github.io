@@ -614,7 +614,7 @@
                         'product_number': { value: deal_detail.product_number },
                         'qty': { value: deal_detail.qty },
                         'amount': { value: amount },
-                        'details_remarks': { value: deal_detail.purchase_amount },
+                        'details_remarks': { value: deal_detail.details_remarks },
                     }
                 }
                 table_value.push(newRow);
