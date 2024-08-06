@@ -2,6 +2,7 @@
     "use strict";
     const INVOICE_APP_ID = 22;
     const REVENUE_APP_ID = 23;
+    const PURCHASE_APP_ID = 25;
     const APP_ID = 21;
 
     const INVOICE_TIMING_BULK_INITIAL = "開始月一括";
@@ -61,6 +62,15 @@
             button2.addEventListener('click', function (click_event) {
                 createRevenue(event);
                 alert("売上データを作成しました");
+            });
+            const button3 = new Kuc.Button({
+                text: '仕入データ作成',
+                type: 'submit',
+            });
+            header.appendChild(button3);
+            button3.addEventListener('click', function (click_event) {
+                createPurchase(event);
+                alert("仕入データを作成しました");
             });
         }
         return event;
@@ -575,6 +585,55 @@
         }
     }
 
+    function createPurchase(event) {
+        var record = event.record;
+        var deal_info = new DealInfo(record);
+        var deal_groups = deal_info.createDealDetailGroups();
+        for (var deal_group of deal_groups) {
+            if (deal_group.product_supplier != PRODUCT_SUPPLIER_PARTNER) {
+                continue;
+            }
+            var table_value = [];
+            for ( deal_detail of deal_group.deal_details) {
+                var amount = 0;
+                if (deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
+                    amount = partner_initial_purchase_amount;
+                } else {
+                    amount = partner_monthly_period_purchase_amount;
+                }
+                var newRow = {
+                    value: {
+                        'product_number': { value: detal_detail.product_number },
+                        'qty': { value: detal_detail.qty },
+                        'amount': { value: amount },
+                        'details_remarks': { value: deal_detail.purchase_amount },
+                    }
+                }
+                table_value.push(newRow);
+            }
+            var newData = {
+                'app': PURCHASE_APP_ID,
+                'record': {
+                    "partner_number": { "value": deal_group.partner_number },
+                    "deal_number": { "value": deal_group.deal_number },
+                    "deliver_to_number": { "value": deal_group.deliver_to_number },
+                    "invoice_to_number": { "value": deal_group.invoice_to_number },
+                    "partner_initial_start_date": { "value": formatKintoneDate(deal_group.partner_initial_start_date) },
+                    "partner_initial_end_date": { "value": formatKintoneDate(deal_group.partner_initial_end_date) },
+                    "partner_initial_invoice_timing": { "value": deal_group.partner_initial_invoice_timing },
+                    "partner_initial_payment_due_date": { "value": formatKintoneDate(deal_group.partner_initial_payment_due_date) },
+                    "partner_monthly_start_date": { "value": formatKintoneDate(deal_group.partner_monthly_start_date) },
+                    "partner_monthly_end_date": { "value": formatKintoneDate(deal_group.partner_monthly_end_date) },
+                    "partner_monthly_invoice_timing": { "value": deal_group.partner_monthly_invoice_timing },
+                    "partner_monthly_payment_due_date": { "value": formatKintoneDate(deal_group.partner_monthly_payment_due_date) },
+                    "partner_charge_months": { "value": deal_group.partner_charge_months },
+                    "partner_auto_renewal_months": { "value": deal_group.partner_auto_renewal_months },
+                    "details_table": { "value": table_value },
+                }
+            };
+            callKintoneAPI(event, PURCHASE_APP_ID, newData);
+        }
+    }
 
     function createRevenue(event) {
         var record = event.record;
@@ -583,8 +642,8 @@
         for (var deal_group of deal_groups) {
             for (var month_entry of deal_group.monthly_entries) {
                 var newData = {
-                    "app": REVENUE_APP_ID,
-                    "record": {
+                    'app': REVENUE_APP_ID,
+                    'record': {
                         "deal_number": { "value": deal_group.deal_number },
                         "deliver_to_number": { "value": deal_group.deliver_to_number },
                         "invoice_to_number": { "value": deal_group.invoice_to_number },
@@ -686,8 +745,8 @@
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
             var newData = {
-                "app": INVOICE_APP_ID,
-                "record": {
+                'app': INVOICE_APP_ID,
+                'record': {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
                     "invoice_issue_date": { "value": formatKintoneDate(invoice_issue_date) },
                     "payment_due_date": { "value": formatKintoneDate(payment_due_date) },
@@ -746,8 +805,8 @@
             var consumption_tax = Math.floor(invoice_amount * 0.1);
             var invoice_amount_with_tax = invoice_amount + consumption_tax;
             var newData = {
-                "app": INVOICE_APP_ID,
-                "record": {
+                'app': INVOICE_APP_ID,
+                'record': {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
                     "invoice_issue_date": { "value": invoice_date },
                     "payment_due_date": { "value": formatKintoneDate(payment_due_date) },
