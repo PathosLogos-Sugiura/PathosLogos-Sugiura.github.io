@@ -177,6 +177,7 @@
         deliver_to_number;
         product_supplier;
         product_type;
+        partner_number;
         partner_name;
         product_name;
         order_date;
@@ -210,6 +211,7 @@
             this.end_date = end_date;
             this.product_supplier = deal_detail.product_supplier;
             this.product_type = deal_detail.product_type;
+            this.partner_number = deal_detail.partner_number;
             this.partner_name = deal_detail.partner_name;
             this.product_name = deal_detail.product_name;
             this.deal_number = deal_detail.deal_number;
