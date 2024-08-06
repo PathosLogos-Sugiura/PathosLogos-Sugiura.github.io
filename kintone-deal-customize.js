@@ -603,8 +603,8 @@
                 }
                 var newRow = {
                     value: {
-                        'product_number': { value: detal_detail.product_number },
-                        'qty': { value: detal_detail.qty },
+                        'product_number': { value: deal_detail.product_number },
+                        'qty': { value: deal_detail.qty },
                         'amount': { value: amount },
                         'details_remarks': { value: deal_detail.purchase_amount },
                     }
