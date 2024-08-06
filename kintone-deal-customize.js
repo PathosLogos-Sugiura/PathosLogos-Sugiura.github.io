@@ -126,6 +126,7 @@
         partner_monthly_period_amount_actual;
         partner_monthly_period_purchase_amount;
         partner_name;
+        partner_number;
         product_name;
         product_number;
         product_supplier;
@@ -160,6 +161,7 @@
             this.partner_monthly_period_amount_actual = Number(value.partner_monthly_period_amount_actual.value);
             this.partner_monthly_period_purchase_amount = Number(value.partner_monthly_period_purchase_amount.value);
             this.partner_name = value.partner_name.value;
+            this.partner_number = Number(value.partner_number.value);
             this.product_name = value.product_name.value;
             this.product_number = value.product_number.value;
             this.product_supplier = value.product_supplier.value;
