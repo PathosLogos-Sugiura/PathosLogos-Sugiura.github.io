@@ -441,10 +441,10 @@
             }
         }
 
-        createDealDetailGroups() {
+        createDealDetailGroups(by_partner = false) {
             const map = new Map();
             for (var deal_detail of this.deal_details) {
-                var key = this.createKey(deal_detail);
+                var key = this.createKey(deal_detail, by_partner);
                 var detail_group = map.get(key);
                 if (detail_group == null) {
                     var start_date;
@@ -491,8 +491,12 @@
             return ret_array;
         }
 
-        createKey(deal_detail) {
-            return deal_detail.product_supplier + "_" + deal_detail.product_type + "_" + deal_detail.partner_name + "_" + deal_detail.product_name;
+        createKey(deal_detail, by_partner) {
+            if (by_partner) {
+                return deal_detail.product_supplier + "_" + deal_detail.partner_name;
+            } else {
+                return deal_detail.product_supplier + "_" + deal_detail.product_type + "_" + deal_detail.partner_name + "_" + deal_detail.product_name;
+            }
         }
     }
 
@@ -592,7 +596,7 @@
     function createPurchase(event) {
         var record = event.record;
         var deal_info = new DealInfo(record);
-        var deal_groups = deal_info.createDealDetailGroups();
+        var deal_groups = deal_info.createDealDetailGroups(true);
         for (var deal_group of deal_groups) {
             if (deal_group.product_supplier != PRODUCT_SUPPLIER_PARTNER) {
                 continue;
