@@ -597,9 +597,9 @@
             for (var deal_detail of deal_group.deal_details) {
                 var amount = 0;
                 if (deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
-                    amount = partner_initial_purchase_amount;
+                    amount = deal_detail.partner_initial_purchase_amount;
                 } else {
-                    amount = partner_monthly_period_purchase_amount;
+                    amount = deal_detail.partner_monthly_period_purchase_amount;
                 }
                 var newRow = {
                     value: {
