@@ -773,6 +773,17 @@
         if (value.toString().trim().length == 0) {
             return true;
         }
+        return false;
+    }
+
+    function isBlankOrZero(value) {
+        if (isBlank(value)) {
+            return true;
+        }
+        if (value == 0) {
+            return true;
+        }
+        return false;
     }
 
     function isNotStartOfMonth(date) {
