@@ -222,20 +222,20 @@
         }
 
         calculate() {
-            var dj_start_date = dayjs(this.start_date);
-            var dj_end_date = dayjs(this.end_date);
-            var start_month_date = dj_start_date.date();
-            var end_month_date = dj_end_date.date();
+            let dj_start_date = dayjs(this.start_date);
+            let dj_end_date = dayjs(this.end_date);
+            let start_month_date = dj_start_date.date();
+            let end_month_date = dj_end_date.date();
             if (dj_end_date.isBefore(dj_start_date)) {
                 consoleError("End date is before start date");
                 return;
             }
             if (start_month_date != 1) {
                 this.is_start_month_split = true;
-                var month_days = getEndOfMonth(this.start_date).date();
+                let month_days = getEndOfMonth(this.start_date).date();
                 this.start_month_ratio = Math.round((month_days - start_month_date + 1) / month_days * 100) / 100;
             }
-            var end_month_end_date = getEndOfMonth(this.end_date).date();
+            let end_month_end_date = getEndOfMonth(this.end_date).date();
             if (end_month_date != end_month_end_date) {
                 this.is_end_month_split = true;
                 this.end_month_ratio = Math.round(end_month_date / end_month_end_date * 100) / 100;
@@ -251,7 +251,7 @@
                 this.month_duration_for_finance += (this.start_month_ratio + this.end_month_ratio);
             }
             this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance);
-            for (var deal_detail of this.deal_details) {
+            for (let deal_detail of this.deal_details) {
                 this.initial_amount += Math.max(deal_detail.own_initial_amount_actual, deal_detail.partner_initial_amount_actual);
                 this.initial_purchase_amount += deal_detail.partner_initial_purchase_amount;
                 this.monthly_amount += Math.floor(Math.max(deal_detail.own_monthly_amount_actual, deal_detail.partner_monthly_amount_actual));
@@ -274,15 +274,15 @@
                 this.end_month_amount_for_finance = Math.floor(this.monthly_amount_for_finance * this.end_month_ratio);
                 this.end_month_purchase_amount_for_finance = Math.floor(this.monthly_purchase_amount_for_finance * this.end_month_ratio);
             }
-            var entry_date = getEndOfMonth(this.start_date);
-            var free_months = 0;
+            let entry_date = getEndOfMonth(this.start_date);
+            let free_months = 0;
             if (this.charge_months < this.month_duration_for_finance_round_up) {
                 free_months = this.month_duration_for_finance_round_up - this.charge_months;
             }
-            var amount_for_finance_sum = 0;
-            var purchase_amount_for_finance_sum = 0;
-            for (var i = 1; i <= this.month_duration_for_finance_round_up; i++) {
-                var month_entry = new MonthlyEntry();
+            let amount_for_finance_sum = 0;
+            let purchase_amount_for_finance_sum = 0;
+            for (let i = 1; i <= this.month_duration_for_finance_round_up; i++) {
+                let month_entry = new MonthlyEntry();
                 month_entry.revenue_date = entry_date;
                 month_entry.invoice_date = getPriorEndOfMonth(entry_date);
                 month_entry.month_index = i;
@@ -330,8 +330,8 @@
                     }
                 }
                 if (i == this.month_duration_for_finance_round_up) {
-                    var amount_diff = 0;
-                    var purchase_amount_diff = 0;
+                    let amount_diff = 0;
+                    let purchase_amount_diff = 0;
                     if (this.product_type == PRODUCT_TYPE_INITIAL) {
                         amount_diff = this.initial_amount - amount_for_finance_sum;
                         purchase_amount_diff = this.initial_purchase_amount - purchase_amount_for_finance_sum;
@@ -436,20 +436,20 @@
             this.grand_total_amount_with_discount = Number(record.grand_total_amount_with_discount.value);
             this.consumption_tax = Number(record.consumption_tax.value);
             this.grand_total_amount_with_tax = Number(record.grand_total_amount_with_tax.value);
-            for (var row_value of record.quotation_details_table.value) {
+            for (let row_value of record.quotation_details_table.value) {
                 this.deal_details.push(new DealDetail(this.deal_number, this.invoice_to_number, this.deliver_to_number, row_value.value));
             }
         }
 
         createDealDetailGroups(by_partner = false) {
             const map = new Map();
-            for (var deal_detail of this.deal_details) {
-                var key = this.createKey(deal_detail, by_partner);
-                var detail_group = map.get(key);
+            for (let deal_detail of this.deal_details) {
+                let key = this.createKey(deal_detail, by_partner);
+                let detail_group = map.get(key);
                 if (detail_group == null) {
-                    var start_date;
-                    var end_date;
-                    var invoice_timing;
+                    let start_date;
+                    let end_date;
+                    let invoice_timing;
                     if (deal_detail.product_supplier == PRODUCT_SUPPLIER_OWN && deal_detail.product_type === PRODUCT_TYPE_INITIAL) {
                         start_date = this.own_initial_start_date;
                         end_date = this.own_initial_end_date;
@@ -482,7 +482,7 @@
                 }
                 detail_group.deal_details.push(deal_detail);
             }
-            var ret_array = [];
+            let ret_array = [];
             for (detail_group of map.values()) {
                 // データが揃ったここで計算しないとちゃんと計算されない
                 detail_group.calculate();
@@ -501,7 +501,7 @@
     }
 
     function validateInput(event) {
-        var record = event.record;
+        const record = event.record;
         if (record.deal_type.value == '初期移行') {
             return;
         }
@@ -576,7 +576,7 @@
                 }
             }
         }
-        for (var row_value of record.quotation_details_table.value) {
+        for (let row_value of record.quotation_details_table.value) {
             if (row_value.value.product_supplier.value == PRODUCT_SUPPLIER_PARTNER && isBlank(row_value.value.purchase_amount.value)) {
                 row_value.value.purchase_amount.error = '仕入額を入力してください';
             }
@@ -594,22 +594,22 @@
     }
 
     function createPurchase(event) {
-        var record = event.record;
-        var deal_info = new DealInfo(record);
-        var deal_groups = deal_info.createDealDetailGroups(true);
-        for (var deal_group of deal_groups) {
+        const record = event.record;
+        const deal_info = new DealInfo(record);
+        const deal_groups = deal_info.createDealDetailGroups(true);
+        for (let deal_group of deal_groups) {
             if (deal_group.product_supplier != PRODUCT_SUPPLIER_PARTNER) {
                 continue;
             }
-            var table_value = [];
-            for (var deal_detail of deal_group.deal_details) {
-                var amount = 0;
+            let table_value = [];
+            for (let deal_detail of deal_group.deal_details) {
+                let amount = 0;
                 if (deal_detail.product_type == PRODUCT_TYPE_INITIAL) {
                     amount = deal_detail.partner_initial_purchase_amount;
                 } else {
                     amount = deal_detail.partner_monthly_period_purchase_amount;
                 }
-                var newRow = {
+                let newRow = {
                     value: {
                         'product_number': { value: deal_detail.product_number },
                         'qty': { value: deal_detail.qty },
@@ -619,7 +619,7 @@
                 }
                 table_value.push(newRow);
             }
-            var newData = {
+            let newData = {
                 'app': PURCHASE_APP_ID,
                 'record': {
                     "partner_number": { "value": deal_group.partner_number },
@@ -644,12 +644,12 @@
     }
 
     function createRevenue(event) {
-        var record = event.record;
-        var deal_info = new DealInfo(record);
-        var deal_groups = deal_info.createDealDetailGroups();
-        for (var deal_group of deal_groups) {
-            for (var month_entry of deal_group.monthly_entries) {
-                var newData = {
+        const record = event.record;
+        const deal_info = new DealInfo(record);
+        const deal_groups = deal_info.createDealDetailGroups();
+        for (let deal_group of deal_groups) {
+            for (let month_entry of deal_group.monthly_entries) {
+                let newData = {
                     'app': REVENUE_APP_ID,
                     'record': {
                         "deal_number": { "value": deal_group.deal_number },
@@ -672,14 +672,15 @@
     }
 
     function createInvoice(event) {
-        var record = event.record;
-        var deal_info = new DealInfo(record);
+        const record = event.record;
+        const deal_info = new DealInfo(record);
+        const deal_groups = deal_info.createDealDetailGroups();
         const initial_map = new Map();
         if (deal_info.own_initial_total_amount_actual > 0 && deal_info.own_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "初期費用(パトスロゴス)" + deal_info.invoice_item_suffix;
-            var payment_due_date = formatKintoneDate(deal_info.own_initial_payment_due_date);
-            var table_value = [];
-            var newRow = {
+            let item_name = "初期費用(パトスロゴス)" + deal_info.invoice_item_suffix;
+            let payment_due_date = formatKintoneDate(deal_info.own_initial_payment_due_date);
+            let table_value = [];
+            let newRow = {
                 value: {
                     'item_name': { value: item_name },
                     'start_date': { value: deal_info.own_initial_start_date },
@@ -691,13 +692,13 @@
             initial_map.set(payment_due_date, table_value);
         }
         if (deal_info.partner_initial_total_amount_actual > 0 && deal_info.partner_initial_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "初期費用(共創パートナー)" + deal_info.invoice_item_suffix;
-            var payment_due_date = formatKintoneDate(deal_info.partner_initial_payment_due_date);
-            var table_value = initial_map.get(payment_due_date);
+            let item_name = "初期費用(共創パートナー)" + deal_info.invoice_item_suffix;
+            let payment_due_date = formatKintoneDate(deal_info.partner_initial_payment_due_date);
+            let table_value = initial_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
             }
-            var newRow = {
+            let newRow = {
                 value: {
                     'item_name': { value: item_name },
                     'start_date': { value: deal_info.partner_initial_start_date },
@@ -709,13 +710,13 @@
             initial_map.set(payment_due_date, table_value);
         }
         if (deal_info.own_monthly_total_period_amount_actual > 0 && deal_info.own_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "期間費用(パトスロゴス)" + deal_info.invoice_item_suffix;
-            var payment_due_date = formatKintoneDate(deal_info.own_monthly_payment_due_date);
-            var table_value = initial_map.get(payment_due_date);
+            let item_name = "期間費用(パトスロゴス)" + deal_info.invoice_item_suffix;
+            let payment_due_date = formatKintoneDate(deal_info.own_monthly_payment_due_date);
+            let table_value = initial_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
             }
-            var newRow = {
+            let newRow = {
                 value: {
                     'item_name': { value: item_name },
                     'start_date': { value: deal_info.own_monthly_start_date },
@@ -727,13 +728,13 @@
             initial_map.set(payment_due_date, table_value);
         }
         if (deal_info.partner_monthly_total_period_amount_actual > 0 && deal_info.partner_monthly_invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
-            var item_name = "期間費用(共創パートナー)" + deal_info.invoice_item_suffix;
-            var payment_due_date = formatKintoneDate(deal_info.partner_monthly_payment_due_date);
-            var table_value = initial_map.get(payment_due_date);
+            let item_name = "期間費用(共創パートナー)" + deal_info.invoice_item_suffix;
+            let payment_due_date = formatKintoneDate(deal_info.partner_monthly_payment_due_date);
+            let table_value = initial_map.get(payment_due_date);
             if (table_value == null) {
                 table_value = [];
             }
-            var newRow = {
+            let newRow = {
                 value: {
                     'item_name': { value: item_name },
                     'start_date': { value: deal_info.partner_monthly_start_date },
@@ -745,14 +746,14 @@
             initial_map.set(payment_due_date, table_value);
         }
         initial_map.forEach(function (table_value, payment_due_date) {
-            var invoice_issue_date = getPriorEndOfMonth(payment_due_date);
-            var invoice_amount = 0;
+            let invoice_issue_date = getPriorEndOfMonth(payment_due_date);
+            let invoice_amount = 0;
             table_value.forEach(function (row) {
                 invoice_amount += Number(row.value.amount.value);
             });
-            var consumption_tax = Math.floor(invoice_amount * 0.1);
-            var invoice_amount_with_tax = invoice_amount + consumption_tax;
-            var newData = {
+            let consumption_tax = Math.floor(invoice_amount * 0.1);
+            let invoice_amount_with_tax = invoice_amount + consumption_tax;
+            let newData = {
                 'app': INVOICE_APP_ID,
                 'record': {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
@@ -771,28 +772,27 @@
             // 全て開始月一括請求の場合はここで終わり。
             return;
         }
-        var deal_groups = deal_info.createDealDetailGroups();
         const monthly_map = new Map();
-        for (var deal_group of deal_groups) {
+        for (let deal_group of deal_groups) {
             if (deal_group.invoice_timing == INVOICE_TIMING_BULK_INITIAL) {
                 continue;
             }
-            var item_name = '';
+            let item_name = '';
             if (deal_group.product_supplier == PRODUCT_SUPPLIER_OWN) {
                 item_name = '月額費用(パトスロゴス)' + deal_info.invoice_item_suffix;
             } else if (deal_group.product_supplier == PRODUCT_SUPPLIER_PARTNER) {
                 item_name = '月額費用(共創パートナー)' + deal_info.invoice_item_suffix;
             }
-            for (var month_entry of deal_group.monthly_entries) {
+            for (let month_entry of deal_group.monthly_entries) {
                 if (month_entry.amount_for_sales == 0) {
                     continue;
                 }
-                var invoice_date = formatKintoneDate(month_entry.invoice_date);
-                var table_value = monthly_map.get(invoice_date);
+                let invoice_date = formatKintoneDate(month_entry.invoice_date);
+                let table_value = monthly_map.get(invoice_date);
                 if (table_value == null) {
                     table_value = [];
                 }
-                var newRow = {
+                let newRow = {
                     value: {
                         'item_name': { value: item_name },
                         'start_date': { value: formatKintoneDate(getStartOfMonth(month_entry.revenue_date)) },
@@ -805,14 +805,14 @@
             }
         }
         monthly_map.forEach(function (table_value, invoice_date) {
-            var payment_due_date = getNextEndOfMonth(invoice_date);
-            var invoice_amount = 0;
+            let payment_due_date = getNextEndOfMonth(invoice_date);
+            let invoice_amount = 0;
             table_value.forEach(function (row) {
                 invoice_amount += Number(row.value.amount.value);
             });
-            var consumption_tax = Math.floor(invoice_amount * 0.1);
-            var invoice_amount_with_tax = invoice_amount + consumption_tax;
-            var newData = {
+            let consumption_tax = Math.floor(invoice_amount * 0.1);
+            let invoice_amount_with_tax = invoice_amount + consumption_tax;
+            let newData = {
                 'app': INVOICE_APP_ID,
                 'record': {
                     "invoice_to_number": { "value": deal_info.invoice_to_number },
@@ -854,7 +854,7 @@
     }
 
     function isNotStartOfMonth(date) {
-        var dj_date = dayjs(date);
+        let dj_date = dayjs(date);
         if (dj_date.date() != 1) {
             return true;
         }
@@ -862,8 +862,8 @@
     }
 
     function isNotEndOfMonth(date) {
-        var dj_date = dayjs(date);
-        var eo_date = getEndOfMonth(date);
+        let dj_date = dayjs(date);
+        let eo_date = getEndOfMonth(date);
         if (dj_date.date() != eo_date.date()) {
             return true;
         }
@@ -877,38 +877,32 @@
         return dayjs(value).format('YYYY-MM-DD');
     }
 
-    // 指定された日付の月末を算出
     function getEndOfMonth(date) {
         return dayjs(date).endOf('month');
     }
 
-    // 指定された日付の月初を算出
     function getStartOfMonth(date) {
         return dayjs(date).startOf('month');
     }
 
-    // 指定された日付の翌月末を算出
     function getNextEndOfMonth(date) {
         return dayjs(date).add(1, 'month').endOf('month');
     }
 
-    // 指定された日付の前月末を算出
     function getPriorEndOfMonth(date) {
         return dayjs(date).subtract(1, 'month').endOf('month');
     }
 
-    // コンソールにログ出力（ブラウザで見やすいように接頭語をつけている）
     function consoleLog(message) {
         console.log(`[PathosLogos] ${message}`);
     }
 
-    // コンソールにエラー出力（ブラウザで見やすいように接頭語をつけている）
     function consoleError(message, error) {
         console.error(`[PathosLogos] ${message}`, error);
     }
 
     function applyHightLightStyle(element_name) {
-        var element = kintone.app.record.getFieldElement(element_name);
+        let element = kintone.app.record.getFieldElement(element_name);
         element.style.color = FONT_COLOR;
         element.style.fontWeight = FONT_WEIGHT;
         element.style.fontSize = FONT_SIZE;
