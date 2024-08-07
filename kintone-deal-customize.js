@@ -18,6 +18,8 @@
     const FONT_COLOR = '#3598da';
     const FONT_WEIGHT = 'bold';
     const FONT_SIZE = '16px';
+    const ALERT_COLOR = 'ffeb3b';
+    const ALERT_DATE_DIFFERENCE = 60;
 
     kintone.events.on(['app.record.create.submit', 'app.record.edit.submit'], function (event) {
         validateInput(event);
@@ -73,6 +75,18 @@
                 alert("仕入データを作成しました");
             });
         }
+        if (dateDiff(event.record.own_initial_start_date.value, event.record.own_initial_payment_due_date.value) > ALERT_DATE_DIFFERENCE) {
+            applyAlertStyle('own_initial_payment_due_date');
+        }
+        if (dateDiff(event.record.own_monthly_start_date.value, event.record.own_monthly_payment_due_date.value) > ALERT_DATE_DIFFERENCE) {
+            applyAlertStyle('own_monthly_payment_due_date');
+        }
+        if (dateDiff(event.record.partner_initial_start_date.value, event.record.partner_initial_payment_due_date.value) > ALERT_DATE_DIFFERENCE) {
+            applyAlertStyle('partner_initial_payment_due_date');
+        }
+        if (dateDiff(event.record.partner_monthly_start_date.value, event.record.partner_monthly_payment_due_date.value) > ALERT_DATE_DIFFERENCE) {
+            applyAlertStyle('partner_monthly_payment_due_date');
+        }
         return event;
     });
 
@@ -80,10 +94,9 @@
         if (event.nextStatus.value != "受注済") {
             return;
         }
-        // 請求データの作成
         createInvoice(event);
-        // 売上データの作成
         createRevenue(event);
+        createPurchase(event);
         return event;
     });
 
@@ -870,6 +883,15 @@
         return false;
     }
 
+    function dateDiff(from, to) {
+        if (isBlank(from) || isBlank(to)) {
+            return -1;
+        }
+        let from_date = dayjs(from);
+        let to_date = daysjs(to);
+        return to_date.diff(from_date, 'day');
+    }
+
     function formatKintoneDate(value) {
         if (value instanceof dayjs) {
             return value.format('YYYY-MM-DD');
@@ -906,6 +928,11 @@
         element.style.color = FONT_COLOR;
         element.style.fontWeight = FONT_WEIGHT;
         element.style.fontSize = FONT_SIZE;
+    }
+
+    function applyAlertStyle(element_name) {
+        let element = kintone.app.record.getFieldElement(element_name);
+        element.style.background-color = ALERT_COLOR;
     }
 
     function dumpObject(obj) {
