@@ -932,7 +932,7 @@
 
     function applyAlertStyle(element_name) {
         let element = kintone.app.record.getFieldElement(element_name);
-        element.style.background-color = ALERT_COLOR;
+        element.style.backgroundColor = ALERT_COLOR;
     }
 
     function dumpObject(obj) {
