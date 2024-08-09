@@ -259,13 +259,12 @@
                 this.month_duration_for_finance_round_up = month_duration_for_finance;
             } else if (!this.is_start_month_split && this.is_end_month_split) {
                 this.month_duration_for_finance += this.end_month_ratio;
-                this.month_duration_for_finance_round_up = month_duration_for_finance + 1;
+                this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance);
             } else if (this.is_start_month_split && !this.is_end_month_split) {
                 this.month_duration_for_finance += this.start_month_ratio;
-                this.month_duration_for_finance_round_up = month_duration_for_finance + 1;
+                this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance);
             } else if (this.is_start_month_split && this.is_end_month_split) {
-                this.month_duration_for_finance += (this.start_month_ratio + this.end_month_ratio);
-                this.month_duration_for_finance_round_up = month_duration_for_finance + 1;
+                this.month_duration_for_finance += (this.start_month_ratio + this.end_month_ratio + 1);
             }
             consoleLog(`start_month_ratio=${this.start_month_ratio}`);
             consoleLog(`end_month_ratio=${this.end_month_ratio}`);
