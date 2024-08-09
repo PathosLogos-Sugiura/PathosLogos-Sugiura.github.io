@@ -888,7 +888,7 @@
             return -1;
         }
         let from_date = dayjs(from);
-        let to_date = daysjs(to);
+        let to_date = dayjs(to);
         return to_date.diff(from_date, 'day');
     }
 
