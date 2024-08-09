@@ -267,10 +267,6 @@
                 this.month_duration_for_finance += (this.start_month_ratio + this.end_month_ratio);
                 this.month_duration_for_finance_round_up = Math.ceil(this.month_duration_for_finance) + 1;
             }
-            consoleLog(`start_month_ratio=${this.start_month_ratio}`);
-            consoleLog(`end_month_ratio=${this.end_month_ratio}`);
-            consoleLog(`month_duration_for_finance=${this.month_duration_for_finance}`);
-            consoleLog(`month_duration_for_finance_round_up=${this.month_duration_for_finance_round_up}`);
             for (let deal_detail of this.deal_details) {
                 this.initial_amount += Math.max(deal_detail.own_initial_amount_actual, deal_detail.partner_initial_amount_actual);
                 this.initial_purchase_amount += deal_detail.partner_initial_purchase_amount;
