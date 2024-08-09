@@ -496,7 +496,7 @@
                 detail_group.deal_details.push(deal_detail);
             }
             let ret_array = [];
-            for (detail_group of map.values()) {
+            for (let detail_group of map.values()) {
                 // データが揃ったここで計算しないとちゃんと計算されない
                 detail_group.calculate();
                 ret_array.push(detail_group);
